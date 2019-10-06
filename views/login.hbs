@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Log In</title>
+</head>
+
+<body>
+  {{#if errorMsg}}
+  <div class="error-msg">
+    {{errorMsg}}
+  </div>
+  {{/if}}
+
+  <form method="post">
+    <input type="text" placeholder="Username" name="username" required />
+    <input type="password" placeholder="Password" name="password" required />
+    <button type="submit">Log In</button>
+  </form>
+</body>
+
+</html>
