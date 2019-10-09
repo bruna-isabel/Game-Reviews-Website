@@ -1,6 +1,10 @@
 {
   "ignore": [
-    "*.test.js"
+    "*.test.js",
+    "jest.config.js",
+    ".vscode/",
+    "node_modules/",
+    "build/"
   ],
   "ext": "js,mjs,hbs,html,json"
 }

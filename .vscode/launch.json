@@ -6,6 +6,9 @@
       "request": "launch",
       "name": "nodemon",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon.cmd"
+      },
       "runtimeArgs": [
         "--harmony",
         "--use_strict",
