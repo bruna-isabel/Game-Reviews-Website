@@ -2,19 +2,19 @@
 
 ## Installation
 
-To install the packages needed to run this package run: `npm install`.
+To install the packages needed to run this package run: `yarn install`.
 
-Run `npm run build-db` to create the database structure.
+Run `yarn run build-db` to create the database structure.
 
 ## Running
 
-To run the server, run `npm start`.
+To run the server, run `yarn start`.
 
-To live-reloading, run `npm run watch`.
+To live-reloading, run `yarn run watch`.
 
 ## Debugging
 
-You can debug using VS Code by pressing `F5`, this works the same way as `npm run watch` but with added debugging capabilities.
+You can debug using VS Code by pressing <kbd>F5</kbd>, this works the same way as `yarn run watch` but with added debugging capabilities.
 
 ---
 
