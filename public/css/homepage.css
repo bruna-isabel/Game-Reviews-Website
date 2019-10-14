@@ -11,7 +11,6 @@ body{
 }
 
 /* EVERYTHING IN THE HEADER*/
-
 header {
     font-family: Helvetica, sans-serif;
     position: fixed;
@@ -20,14 +19,13 @@ header {
     
 }
 
-/*Title of website*/
+/*title of website*/
 #title{
   float: left;
   margin-left: 15%;
 
   
 }
-
 /*elements from top bar*/
 ul.top {
     list-style-type: none;
@@ -49,6 +47,7 @@ input{
   color: white;
 }
 
+/*MAIN IMAGE*/
 section{
   width: 1100px;
   height:auto;
@@ -65,6 +64,7 @@ img {
   z-index: -2;
 }
 
+/*MAIN TEXT*/
 .word{
   font-family: 'Staatliches', cursive;
   font-weight: bold;
@@ -80,8 +80,9 @@ img {
   top: 400px;
   
 }
-/*EVERYTHING FROM THE FOOTER*/
 
+
+/*EVERYTHING FROM THE FOOTER*/
 footer{
   position: absolute;
   bottom: 0;
@@ -118,8 +119,7 @@ ul.bottom {
 }
 
 
-/*Footer and Header*/
-
+/*FOOTER AND HEADER*/
 li a, #title{
     display: block;
     color: white;
@@ -128,8 +128,7 @@ li a, #title{
     text-decoration: none;
     
 }
-  
-  li a:hover, #title:hover {
+li a:hover, #title:hover {
     background-color: rgb(49, 49, 49);
   }
 
