@@ -7,7 +7,7 @@
     "start": "node --use_strict index.js",
     "watch": "npx nodemon --harmony --use_strict index.js",
     "build-db": "node ./build/build_db.js",
-    "test": "jest"
+    "test": "jest --coverage --runInBand"
   },
   "author": "",
   "license": "ISC",
