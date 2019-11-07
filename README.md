@@ -26,5 +26,6 @@ This project is split into a few folders:
 - `controllers/`: contains subrouters for different parts of the site.
 - `models/`: contains classes that represent database entities.
 - `public/`: contains the site's front-end static pages and JavaScript.
+- `utils/`: contains shared utility code.
 - `views/`: contains dynamic HTML templates.
 - `./`: contains code that is used directly by the Koa app.

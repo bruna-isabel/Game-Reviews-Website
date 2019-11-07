@@ -1,4 +1,6 @@
-node_modules
-
-# ignore sqlite databases
+.DS_Store
+node_modules/
+coverage/
 *.db
+screenshots/*
+docs/
