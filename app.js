@@ -2,6 +2,8 @@
  * Creates a common Koa app
  */
 
+'use strict'
+
 const path = require('path')
 
 const Koa = require('koa')
@@ -10,11 +12,11 @@ const serve = require('koa-static')
 
 const app = new Koa()
 const handlebars = new Views(
-  path.join(__dirname, '/views'),
-  {
-    map: { hbs: 'handlebars' },
-    extension: 'hbs'
-  }
+	path.join(__dirname, '/views'),
+	{
+		map: { hbs: 'handlebars' },
+		extension: 'hbs'
+	}
 )
 
 const login = require('./controllers/login')
