@@ -19,7 +19,8 @@ login.post('/', async ctx => {
 	}
 
 	if (await bcrypt.compare(password, user.hash)) {
-		return ctx.redirect('/')
+		ctx.session.authorised = true
+		return ctx.redirect('back')
 	} else {
 		return ctx.render('login.hbs', { errorMsg: 'Password incorrect' })
 	}
