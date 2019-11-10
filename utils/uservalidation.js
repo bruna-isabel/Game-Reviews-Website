@@ -67,12 +67,8 @@
 
 	function validatePassword(password) {
 
-		//Checks if user enters password
-			if (password.value == " " || confirmPassword == " "){
-				throw new Error('password or confirm password were not entered')
-
 		//Checks if password has ascii printable characters
-			} else if (password.value.match(illegalChars)) {
+			if (password.value.match(illegalChars)) {
 				throw new Error('password contains illegal characters')
 
 		//Checks if password is on the length limits
@@ -86,20 +82,14 @@
 		//Checks if password and confirmPassword are equals
 			} else if (password.value !== confirmPassword.value){
 					throw new Error('password does not match Confirm Password')
-			
 			}
 	}
 
-	function validateConfirmPassoword(confirmPassword){
-
-		//Checks if user enters password
-		if (confirmPassword == " "){
-			throw new Error('confirm password were not entered')
-	
+function validateConfirmPassword(password, confirmPassword){
 		//Checks if password and confirmPassword are equals
-		} else if (password.value !== confirmPassword.value){
-			throw new Error('password does not match Confirm Password')
-		}
+	if (password.value !== confirmPassword.value){
+		throw new Error('password does not match Confirm Password')
+	}
 }
 	module.exports = validatePassword
 	module.exports = validateConfirmPassword

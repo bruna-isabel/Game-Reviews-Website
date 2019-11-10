@@ -106,10 +106,6 @@ describe('password', () => {
 		})
 })
 
-test('should be equal to password', async done => {
-	expect(validatePassword).toBeEqual(validateConfirmPassword);
-})
-
 describe('confirm password', async => {
 
 	// before each function
@@ -119,10 +115,6 @@ describe('confirm password', async => {
 
 	afterEach( async() => {
 		// runs after each test completes
-	})
-
-	test('should be inserted', async done => {
-		expect(validateConfirmPassword(' ')).toThrowError('confirm password was not inserted');
 	})
 
 	test('should be equal to password', async done => {
