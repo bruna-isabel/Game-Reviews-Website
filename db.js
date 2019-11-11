@@ -8,6 +8,7 @@ const sqlite = require('sqlite')
 
 const { NotImplemented } = require('./utils/errors')
 const User = require('./models/user')
+const Game = require('./models/game')
 
 class DbContext {
 	async getUsers() {
@@ -37,6 +38,31 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async execute(query) {
 		throw new NotImplemented('execute is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getGames() {
+		throw new NotImplemented('getGames is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getGame(id) {
+		throw new NotImplemented('getGame is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async deleteGame(id) {
+		throw new NotImplemented('removeGame is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async addGame(game) {
+		throw new NotImplemented('addGame is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async updateGame(game) {
+		throw new NotImplemented('updateGame is not implemented')
 	}
 }
 
@@ -108,6 +134,82 @@ class SqliteDbContext extends DbContext {
 			user.id
 		)
 		return this.getUser(user.id)
+	}
+
+	async getGames() {
+		const sqlite = await this.sqlitePromise
+
+		const games = await sqlite.all('SELECT * FROM `games`;')
+		return games
+		//ask dec about what the hell his code returns
+	}
+
+	async getGame(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+		
+		if (typeof id === 'number') {
+			query = 'SELECT * FROM `games` WHERE `id` = ?;'
+		}
+		else if (typeof id === 'string') {
+			query = 'SELECT * FROM `games` WHERE `title` = ?;'
+		}
+		else {
+			throw new TypeError('must be a number or a string')
+		}
+
+		const game = await sqlite.get(query.id)
+		return Object.assign(new Game(), game)
+	}
+
+	async deleteGame(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof id === 'number') {
+			query = 'DELETE FROM `games` WHERE `gameID` = ?;'
+		}
+		else if (typeof id === 'string') {
+			query = 'DELETE FROM `games` WHERE `title` = ?;'
+		}
+		else {
+			throw new TypeError ('must be number or string')
+		}
+
+		await sqlite.run(query, id)
+	}
+
+	async updateGame(game) {
+		const sqlite = await this.sqlitePromise
+
+		await sqlite.run(
+			'UPDATE `games` SET `title` = ?, `summary` = ?, `imageSrc` = ?, `rating` = ?, `submittedBy` = ? WHERE `gameID` = ?;',
+			game.title,
+			game.summary,
+			game.imageSrc,
+			game.rating,
+			game.submittedBy,
+			game.gameID
+		)
+		return this.getUser(game.id)
+	}
+
+	async addGame(game) {
+		const sqlite = await this.sqlitePromise
+
+		await sqlite.run(
+			'INSERT INTO `games` VALUES `title` = ?, `summary` = ?, `imageSrc` = ?, `rating` =?, `submittedBy` = ?;',
+			game.title,
+			game.summary,
+			game.imageSrc,
+			game.rating,
+			game.submittedBy,
+			game.gameID
+		)
+		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
+		return Object.assign(new Game(), newGame)
 	}
 }
 
