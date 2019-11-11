@@ -32,6 +32,7 @@
 		}
 	}
 
+
 	module.exports = validateUsername
 
 	function validateEmail(email) {
@@ -93,7 +94,10 @@ function validateConfirmPassword(password, confirmPassword){
 		throw new Error('password does not match Confirm Password')
 	}
 }
-	module.exports = validatePassword
-	module.exports = validateConfirmPassword
 
-console.log(validateConfirmPassword('aaafffA1aaa@','aaafffA1aaa@'))
+module.exports = {
+	validateUsername,
+	validateEmail,
+	validatePassword,
+	validateConfirmPassword
+}

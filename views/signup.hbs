@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sign Up</title>
+</head>
+
+<body>
+  {{#if errorMsg}}
+  <div class="error-msg">
+    {{errorMsg}}
+  </div>
+  {{/if}}
+
+  <form method="post">
+    <input type="text" placeholder="Username" name="username" required />
+		<input type="email" placeholder="Email" name="email" required />
+    <input type="password" placeholder="Password" name="password" required />
+		<input type="confirmpassword" placeholder="Confirm Password" name="confirmpassword" required />
+
+    <button type="submit">Create Account</button>
+  </form>
+</body>
+
+</html>

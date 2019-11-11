@@ -20,10 +20,12 @@ const handlebars = new Views(
 )
 
 const login = require('./controllers/login')
+const signup = require('./controllers/signup')
 const homepage = require('./controllers/homepage')
 
 app.use(handlebars)
 app.use(login.routes())
+app.use(signup.routes())
 app.use(homepage.routes())
 app.use(serve(path.join(__dirname, './public')))
 
