@@ -14,7 +14,7 @@
 
 	//Checks if username already exists
 		for (let i = 0; i < usernames.length; i++);
-			if (usernames[i].value == username.value) {
+			if (usernames[i] == username) {
 				throw new Error('username already exists')
 		}
 
@@ -23,7 +23,7 @@
 			throw new Error('username was not entered')
 
 	//Checks if username has ascii printable characters
-		} else if (illegalChars.test(username.value)) {
+		} else if (illegalChars.test(username)) {
 			throw new Error('username contains illegal characters')
 
 	//Checks if username is on the length limits
@@ -46,7 +46,7 @@
 
 		//Checks if email already exists
 		for (let i = 0; i < emails.length; i++);
-			if (emails[i].value == email.value) {
+			if (emails[i] == email) {
 				throw new Error('email already exists')
 			}
 
