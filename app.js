@@ -22,11 +22,13 @@ const handlebars = new Views(
 const login = require('./controllers/login')
 const signup = require('./controllers/signup')
 const homepage = require('./controllers/homepage')
+const games = require('./controllers/games')
 
 app.use(handlebars)
 app.use(login.routes())
 app.use(signup.routes())
 app.use(homepage.routes())
+app.use(games.routes())
 app.use(serve(path.join(__dirname, './public')))
 
 module.exports = app
