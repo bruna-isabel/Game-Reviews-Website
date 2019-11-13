@@ -19,8 +19,10 @@ const handlebars = new Views(
 )
 
 const login = require('./controllers/login')
+const list = require('./controllers/list')
 
 app.use(handlebars)
 app.use(login.routes())
+app.use(list.routes())
 
 module.exports = app

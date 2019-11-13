@@ -7,10 +7,10 @@ CREATE TABLE `users`
 
 CREATE TABLE `games` 
 (
-    `gameID` INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-    `title` TEXT) NOT NULL UNIQUE,
-    `summary` varchar(100),
+    `gameID` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `title` TEXT NOT NULL UNIQUE,
+    `summary` TEXT,
     `imageSrc` TEXT,
     `rating` INT,
-    `submittedBy` TEXT FOREIGN KEY REFERENCES users(id)
+    `submittedBy` TEXT
 );
