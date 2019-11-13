@@ -193,10 +193,11 @@ class SqliteDbContext extends DbContext {
 	}
 
 	async addGame(game) {
+		//TEST THIS METHOD
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title` = ?, `summary` = ?, `imageSrc` = ?, `rating` =?, `submittedBy` = ?;',
+			'INSERT INTO `games` VALUES `title`=?,`summary`=?,`imageSrc`=?,`rating`=?,`submittedBy`=?,`approved`=`no`;',
 			game.title,
 			game.summary,
 			game.imageSrc,

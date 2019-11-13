@@ -20,9 +20,11 @@ const handlebars = new Views(
 
 const login = require('./controllers/login')
 const list = require('./controllers/list')
+const approval = require('./controllers/approval')
 
 app.use(handlebars)
 app.use(login.routes())
 app.use(list.routes())
+app.use(approval.routes())
 
 module.exports = app

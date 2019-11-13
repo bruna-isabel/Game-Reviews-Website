@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	Approval of Games
+</head>
+
+<body>
+	<table>
+	{{#each games}}
+	<tr>
+		<td>{{this.title}}</td>
+	</tr>
+	<tr>
+		<td>{{this.imageSrc}}</td>
+	</tr>
+	<tr>
+		<td>{{this.summary}}</td>
+	</tr>
+	<tr>
+		<td><input id="{{this.gameID}}" type="submit" name="appbrove" value="approve"/></td>
+		<td><input id="{{this.gameID}}" type="submit" name="deny" value="deny"/></td>
+	<tr>
+	{{/each}}
+	</table>
+</body>
+
+</html>
