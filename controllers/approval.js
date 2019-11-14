@@ -2,6 +2,8 @@
 
 const Router = require('koa-router')
 
+const koaBody = require('koa-body')()
+
 const approval = new Router({prefix: '/approval'})
 
 approval.get('/games', async ctx => {
@@ -20,9 +22,17 @@ approval.get('/games', async ctx => {
 	await ctx.render('approvalGames.hbs', {games: unapproved})
 })
 
-approval.post('/games', async ctx => {
-	console.log(ctx.query)
-	console.log(ctx.querystring)
+approval.post('/games', koaBody, async ctx => {
+	const body = ctx.request.body
+	const id = parseInt(Object.keys(body)[0]) //getting the key (gameID) and converting it into an integer
+	const game = await ctx.db.getGame(id)
+	if(body[id] === 'Approve') {
+		game['approved'] = 'yes'
+		await ctx.db.updateGame(game)
+	} else if(body[id] === 'Reject') {
+		await ctx.db.deleteGame(id)
+	}
+	ctx.redirect('/approval/games')
 })
 
 module.exports = approval
