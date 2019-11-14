@@ -23,6 +23,7 @@ const game = {
 const listrouter = new Router ({prefix: '/list'})
 listrouter.get('/', ctx => {
 	console.log('hello')
-	return ctx.render('listpage.hbs', {type: 'Adventure', info: game.info})
+	return ctx.render('listpage.hbs', {type: 'Adventure', info: ctx.db.getGames()})
 })
+
 module.exports = listrouter;
