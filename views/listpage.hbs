@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
-  <head><title>Games List</title>
+  <head>
+    <title>Games List</title>
+
   <style lang= "css">
   body{
   font-size: 100%;
@@ -31,12 +33,15 @@ h1{
   color: black;
 }
 
-  </style>
+</style>
   </head>
+
   <body>
     {{!-- <div  id="gamesdata"></div> --}}
     <h1>Top {{type}} Games</h1>
+
     <ul class= "listofgames">
+
       {{#each info}}
       <li class= "info">
         <h2>{{title}}</h2>
@@ -44,7 +49,16 @@ h1{
         <p>Descritpion : {{description}}</p>
       </li>
       {{/each}}
+
     </ul>
+
+    	{{#each genres}}
+			<ul>
+				<li>
+					<a href="/list/{{genre}}">{{genre}}</a>
+				</li>
+			</ul>
+  	  {{/each}}
 
   </body>
 </html>

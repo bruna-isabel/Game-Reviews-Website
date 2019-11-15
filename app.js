@@ -23,13 +23,11 @@ const login = require('./controllers/login')
 const list = require ('./controllers/listrouter') 
 const signup = require('./controllers/signup')
 const homepage = require('./controllers/homepage')
-const games = require('./controllers/games')
 
 app.use(handlebars)
 app.use(login.routes())
 app.use(list.routes()) 
 app.use(signup.routes())
 app.use(homepage.routes())
-app.use(games.routes())
 app.use(serve(path.join(__dirname, './public')))
 module.exports = app
