@@ -1,16 +1,16 @@
-CREATE TABLE `users`
+CREATE TABLE IF NOT EXISTs`users`
 (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `username` TEXT UNIQUE,
   `hash` TEXT
 );
 
-CREATE TABLE `games` 
+CREATE TABLE IF NOT EXISTS `games`
 (
-    `gameID` INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-    `title` TEXT) NOT NULL UNIQUE,
-    `summary` varchar(100),
-    `imageSrc` TEXT,
-    `rating` INT,
-    `submittedBy` TEXT FOREIGN KEY REFERENCES users(id)
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `title` TEXT NOT NULL UNIQUE,
+  `summary` TEXT,
+  `imageSrc` TEXT,
+  `rating` INT,
+  `submittedBy` INT REFERENCES `users` (`id`)
 );
