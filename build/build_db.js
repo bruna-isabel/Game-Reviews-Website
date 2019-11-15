@@ -2,19 +2,13 @@
 
 'use strict'
 
-const fs = require('fs')
 const path = require('path')
 
 const sqlite = require('sqlite')
 
-sqlite.open('app.db').then(db => {
-	const sqlPath = path.join(__dirname, 'build_db.sql')
-	fs.readFile(sqlPath, 'utf8', async(err, sql) => {
-		if (err) {
-			console.error(err)
-			process.exit(1)
-		}
+const { runSQLScript } = require('./utils')
 
-		await db.exec(sql)
-	})
+sqlite.open('app.db').then(async db => {
+	const sqlPath = path.join(__dirname, 'build_db.sql')
+	await runSQLScript(db, sqlPath)
 })
