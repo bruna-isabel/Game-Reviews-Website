@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>The Last of Us</title>
+        <link href="css/game.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        </head>
+
+    
+	<body>
+            <figure class="splash">
+                    <img src="images/tlousplash.jpg" alt="Splash image" class="centre"/>
+                    <figure class="splashGradient"></figure>
+            </figure>
+        
+        <h1>The Last of Us</h1>
+        
+                        <section id="synopsisModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                        <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+
+                                    <h2>MODAL HEADER</h2>
+                                    <p>MODAL TEXT</p>
+                                </section>
+                            </section>
+
+                        <section id="reviewModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                        <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+
+                                    <h2>LEAVE A REVIEW</h2>
+                                    <p>"GAME TITLE" "YEAR" "PLATFORM1, PLATFORM 2, PLATFORM 3"</p>
+                                    <fieldset class="rate">
+                                  <span id = "10" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "9" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "8" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "7" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "6" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "5" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>   
+                                  <span id = "4" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>     
+                                  <span id = "3" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "2" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "1" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>     
+                                  <span id = "0" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure></figure>
+                                        </span>         
+                                    </fieldset>
+                                    <form>
+                                        </form>
+                                    	<form action="/add" method="post">
+                                        	<p><br /><textarea name="rvtext"></textarea></p>
+                                            <input type="hidden" id="gameName" name="gameName" value="...">
+                                            <input type="hidden" id="starRating" name="starRating" value="...">
+                                            <p><input type="submit" value="Submit Review"></p>
+                                        </form>
+                                </section>
+
+                            </section>
+
+        <section class = "column" id="column1">
+
+            <section>
+                    <figure>
+                            <img src="images/tlou.jpg" alt="Game poster"/>
+                    </figure>
+            </section>
+
+        
+                <section class = "purchaseButton">
+                    <i class="fab fa-amazon" aria-hidden="true"></i> PURCHASE
+                </section>
+
+                <section>
+                    <figure>
+                            <img src="images/tlousplash.jpg" alt="Game screenshot"/>
+                    </figure>
+                    </section>
+
+
+        </section>
+
+        <section class = "column" id="column2">
+                <section class = "platforms">
+                        <article>
+                            <p>PlayStation 3</p> 
+                        </article>
+                    </section>
+                <section class= "synopsis">
+                        <article id = "synopsis" onclick= "clickSynopsis()">
+                                <h2 class = "synopsisHeader" id = "synopsisHeader">Hope is the key to survival.</h2>
+                                <p class = "synopsisPara" id = "synopsisPara">
+                                    Set in the post-apocalyptic United States, the game tells the story of survivors Joel and Ellie as they work together to survive their westward journey across what remains of the country to find a possible cure for the modern fungal plague that has nearly decimated the entire human race.                             
+                                </p>
+                        </article>
+                    
+                </section>
+                    
+            <section style="margin-bottom: 0%">
+                    <article class = "aboutGame">
+                            <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Release Date</th>
+                                            <td>04 June 2013</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Director</td>
+                                            <td>Bruce Straley, Neil Druckmann</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Publisher</th>
+                                            <td>Sony Computer Entertainment</td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                </section>
+            </section>  
+
+        <section class = "column" id="column3">
+            <section>
+             <fieldset class = "leaveReviewButton" onclick= "clickReview()">Leave a review...</fieldset>
+            </section>
+            <section class = "charts">
+            </section>
+        </section>
+
+            
+        <section class = "column" id = "columnReviews">
+             <section class="recentReviews">
+                <h2>
+                    Recent User Ratings
+                </h2>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>@callum.j.byrne</th>
+                            <td>10/04/19</td>
+                            <td>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+            </table>
+        </section>
+        </section>
+
+
+    </body>
+    <script src="GamePage.js"></script>
+
+</html>
