@@ -3,122 +3,95 @@
  */
 
 'use strict'
+
 const userValidation = require('../utils/uservalidation.js')
 
-//tests for validating username
-describe('username', () => {
-
-	// block of tests
-	beforeEach( async() => {
-		userValidation.clear()
-	})
-	afterEach( async() => {
-		// runs after each test completes
+	test ('Dummy test', () => {
+		const result = 2*3;
+		expect(result).toBe(6)
 	})
 
 	//Missing:  database username test that verifies that a username already exists
+//tests for validating username
 
 
-	test('should be inserted', async done => {
-		expect(validateUsername(' ')).toThrowError('username was not inserted');
+describe('username', () => {
+
+	test('should be inserted', () => {
+		expect(() => userValidation.validateUsername('')).toThrowError('username was not entered')
 	})
 
-	test ('should only have legal characters', async done => {
-		expect(validateUsername('aaaaaaa')).toBeTruthy;
-		expect(validateUsername('aaaaaaa1')).toBeTruthy;
-		expect(validateUsername('aaaaaaA')).toBeTruthy;
-		expect(validateUsername('aaaaaaa¶')).toThrowError('username contains illegal characters');
+	test('should only have legal characters', () => {
+		expect(userValidation.validateUsername('aaaaaaa')).toBeTruthy;
+		expect(userValidation.validateUsername('aaaaaaa1')).toBeTruthy;
+		expect(userValidation.validateUsername('aaaaaaA')).toBeTruthy;
+		expect(() => userValidation.validateUsername('aaaaaaa¶')).toThrowError('username contains illegal characters')
 	})
 
-	test ('should have min 4 and max 30 characters', async done => {
-		expect(validateUsername('abc')).toThrowError('username has less than 4 characters');
-		expect(validateUsername('1234567890123456789012345678901')).toThrowError('username has more than 30 characters');
-		expect(validateUsername('abcderfj')).toBeTruthy;
+	test ('should have min 4 and max 30 characters', () => {
+		expect(() => userValidation.validateUsername('abc')).toThrowError('username must have in between 4 and 30 characters')
+		expect(() => userValidation.validateUsername('1234567890123456789012345678901')).toThrowError('username must have in between 4 and 30 characters');
+		expect( userValidation.validateUsername('abcderfj')).toBeTruthy;
 	})
 
 })
 
 describe('email', () => {
 
-	// block of tests
-	beforeEach( async() => {
-		userValidation.clear()
-	})
-	afterEach( async() => {
-		// runs after each test completes
-	})
-
 	//It's missing the database email test that verifies that an email already exists
 
 
-	test('should be inserted', async done => {
-		expect(validateEmail(' ')).toThrowError('email was not inserted');
+	test('should be inserted', ()  => {
+		expect(() => userValidation.validateEmail('')).toThrowError('email was not entered')
 	})
 
-	test ('should be in correct format', async done => {
-		expect(validateEmail('aaaa@bbbb.com')).toBeTruthy;
-		expect(validateEmail('aaaa1@bbbb.co.uk')).toBeTruthy;
-		expect(validateEmail('@bbb.com')).toThrowError('email in incorrect format');
-		expect(validateEmail('aaa1@.com')).toThrowError('email in incorrect format');
-		expect(validateEmail('aaa@bbb')).toThrowError('email in incorrect format');
-		expect(validateEmail('@bbbcom')).toThrowError('email in incorrect format'); 
+	test ('should be in correct format',  () => {
+		expect( userValidation.validateEmail('aaaa@bbbb.com')).toBeTruthy;
+		expect( userValidation.validateEmail('aaaa1@bbbb.co.uk')).toBeTruthy;
+		expect( () => userValidation.validateEmail('@bbb.com')).toThrowError('email is in the wrong format');
+		expect( () => userValidation.validateEmail('aaa1@.com')).toThrowError('email is in the wrong format');
+		expect( () => userValidation.validateEmail('aaa@bbb')).toThrowError('email is in the wrong format');
+		expect( () => userValidation.validateEmail('@bbbcom')).toThrowError('email is in the wrong format'); 
 
 	})
 
-	test ('should have lowercase letters only', async done => {
-		expect(validateEmail('aaAA@bbbb.com')).toThrowError('email has uppercase letters');
-		expect(validateEmail('aaaAA@bbBB.com')).toThrowError('email has uppercase letters');
-		expect(validateEmail('aaaa@bbbb.com')).toBeTruthy;
+	test ('should have lowercase letters only', () => {
+		expect( () => userValidation.validateEmail('aaAA@bbbb.com')).toThrowError('email contains uppercase letters');
+		expect( () => userValidation.validateEmail('aaaAA@bbBB.com')).toThrowError('email contains uppercase letters');
+		expect( userValidation.validateEmail('aaaa@bbbb.com')).toBeTruthy;
 	})
 
 })
 
 describe('password', () => {
 
-	// block of tests
-	beforeEach( async() => {
-		userValidation.clear()
-	})
-	afterEach( async() => {
-		// runs after each test completes
+	test('should be inserted', ()  => {
+		expect( () => userValidation.validatePassword('')).toThrowError('password was not entered');
 	})
 
-	test('should be inserted', async done => {
-		expect(validatePassword(' ')).toThrowError('password was not inserted');
+	test ('should only have legal characters', () => {
+		expect(userValidation.validatePassword('aAaaa2aa!a')).toBeTruthy;
+		expect( () => userValidation.validatePassword('aa1aaAaaaa¶')).toThrowError('password contains illegal characters');
+	})
+	test ('should have min 8 and max 15 characters', () => {
+		expect( () => userValidation.validatePassword('a!A1ec')).toThrowError('password has to be inbetween 8 and 15 characters');
+		expect( () =>  userValidation.validatePassword('1234567890123456789!Aa1')).toThrowError('password has to be inbetween 8 and 15 characters');
+		expect( userValidation.validateUsername('abcderfJ2!')).toBeTruthy;
 	})
 
-	test ('should only have legal characters', async done => {
-		expect(validatePassword('aAaaa2aa!a')).toBeTruthy;
-		expect(validatePassword('aa1aaAaaaa¶')).toThrowError('password contains illegal characters');
-	})
-	test ('should have min 8 and max 15 characters', async done => {
-		expect(validatePassword('a!A1ec')).toThrowError('password has less than 8 characters');
-		expect(validatePassword('1234567890123456789!Aa1')).toThrowError('password has more than 15 characters');
-		expect(validateUsername('abcderfJ2!')).toBeTruthy;
-	})
-
-	test ('should have one lowercase, one uppercase, one number and one symbol', async done => {
-		expect(validatePassword('a1eC2019!')).toBeTruthy;
-		expect(validatePassword('aleC!alec')).toThrowError('password has to contain at least one number');
-		expect(validatePassword('alec2029!')).toThrowError('password has to contain at least one uppercase letter');
-		expect(validatePassword('ALEC2029!')).toThrowError('password has to contain at least one lowercase letter');
-		expect(validatePassword('alec12lec')).toThrowError('password has to contain at least one symbol');
+	test ('should have one lowercase, one uppercase, one number and one symbol', () => {
+		expect( userValidation.validatePassword('a1eC2019!')).toBeTruthy;
+		expect(() =>  userValidation.validatePassword('aleC!alec')).toThrowError('password does not have all the right requirements' );
+		expect(() =>  userValidation.validatePassword('alec2029!')).toThrowError('password does not have all the right requirements ');
+		expect(() => userValidation.validatePassword('ALEC2029!')).toThrowError('password does not have all the right requirements ');
+		expect(() => userValidation.validatePassword('alec12lec')).toThrowError('password does not have all the right requirements ');
 		})
 })
 
-describe('confirm password', async => {
+describe('confirm password', () => {
+	test('should be equal to password', () => {
 
-	// before each function
-	beforeEach( async() => {
-		userValidation.clear()
-	})
-
-	afterEach( async() => {
-		// runs after each test completes
-	})
-
-	test('should be equal to password', async done => {
-		expect(validateConfirmPassword).toBeEqual(validatePassword);
+		expect(() => userValidation.validateConfirmPassword('ALEC@2029!', 'ALEC&2029!')).toThrowError('password does not match Confirm Password')
 	})
 
 })

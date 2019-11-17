@@ -4,43 +4,42 @@
 
 'use strict'
 
-	function validateUsername (username) {
-		var illegalChars = /[^\x20-\x7E]/g; //allows only ascii printable characters
-		let sqlUsers = `SELECT username FROM users`
+function validateUsername (username) {
+	var illegalChars = /[^\x20-\x7E]/g; //allows only ascii printable characters
+	let sqlUsers = `SELECT username FROM users`
+/*
+	const db = await Database.open(dbName)
+	const usernames = await db.all(sqlUsers)
+	await db.close()
 
-		const db = await Database.open(dbName)
-		const usernames = await db.all(sqlUsers)
-		await db.close()
+//Checks if username already exists
+	for (let i = 0; i < usernames.length; i++);
+		if (usernames[i] == username) {
+			throw new Error('username already exists')
+	}*/
 
-	//Checks if username already exists
-		for (let i = 0; i < usernames.length; i++);
-			if (usernames[i] == username) {
-				throw new Error('username already exists')
-		}
+//Checks if user enters username
+	if (username == '') {
+		throw new Error('username was not entered')
 
-	//Checks if user enters username
-		if (username == '') {
-			throw new Error('username was not entered')
+//Checks if username has ascii printable characters
+	} else if (illegalChars.test(username)) {
+		throw new Error('username contains illegal characters')
 
-	//Checks if username has ascii printable characters
-		} else if (illegalChars.test(username)) {
-			throw new Error('username contains illegal characters')
-
-	//Checks if username is on the length limits
-		} else if ((username.length > 30)  || (username.length < 4)) {
-				throw new Error('username must have in between 4 and 30 characters')
-		}
+//Checks if username is on the length limits
+	} else if ((username.length > 30)  || (username.length < 4)) {
+			throw new Error('username must have in between 4 and 30 characters')
 	}
+	return true;
+}
 
 
-	module.exports = validateUsername
-
-	function validateEmail(email) {
+	function validateEmail (email) {
 		let sqlEmails = `SELECT email FROM users`
 		let atPosition = email.indexOf("@")
 		let dotPosition = email.indexOf(".")
 
-		const db = await Database.open(dbName)
+		/*const db = await Database.open(dbName)
 		const emails = await db.all(sqlEmails)
 		await db.close()
 
@@ -48,7 +47,7 @@
 		for (let i = 0; i < emails.length; i++);
 			if (emails[i] == email) {
 				throw new Error('email already exists')
-			}
+			}*/
 
 		//Checks if user enters email
 			if (email == ''){
@@ -66,7 +65,7 @@
 	}
 	module.exports = validateEmail
 
-	function validatePassword(password) {
+ function validatePassword(password) {
 		var passStructure =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
 		var illegalChars = /[^\x20-\x7E]/g; //allows only ascii printable characters
 
