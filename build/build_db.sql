@@ -15,3 +15,14 @@ CREATE TABLE `games`
     `submittedBy` TEXT,
     `approved` TEXT
 );
+
+CREATE TABLE `reviews`
+(
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `user` TEXT,
+  `game` TEXT,
+  `review_score` INT,
+  `review_text` TEXT,
+  `review_date` DATE,
+  `approved` TEXT
+);

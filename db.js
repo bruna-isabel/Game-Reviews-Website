@@ -9,6 +9,7 @@ const sqlite = require('sqlite')
 const { NotImplemented } = require('./utils/errors')
 const User = require('./models/user')
 const Game = require('./models/game')
+const Review = require('./models/review')
 
 class DbContext {
 	async getUsers() {
@@ -63,6 +64,31 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async updateGame(game) {
 		throw new NotImplemented('updateGame is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getReviews() {
+		throw new NotImplemented('getReviews is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getReview(id) {
+		throw new NotImplemented('getReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async deleteReview(id) {
+		throw new NotImplemented('deleteReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async createReview(review) {
+		throw new NotImplemented('createReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async updateReview(review) {
+		throw new NotImplemented('updateReview is not implemented')
 	}
 }
 
@@ -208,6 +234,75 @@ class SqliteDbContext extends DbContext {
 		)
 		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
 		return Object.assign(new Game(), newGame)
+	}
+
+	async getReviews() {
+		const sqlite = await this.sqlitePromise
+
+		const reviews = await sqlite.all('SELECT * FROM `reviews`;')
+		return reviews
+	}
+
+	async getReview(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof id === 'number') {
+			query = 'SELECT * FROM `reviews` WHERE `id` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		const review = await sqlite.get(query, id)
+		return Object.assign(new Review(), review)
+	}
+
+	async deleteReview(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof id === 'number') {
+			query = 'DELETE FROM `reviews` WHERE `id` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		await sqlite.run(query, id)
+	}
+
+	async createReview(review) {
+		const sqlite = await this.sqlitePromise
+		const d = new Date();
+		const month = Number(d.getMonth()+1)
+		const currentDate = "" + d.getDate() + '/' + month + '/' + d.getFullYear() + "";
+
+		await sqlite.run(
+			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
+			'USER_NAME',
+			review.gameName,
+			review.starRating,
+			review.rvtext,
+			currentDate,
+			'no'
+		)
+	}
+
+	async updateReview(review) {
+		const sqlite = await this.sqlitePromise
+
+		await sqlite.run(
+			'UPDATE `reviews` SET `user`=?, `game`=?, `review_score`=?, `review_text`=?, `review_date`=?, `approved`=? WHERE `id`=?;',
+			review.user,
+			review.game,
+			review.review_score,
+			review.review_text,
+			review.review_date,
+			review.approved,
+			review.id
+		)
+		return this.getReview(review.id)
 	}
 }
 

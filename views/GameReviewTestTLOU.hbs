@@ -72,7 +72,7 @@
                                     </fieldset>
                                     <form>
                                         </form>
-                                    	<form action="/add" method="post">
+                                    	<form action="/game" method="post">
                                         	<p><br /><textarea name="rvtext"></textarea></p>
                                             <input type="hidden" id="gameName" name="gameName" value="...">
                                             <input type="hidden" id="starRating" name="starRating" value="...">
@@ -157,9 +157,10 @@
                 </h2>
                 <table>
                     <tbody>
+                        {{#each review}}
                         <tr>
-                            <th>@callum.j.byrne</th>
-                            <td>10/04/19</td>
+                            <th>{{this.user}}</th>
+                            <td>{{this.review_date}}</td>
                             <td>
                                 <span class="fa fa-star"></span>
                                 <span class="fa fa-star"></span>
@@ -168,6 +169,7 @@
                                 <span class="fa fa-star"></span>
                             </td>
                         </tr>
+                        {{/each}}
                     </tbody>
             </table>
         </section>

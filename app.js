@@ -21,10 +21,13 @@ const handlebars = new Views(
 const login = require('./controllers/login')
 const list = require('./controllers/list')
 const approval = require('./controllers/approval')
+const game = require('./controllers/game')
 
+app.use(require('koa-static')('public'))
 app.use(handlebars)
 app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
+app.use(game.routes())
 
 module.exports = app

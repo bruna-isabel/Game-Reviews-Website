@@ -34,7 +34,7 @@ function clickSynopsis() {
     modal.style.display = "block";
     modalText.children[1].innerHTML = document.getElementsByClassName("synopsisHeader")[0].innerHTML;
     modalText.children[2].innerHTML = document.getElementsByClassName("synopsisPara")[0].innerHTML;
-    const db =  'reviews.db'
+    const db =  'app.db'
     const sql = `INSERT INTO reviews(user, game, review_score, review_text, review_date) 
     VALUES("name", "title", 8, "smda", "idjqwi");`
     db.run(sql)
