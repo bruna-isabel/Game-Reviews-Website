@@ -14,9 +14,15 @@
   "dependencies": {
     "koa": "^2.8.2",
     "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
-    "sqlite": "^3.0.3"
+    "require-stack": "^1.0.2",
+    "sqlite": "^3.0.3",
+    "sqlite-async": "^1.0.12",
+    "sqlite3": "^4.1.0",
+    "stack": "^0.1.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",

@@ -1,0 +1,401 @@
+html{
+    background-color: #292a2e;
+    color: #e3e7e8;
+    font-size: 16px;
+    height: 2000px;
+}
+.column{
+    margin-top: 1%;
+    box-shadow: 0px 0px 18px #1d1e20;
+    background-color: rgba(0,0,0,0);
+}
+#column1{
+    float: left;
+    width: 25%;
+    position: relative;
+    height: 100vmax;
+}
+#column1 section{
+    margin-bottom: 10px;
+}
+#column2{
+    float: left;
+    width: 43%;
+    margin-left: 2.5%;
+    position: relative;
+    border-radius: 3px;
+}
+
+#column2 section{
+    background-color: #35363b;
+    padding: 2%;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: #3e3f44 2px solid;
+}
+#column2 .synopsis{
+    transition-duration: 0.2s;
+}
+#column2 .synopsis:hover{
+    background-color: #3a3c41;
+    transition-duration: 0.2s;
+}
+#column2 .platforms{
+    background-color: rgba(0,0,0,0);
+    border: #292a2e 2px solid;
+    margin-top: 0px;
+    margin-bottom: -1px;
+}
+#column3{
+    float: right;
+    width: 27%;
+    position: relative;
+    box-shadow: 0px 0px 18px #1d1e20;
+    background-color: rgba(0,0,0,0);
+    border-radius: 3px;
+    height: 284px;
+    margin-bottom: 10px;
+}
+#column3 section{
+    background-color: #35363b;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    /*height: 265px;*/
+    border: #3e3f44 2px solid;
+    transition-duration: 0.2s;
+}
+#columnReviews{
+    float: left;
+    width: 72.5%;
+    margin-left: 2.5%;
+    height: 350px;
+    position: relative;
+    margin-top: 0px;
+}
+#columnReviews section{
+    margin-top: 0px;
+    width: auto;
+    height: 100%;
+    background-color: #35363b;
+    padding: 2%;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: #3e3f44 2px solid;
+}
+
+h1{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 40px;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1vh;
+    letter-spacing: -0.5px;
+    margin-top: -150px;
+    display: block;
+    position: relative;
+    color: white;
+}
+h2{
+    font-size: 18px;
+}
+.splash{
+    width: 135%;
+    margin-left: -17.5%;
+    margin-top: -15%;
+}
+.splash .splashGradient{
+    position: relative;
+    margin-top: -820px;
+    height: 820px;
+    background: rgba(0,0,0,0);
+    width: 100%;
+    box-shadow: inset 0 0 75px 100px #292a2e;
+
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    margin-top: 0px;
+    width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 500px;
+    letter-spacing: 0.5px;
+}
+
+figure{
+    width: 100%;
+    height: auto;
+    /*width: 91px;
+    DIMENSIONS FOR BOX ART IN SIMPLEST FORM
+    height: 137px;*/
+    margin: 0px;
+}
+figure img{
+    width: 100%;
+}
+#column1 figure img{
+    width: 100%;
+    border: #3e3f44 2px solid;
+    border-radius: 3px;
+    margin-left: -1%;
+    margin-bottom: -2%;
+}
+.purchaseButton{
+    margin-top: 0px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 0px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.2s;
+    font-weight: bold;
+    letter-spacing: 0px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-bottom: 2.5%;
+}
+.purchaseButton:hover{
+    background-color: #408d43;
+}
+
+.purchaseButton .fa-amazon{
+    vertical-align: -1px;
+}
+#column2 #synopsis{
+    font-weight: normal;
+    width: 100%;
+    height: 127px;
+    cursor: pointer;
+}
+#column2 #synopsisHeader{
+    text-transform: uppercase;
+    font-size: 18px;
+
+    margin-top: 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+#column2 #synopsisPara{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    float: none;
+    z-index: 10; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    width: 50%;
+    margin-top: 25vh;
+    height: auto;
+    background-color: #35363b;
+    border: #3e3f44 2px solid;
+    animation-name: animatetop;
+    animation-duration: 0.5s
+}
+@keyframes animatetop {
+    from {    margin-top: 23vh;        ; opacity:0}
+    to {    margin-top: 25vh;        ; opacity:1}
+  }
+.modal-content h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 9px;
+    margin-top: 0px;
+}
+.modal-content p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+/* The Close Button */
+.close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #8e909b;
+}  
+.close:hover, .close:focus {
+    color:white;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+#columnReviews h2{
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 9px;
+    margin-top: 0px;
+}
+
+.platforms p{
+    margin-top: 0%;
+    margin-bottom: 0%;
+    font-size: 14px;
+}
+.aboutGame{
+    height: 100%;
+    
+}
+.aboutGame table{
+    margin-top: 0px;
+    width: 100%;
+    padding: 0%;
+    position: relative;
+}
+.aboutGame table tbody tr th{
+    font-size: 16px;
+    text-align: left;
+    color: white;
+    text-transform: uppercase;
+}
+.aboutGame table tbody tr{
+    text-align: right;
+    font-size: 16px;
+}
+.recentReviews table{
+    width: 100%;
+    vertical-align: auto;
+}
+.recentReviews table tbody tr th{
+    text-align: left;
+}
+.recentReviews table tbody tr td:nth-of-type(1){
+    text-align: center;
+}
+.recentReviews table tbody tr td:nth-of-type(2){
+    text-align: right;
+}
+.ratings{
+    position: relative;
+    width: 100%;
+    margin-right: 0%;
+    text-align: left;
+    height: auto;
+}
+#column3 h2{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+}
+.rate{
+    width: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: none
+}
+.rate span{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    color: #292a2e;
+}
+
+.rate span:nth-child(even){
+    width: 15px;
+    z-index: 1;
+}
+.rate span .fa-star-half{
+    width: 15px;
+    z-index: 1;
+}
+.rate span .fa{
+    pointer-events: none;
+    font-size: 24px
+}
+.rate span .fa-ban{
+    text-align: center;
+    margin-top: 2px;
+    font-size: 12px;
+}
+.leaveReviewButton{
+    transition-duration: 0.2s;
+    margin-left: 0px;
+    border: none;
+    padding: 14px 0px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    transition-duration: 0.2s;
+    font-weight: bold;
+    letter-spacing: 0px;
+    cursor: pointer;
+}
+.leaveReviewButton:hover{
+    background-color: #3a3c41;
+    transition-duration: 0.2s;
+    border-radius: 2px;
+}
+#column3 section:hover{
+    transition-duration: 0.2s;
+    margin-top: -1px;
+    margin-bottom: 11px;
+}
+textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    padding: 12px 12px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: none;
+    background-color: #292a2e;
+    font-size: 16px;
+    resize: none;
+    color: white;
+}
+
+.submitReviewButton{
+    margin-top: 10px;
+    margin-bottom: 0px;
+    background-color: #4b4c53;
+    border: none;
+    color: white;
+    padding: 15px 0px;
+    width: 15%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition-duration: 0.2s;
+    font-weight: bold;
+    letter-spacing: 0px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.submitReviewButton:hover{
+    background-color: #292a2e;
+    transition-duration: 0.2s;
+}
+
+.charts{
+    height: 217px;
+}
+  
+  
