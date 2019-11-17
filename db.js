@@ -148,18 +148,16 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		let query
-		
+
 		if (typeof id === 'number') {
-			query = 'SELECT * FROM `games` WHERE `id` = ?;'
-		}
-		else if (typeof id === 'string') {
+			query = 'SELECT * FROM `games` WHERE `gameID` = ?;'
+		} else if (typeof id === 'string') {
 			query = 'SELECT * FROM `games` WHERE `title` = ?;'
-		}
-		else {
+		} else {
 			throw new TypeError('must be a number or a string')
 		}
 
-		const game = await sqlite.get(query.id)
+		const game = await sqlite.get(query, id)
 		return Object.assign(new Game(), game)
 	}
 
@@ -170,12 +168,10 @@ class SqliteDbContext extends DbContext {
 
 		if (typeof id === 'number') {
 			query = 'DELETE FROM `games` WHERE `gameID` = ?;'
-		}
-		else if (typeof id === 'string') {
+		} else if (typeof id === 'string') {
 			query = 'DELETE FROM `games` WHERE `title` = ?;'
-		}
-		else {
-			throw new TypeError ('must be number or string')
+		} else {
+			throw new TypeError('must be number or string')
 		}
 
 		await sqlite.run(query, id)
@@ -185,22 +181,24 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'UPDATE `games` SET `title` = ?, `summary` = ?, `imageSrc` = ?, `rating` = ?, `submittedBy` = ? WHERE `gameID` = ?;',
+			'UPDATE `games` SET `title`= ? , `summary`= ? , `imageSrc`= ? , `rating`= ? , `submittedBy`= ?, `approved` = ? WHERE `gameID`= ? ;',
 			game.title,
 			game.summary,
 			game.imageSrc,
 			game.rating,
 			game.submittedBy,
+			game.approved,
 			game.gameID
 		)
-		return this.getUser(game.id)
+		return this.getGame(game.gameID)
 	}
 
 	async addGame(game) {
+		//TEST THIS METHOD
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title` = ?, `summary` = ?, `imageSrc` = ?, `rating` =?, `submittedBy` = ?;',
+			'INSERT INTO `games` VALUES `title`=?,`summary`=?,`imageSrc`=?,`rating`=?,`submittedBy`=?,`approved`=`no`;',
 			game.title,
 			game.summary,
 			game.imageSrc,

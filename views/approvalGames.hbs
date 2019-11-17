@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head><title>Approval of Games</title>
+	<style lang= "css">
+		body {
+			font-size: 100%
+			padding:50px;
+			background-color:black 
+		}
+		table {
+			text-align: center;
+			color:gray;
+			}
+			tr,td {
+				color: white;
+				text-align: center;
+				margin : 30px ;
+			}
+	
+	</style>
+	</head>
+
+<body>
+	<table>
+	{{#each games}}
+	<tr>
+		<td>{{this.title}}</td>
+	</tr>
+	<tr>
+		<td>{{this.imageSrc}}</td>
+	</tr>
+	<tr>
+		<td>{{this.summary}}</td>
+	</tr>
+	<tr>
+		<form action="/approval/games" method="post">
+			<td> <input type="submit" name="{{this.gameID}}" value="Approve"/> </td>
+		</form>
+		<form action="/approval/games" method="post">
+			<td><input type="submit" name="{{this.gameID}}" value="Reject"/></td>
+		</form>
+	<tr>
+	{{/each}}
+	</table>
+</body>
+
+</html>
