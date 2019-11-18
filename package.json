@@ -7,16 +7,18 @@
     "start": "node --use_strict index.js",
     "watch": "npx nodemon --harmony --use_strict index.js",
     "build-db": "node ./build/build_db.js",
-    "test": "jest"
+    "test": "jest --coverage --runInBand"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "bcrypt": "^3.0.6",
     "koa": "^2.8.2",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.12.3",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "require-stack": "^1.0.2",
