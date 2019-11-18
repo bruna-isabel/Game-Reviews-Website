@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head><title>Games List</title>
+  <style lang= "css">
+  body{
+  font-size: 100%;
+  line-height: 1.4;
+  padding:50px;
+  background-color: black
+}
+h1, h2 {
+  font-weight: 900;
+}
+ul {
+  list-style:none;
+}
+h1{
+  margin:30px 0;
+  text-align:center;
+  color : gray;  
+}
+.listofgames{
+  width:75%;
+  margin:0 auto;
+}
+.info {
+  background-color: white;
+  margin-bottom: 10px;
+}
+.info * {
+  color: black;
+}
+
+  </style>
+  </head>
+  <body>
+    {{!-- <div  id="gamesdata"></div> --}}
+    <h1>Top {{type}} Games</h1>
+    <ul class= "listofgames">
+      {{#each info}}
+      <li class= "info">
+        <h2>{{title}}</h2>
+        <p>Year: {{year}}</p>
+        <p>Descritpion : {{description}}</p>
+      </li>
+      {{/each}}
+    </ul>
+
+  </body>
+</html>
