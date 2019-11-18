@@ -6,7 +6,6 @@ const list = new Router({prefix: '/list'})
 
 list.get('/', async ctx => {
 	const games = await ctx.db.getGames()
-	console.log(games)
 	await ctx.render('listpage.hbs', {games: games})
 })
 

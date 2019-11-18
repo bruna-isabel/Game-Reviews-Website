@@ -35,13 +35,13 @@ h1{
   </head>
   <body>
     {{!-- <div  id="gamesdata"></div> --}}
-    <h1>Top {{type}} Games</h1>
+    <h1>Top type Games</h1>
     <ul class= "listofgames">
-      {{#each info}}
+      {{#each games}}
       <li class= "info">
-        <h2>{{title}}</h2>
-        <p>Year: {{year}}</p>
-        <p>Descritpion : {{description}}</p>
+        <h2>{{this.title}}</h2>
+        <p>Year: </p>
+        <p>Descritpion : {{this.summary}}</p>
       </li>
       {{/each}}
     </ul>

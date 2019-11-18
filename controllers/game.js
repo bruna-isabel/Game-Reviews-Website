@@ -6,10 +6,6 @@ const koaBody = require('koa-body')()
 
 const game = new Router({prefix: '/game'})
 
-const views = require('koa-views')
-
-const bodyParser = require('koa-bodyparser')
-
 game.get('/', async ctx => {
 	const reviews = await ctx.db.getReviews()
 	let i
