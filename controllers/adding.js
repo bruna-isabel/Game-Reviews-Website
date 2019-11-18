@@ -6,27 +6,17 @@ const koaBody = require('koa-body')()
 const adding = new Router({prefix: '/adding'})
 
 adding.get('/game', async ctx => {
-	const user = await ctx.db.getUser(id)
+	const user = await ctx.db.getUser(ctx.session.userID)
 
-
-		if(user= ctx.session.userID) {
-			continue 
-} 
-		else {
-			console.log('you are not allowed to add any games')
-		}
+	if(!user) {
+		console.log('you are not allowed to add any games')
 	}
+
 })
 
-adding.post('/game',koaBody,async ctx =>{
+adding.post('/game',koaBody,async ctx => {
 	const body = ctx.request.body
-	const games = await ctx.db.getGames()
-	let game
-	if (body[game] != games){
-			await ctx.db.addGame(game)
-	}
-			else {
-				console.log('this game already exists')
-	}		
+	await ctx.db.addGame(body)
+	body.submittedBy = ctx.session.userID
 
 })
