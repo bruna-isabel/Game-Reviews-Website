@@ -20,11 +20,6 @@ const handlebars = new Views(
 	}
 )
 
-const login = require('./controllers/login')
-const list = require('./controllers/list')
-const approval = require('./controllers/approval')
-const game = require('./controllers/game')
-
 app.use(require('koa-static')('public'))
 const SECRET_KEY = process.env.SECRET_KEY || 'dummy'
 app.keys = [SECRET_KEY]
@@ -41,8 +36,11 @@ const dbcontext = new db.SqliteDbContext(path.join(__dirname, 'app.db'))
 // inject the db context
 app.context.db = dbcontext
 
-const home = require('./controllers/home')
 const login = require('./controllers/login')
+const list = require('./controllers/list')
+const approval = require('./controllers/approval')
+const game = require('./controllers/game')
+const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 
 // routers
