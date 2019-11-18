@@ -14,3 +14,17 @@ CREATE TABLE IF NOT EXISTS `games`
   `rating` INT,
   `submittedBy` INT REFERENCES `users` (`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `categories`
+(
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS `game_categories`
+(
+  `gameID` INTEGER REFERENCES `games` (`id`),
+  `categoryID` INTEGER REFERENCES `categories` (`id`),
+
+  PRIMARY KEY (`gameID`, `categoryID`)
+);
