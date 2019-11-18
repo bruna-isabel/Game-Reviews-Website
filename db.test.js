@@ -177,15 +177,16 @@ describe('game database with sqlite', () => {
 				}
 			)
 
-		let error = null;
+		let error = null
+
 		try {
 			await sqliteContext.getGame(3)
 		} catch (e) {
 			error = e
+		} finally {
+			expect(error)
+				.toStrictEqual(new EntityNotFound('game with id 3 not found'))
 		}
-
-		expect(error)
-			.toStrictEqual(new EntityNotFound('game with id 3 not found'))
 	})
 
 	test('should update a game', async() => {

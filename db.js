@@ -196,12 +196,10 @@ class SqliteDbContext extends DbContext {
 	}
 
 	async deleteGame(id) {
+		// this will throw an error if game not found
+		await this.getGame(id)
+
 		const sqlite = await this.sqlitePromise
-
-		if (!this.getGame(id)) {
-			throw new EntityNotFound(`game with id ${id} not found`)
-		}
-
 		let query
 
 		if (typeof id === 'number') {
@@ -214,11 +212,11 @@ class SqliteDbContext extends DbContext {
 	}
 
 	async updateGame(game) {
-		const sqlite = await this.sqlitePromise
-
 		// throws errors if entities are nonexistent
 		await this.getGame(game.id)
 		await this.getUser(game.submittedBy)
+
+		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
 			'UPDATE `games` SET ' +
