@@ -1,6 +1,7 @@
 'use strict'
 var i;
 var ratings = document.getElementsByClassName("rate")[0].children;
+var avgReviewRatings = document.getElementsByClassName("userReviewStars")[0].children;
 var cross = ratings[10];
 var ratingSubmitted;
 var ratingGiven = 0;
@@ -13,6 +14,16 @@ for (i = 0; i < ratings.length; i++) {
     }
     ratings[i].style = "margin-left: -" + newval + "px;";
     document.getElementsByClassName("rate")[0].style= "margin-left: 123px";
+}
+
+for (i = 0; i < ratings.length; i++) { 
+    var newval = (i * 15);
+    if (i % 2 == 0)
+    {
+        newval = newval + 15;
+    }
+    avgReviewRatings[i].style = "margin-left: -" + newval + "px;";
+    document.getElementsByClassName("userReviewStars")[0].style= "margin-left: 173px";
 }
 
 document.getElementById("gameName").value = document.getElementsByTagName("h1")[0].innerHTML;
@@ -127,3 +138,25 @@ function exitStar(id){
     }
 }
 
+function displayAverageRating(value)
+{
+    if (value == 10)
+    {
+        for (i = 0; i <= 9; i++) { 
+                avgReviewRatings[i].style.color = "#ffc526";
+        } 
+    }
+    else
+    {
+        for (i = 0; i <= 9; i++) { 
+            if (avgReviewRatings[i].id <= value){
+                avgReviewRatings[i].style.color = "#ffc526";
+            }
+        }
+        avgReviewRatings[0].style.color = "#292a2e";
+
+    }
+
+}
+displayAverageRating(document.getElementsByClassName("avgRatingPass")[0].innerHTML);
+document.getElementsByClassName("avgRatingPass")[0].innerHTML = "";
