@@ -1,6 +1,4 @@
-/*
- * Database controller
- */
+/*Database controller*/
 
 'use strict'
 
