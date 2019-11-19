@@ -14,7 +14,7 @@ const {
 const User = require('./models/user')
 const Game = require('./models/game')
 
-const BUILD_DB_SCRIPT = path.join(__dirname, 'build/build_db.sql')
+const BUILD_DB_SCRIPT = path.join(__dirname, './build/build_db.sql')
 
 describe('abstract database context', () => {
 	const context = new db.DbContext()
@@ -177,76 +177,44 @@ describe('game database with sqlite', () => {
 				}
 			)
 
-		let error = null
-
-		try {
-			await sqliteContext.getGame(3)
-		} catch (e) {
-			error = e
-		} finally {
-			expect(error)
-				.toStrictEqual(new EntityNotFound('game with id 3 not found'))
-		}
+		await expect(sqliteContext.getGame(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
 	})
 
 	test('should update a game', async() => {
 		const game = await sqliteContext.getGame(1)
 		game.title = 'new title'
 
-		expect((await sqliteContext.updateGame(game)).title).toEqual('new title')
+		expect((await sqliteContext.updateGame(game)).title)
+			.toEqual('new title')
 
-		let error = null
+		// check for missing id
+		game.id = 3
+		await expect(sqliteContext.updateGame(game))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
 
-		try {
-			// check for missing id
-			game.id = 3
-			await sqliteContext.updateGame(game)
-		} catch (e) {
-			error = e
-		} finally {
-			expect(error)
-				.toStrictEqual(new EntityNotFound('game with id 3 not found'))
-			error = null
-		}
-
-		try {
-			// check for missing user
-			game.id = 1
-			game.submittedBy = 1
-			await sqliteContext.updateGame(game)
-		} catch (e) {
-			error = e
-		} finally {
-			expect(error)
-				.toStrictEqual(new EntityNotFound('user with id 1 not found'))
-			error = null
-		}
+		// check for missing user
+		game.id = 1
+		game.submittedBy = 1
+		await expect(sqliteContext.updateGame(game))
+			.rejects
+			.toThrowError(new EntityNotFound('user with id 1 not found'))
 	})
 
 	test('should delete a game', async() => {
 		await sqliteContext.deleteGame(1)
 
-		let error = null
-		try {
-			await sqliteContext.getGame(1)
-		} catch (e) {
-			error = e
-		} finally {
-			expect(error)
-				.toStrictEqual(new EntityNotFound('game with id 1 not found'))
-			error = null
-		}
+		// get non existent game
+		await expect(sqliteContext.getGame(1))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 1 not found'))
 
 		// check non existent game deletion
-		try {
-			await sqliteContext.deleteGame(1)
-		} catch (e) {
-			error = e
-		} finally {
-			expect(error)
-				.toStrictEqual(new EntityNotFound('game with id 1 not found'))
-			error = null
-		}
+		await expect(sqliteContext.deleteGame(1))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 1 not found'))
 	})
 
 	test('should create a game', async() => {
