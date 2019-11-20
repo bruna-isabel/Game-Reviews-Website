@@ -35,7 +35,7 @@ function serve(opts) {
 			serveFile(ctx, path.join(opts.folder, filename))
 		}
 
-		next()
+		return next()
 	}
 }
 
