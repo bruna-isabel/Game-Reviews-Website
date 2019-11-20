@@ -58,11 +58,17 @@ describe('user database with sqlite', () => {
 	test('should get a user by id', async() => {
 		expect(await sqliteContext.getUser(10))
 			.toEqual({ id: 10, username: 'hakasec', hash: 'test' })
+
+		expect(await sqliteContext.getUser(1234))
+			.toBe(null)
 	})
 
 	test('should get a user by username', async() => {
 		expect(await sqliteContext.getUser('hakasec'))
 			.toEqual({ id: 10, username: 'hakasec', hash: 'test' })
+
+		expect(await sqliteContext.getUser('notauser'))
+			.toBe(null)
 	})
 
 	test('should get all users', async() => {
