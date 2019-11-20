@@ -39,7 +39,7 @@ h1{
     <ul class= "listofgames">
       {{#each games}}
       <li class= "info">
-        <h2>{{this.title}}</h2>
+        <h2><a href="/game/{{games.id}}">{{games.title}}</a></h2>
         <p>Year: </p>
         <p>Descritpion : {{this.summary}}</p>
       </li>
