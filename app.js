@@ -8,7 +8,7 @@ const path = require('path')
 
 const Koa = require('koa')
 const Views = require('koa-views')
-const serve = require('koa-static')
+const serve = require('./controllers/middleware/serve')
 const session = require('koa-session')
 
 const app = new Koa()
@@ -26,7 +26,11 @@ app.keys = [SECRET_KEY]
 
 // middleware
 app.use(handlebars)
-// app.use(serve(path.join(__dirname, 'public')))
+// uses ./controllers/middleware/serve.js middleware
+app.use(serve({
+	folder: path.join(__dirname, 'public'),
+	base: '/public/'
+}))
 app.use(session({key: 'session_id', renew: true}, app))
 
 // db stuff
