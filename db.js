@@ -177,10 +177,8 @@ class SqliteDbContext extends DbContext {
 
 		if (typeof id === 'number') {
 			query = 'SELECT * FROM `games` WHERE `gameID` = ?;'
-		} else if (typeof id === 'string') {
-			query = 'SELECT * FROM `games` WHERE `title` = ?;'
 		} else {
-			throw new TypeError('must be a number or a string')
+			throw new TypeError('must be a number')
 		}
 
 		const game = await sqlite.get(query, id)
@@ -194,10 +192,8 @@ class SqliteDbContext extends DbContext {
 
 		if (typeof id === 'number') {
 			query = 'DELETE FROM `games` WHERE `gameID` = ?;'
-		} else if (typeof id === 'string') {
-			query = 'DELETE FROM `games` WHERE `title` = ?;'
 		} else {
-			throw new TypeError('must be number or string')
+			throw new TypeError('must be number')
 		}
 
 		await sqlite.run(query, id)
@@ -205,32 +201,39 @@ class SqliteDbContext extends DbContext {
 
 	async updateGame(game) {
 		const sqlite = await this.sqlitePromise
-
 		await sqlite.run(
-			'UPDATE `games` SET `title`= ? , `summary`= ? , `imageSrc`= ? , `rating`= ? , `submittedBy`= ?, `approved` = ? WHERE `gameID`= ? ;',
+			'UPDATE `games` SET `title`= ? , `slugline` = ?, `summary`= ? , `releaseDate`=?, `director`=?, `publisher`=?, `rating`= ? , `submittedBy`= ?, `approved` = ?, `poster`=?, `splash`=? WHERE `gameID`= ? ;',
 			game.title,
+			game.slugline,
 			game.summary,
-			game.imageSrc,
+			game.releaseDate,
+			game.director,
+			game.publisher,
 			game.rating,
 			game.submittedBy,
 			game.approved,
+			game.poster,
+			game.slugline,
 			game.gameID
 		)
 		return this.getGame(game.gameID)
 	}
 
 	async addGame(game) {
-		//TEST THIS METHOD
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title`=?,`summary`=?,`imageSrc`=?,`rating`=?,`submittedBy`=?,`approved`=`no`;',
+			'INSERT INTO `games` VALUES `title`= ? , `slugline` = ?, `summary`= ? , `releaseDate`=?, , `director`=?, `publisher`=?, `rating`= ? , `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
 			game.title,
+			game.slugline,
 			game.summary,
-			game.imageSrc,
+			game.releaseDate,
+			game.director,
+			game.publisher,
 			game.rating,
 			game.submittedBy,
-			game.gameID
+			game.poster,
+			game.slugline
 		)
 		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
 		return Object.assign(new Game(), newGame)

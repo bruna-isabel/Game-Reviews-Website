@@ -39,7 +39,6 @@ app.context.db = dbcontext
 const login = require('./controllers/login')
 const list = require('./controllers/list')
 const approval = require('./controllers/approval')
-const game = require('./controllers/game')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 
@@ -48,7 +47,6 @@ app.use(home.routes())
 app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
-app.use(game.routes())
 app.use(logout.routes())
 
 module.exports = app

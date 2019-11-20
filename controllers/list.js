@@ -15,6 +15,7 @@ list.get('/', async ctx => {
 			continue
 		}
 	}
+	console.log(approved)
 	await ctx.render('listpage.hbs', {games: approved})
 })
 
