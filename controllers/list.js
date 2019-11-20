@@ -6,7 +6,16 @@ const list = new Router({prefix: '/list'})
 
 list.get('/', async ctx => {
 	const games = await ctx.db.getGames()
-	await ctx.render('listpage.hbs', {games: games})
+	let i
+	const approved = []
+	for (i = 0; i < games.length; i++) {
+		if(games[i]['approved'] === 'yes') {
+			approved.push(games[i])
+		} else {
+			continue
+		}
+	}
+	await ctx.render('listpage.hbs', {games: approved})
 })
 
 list.post('/', async ctx => {
