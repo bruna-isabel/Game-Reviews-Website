@@ -145,42 +145,9 @@
             <section class = "charts">
             
             <h2>AVERAGE USER REVIEW</h2>
-            <p class="avgRatingPass">{{avg_rating}}</p>
-                <fieldset class="userReviewStars">
-                    <span id = "10">
-                        <figure class="fa fa-star"></figure>
-                    </span>
-                    <span id = "9">
-                        <figure class="fa fa-star-half"></figure>
-                    </span>
-                    <span id = "8">
-                        <figure class="fa fa-star"></figure>
-                    </span>
-                    <span id = "7">
-                        <figure class="fa fa-star-half"></figure>
-                    </span>
-                    <span id = "6">
-                        <figure class="fa fa-star"></figure>
-                    </span>
-                    <span id = "5">
-                        <figure class="fa fa-star-half"></figure>
-                    </span>
-                    <span id = "4">
-                        <figure class="fa fa-star"></figure>
-                    </span>
-                    <span id = "3">
-                        <figure class="fa fa-star-half"></figure>
-                    </span>
-                    <span id = "2">
-                        <figure class="fa fa-star"></figure>
-                    </span>
-                    <span id = "1">
-                        <figure class="fa fa-star-half"></figure>
-                    </span>
-                    <span id = "0">
-                        <figure></figure>
-                    </span>
-                </fieldset>
+                    <figure class='rating_bar'>
+                        <figure class="rating" style="width: calc({{avg_rating}}% * 10);"></figure>
+                        </figure>
             <p style="text-align:center; font-size: 12px;">{{avg_rating}}/10 from ...ratings.</p>
             </section>
         </section>
@@ -193,15 +160,13 @@
                 </h2>
                 <table>
                     <tbody>
-                        <tr>
+                        <tr >
                             <th>@callum.j.byrne</th>
                             <td>10/04/19</td>
                             <td>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+                                <figure class='rating_bar' id = 'review'>
+                                    <figure class="rating" style='width: calc({{avg_rating}}% * 10);' id = "review"></figure>
+                                </figure>
                             </td>
                         </tr>
                     </tbody>
