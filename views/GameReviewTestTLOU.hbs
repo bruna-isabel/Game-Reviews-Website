@@ -1,25 +1,22 @@
-
-
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 	<head>
 		<meta charset="utf-8">
-		<title>The Last of Us</title>
+		<title>Game</title>
         <link href="css/game.css" type="text/css" rel="stylesheet" />
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         </head>
 
-    
+
 	<body>
+
             <figure class="splash">
-                    <img src="images/tlousplash.jpg" alt="Splash image" class="centre"/>
+                    <img src="images/{{thisgame.splash_src}}" alt="Splash image" class="centre"/>
                     <figure class="splashGradient"></figure>
             </figure>
-        
-        <h1>The Last of Us</h1>
-        
+        <h1>{{thisgame.title}}</h1>
+
                         <section id="synopsisModal" class="modal">
                                 <section id = "modalText" class="modal-content">
                                         <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
@@ -34,7 +31,7 @@
                                         <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
 
                                     <h2>LEAVE A REVIEW</h2>
-                                    <p>"GAME TITLE" "YEAR" "PLATFORM1, PLATFORM 2, PLATFORM 3"</p>
+                                    <p>{{thisgame.title}} ({{thisgame.platforms}})</p>
                                     <fieldset class="rate">
                                   <span id = "10" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
                                         <figure class="fa fa-star"></figure>
@@ -72,11 +69,11 @@
                                     </fieldset>
                                     <form>
                                         </form>
-                                    	<form action="/game" method="post">
+                                    	<form action="/add" method="post">
                                         	<p><br /><textarea name="rvtext"></textarea></p>
                                             <input type="hidden" id="gameName" name="gameName" value="...">
                                             <input type="hidden" id="starRating" name="starRating" value="...">
-                                            <p><input type="submit" value="Submit Review"></p>
+                                            <p ><input type="submit" value="Submit Review" class = "leaveReviewButton"></p>
                                         </form>
                                 </section>
 
@@ -86,7 +83,7 @@
 
             <section>
                     <figure>
-                            <img src="images/tlou.jpg" alt="Game poster"/>
+                            <img src="images/{{thisgame.poster_src}}" alt="Game poster"/>
                     </figure>
             </section>
 
@@ -107,14 +104,14 @@
         <section class = "column" id="column2">
                 <section class = "platforms">
                         <article>
-                            <p>PlayStation 3</p> 
+                            <p>{{thisgame.platforms}}</p> 
                         </article>
                     </section>
                 <section class= "synopsis">
                         <article id = "synopsis" onclick= "clickSynopsis()">
-                                <h2 class = "synopsisHeader" id = "synopsisHeader">Hope is the key to survival.</h2>
+                                <h2 class = "synopsisHeader" id = "synopsisHeader">{{thisgame.slugline}}</h2>
                                 <p class = "synopsisPara" id = "synopsisPara">
-                                    Set in the post-apocalyptic United States, the game tells the story of survivors Joel and Ellie as they work together to survive their westward journey across what remains of the country to find a possible cure for the modern fungal plague that has nearly decimated the entire human race.                             
+                                {{thisgame.summary}}                             
                                 </p>
                         </article>
                     
@@ -126,15 +123,15 @@
                                     <tbody>
                                         <tr>
                                             <th>Release Date</th>
-                                            <td>04 June 2013</td>
+                                            <td>{{thisgame.releaseDate}}</td>
                                         </tr>
                                         <tr>
                                             <th>Director</td>
-                                            <td>Bruce Straley, Neil Druckmann</th>
+                                            <td>{{thisgame.director}}</th>
                                         </tr>
                                         <tr>
                                             <th>Publisher</th>
-                                            <td>Sony Computer Entertainment</td>
+                                            <td>{{thisgame.publisher}}</td>
                                         </tr>
                                     </tbody>
                             </table>
@@ -146,6 +143,12 @@
              <fieldset class = "leaveReviewButton" onclick= "clickReview()">Leave a review...</fieldset>
             </section>
             <section class = "charts">
+            
+            <h2>AVERAGE USER REVIEW</h2>
+                    <figure class='rating_bar'>
+                        <figure class="rating" style="width: calc({{thisgame.rating}}% * 10);"></figure>
+                        </figure>
+            <p style="text-align:center; font-size: 12px;">{{thisgame.rating}}/10 from ...ratings.</p>
             </section>
         </section>
 
@@ -161,15 +164,14 @@
                         <tr>
                             <th>{{this.user}}</th>
                             <td>{{this.review_date}}</td>
-                            <td>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+
+                                <figure class='rating_bar' id = 'review'>
+                                    <figure class="rating" style='width: calc({{rating}}% * 10);' id = "review"></figure>
+                                </figure>
                             </td>
                         </tr>
                         {{/each}}
+
                     </tbody>
             </table>
         </section>

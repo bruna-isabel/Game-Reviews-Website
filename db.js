@@ -284,9 +284,9 @@ class SqliteDbContext extends DbContext {
 		await sqlite.run(
 			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
 			'USER_NAME',
-			review.gameName,
-			review.starRating,
-			review.rvtext,
+			review.game,
+			review.review_score,
+			review.review_text,
 			currentDate,
 			'no'
 		)

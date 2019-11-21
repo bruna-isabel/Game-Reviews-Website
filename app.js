@@ -10,6 +10,7 @@ const Koa = require('koa')
 const Views = require('koa-views')
 const serve = require('koa-static')
 const session = require('koa-session')
+const bodyParser = require('koa-bodyparser')
 
 const app = new Koa()
 const handlebars = new Views(
@@ -26,6 +27,7 @@ app.keys = [SECRET_KEY]
 
 // middleware
 app.use(handlebars)
+app.use(bodyParser())
 // app.use(serve(path.join(__dirname, 'public')))
 app.use(session({key: 'session_id', renew: true}, app))
 
@@ -41,6 +43,7 @@ const list = require('./controllers/list')
 const approval = require('./controllers/approval')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
+const game = require('./controllers/game')
 
 // routers
 app.use(home.routes())
@@ -48,5 +51,6 @@ app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
 app.use(logout.routes())
+app.use(game.routes())
 
 module.exports = app
