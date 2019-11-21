@@ -61,7 +61,7 @@ class SqliteDbContext extends DbContext {
 		}
 
 		const user = await sqlite.get(query, id)
-		return Object.assign(new User(), user)
+		return user ? Object.assign(new User(), user) : null
 	}
 
 	async getUsers() {
