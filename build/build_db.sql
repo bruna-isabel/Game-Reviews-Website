@@ -16,7 +16,7 @@ CREATE TABLE `games`
     `director` TEXT,
     `publisher` TEXT,
     `rating` INT,
-    `submittedBy` TEXT,
+    `submittedBy` INT,
     `approved` TEXT,
     `poster` TEXT,
     `splash` TEXT

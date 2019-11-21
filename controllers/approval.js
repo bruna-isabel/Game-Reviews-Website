@@ -31,7 +31,7 @@ approval.post('games', async ctx => {
 		const id = parseInt(Object.keys(body)[0]) //getting the key (gameID) and converting it into an integer
 		const game = await ctx.db.getGame(id)
 		if(body[id] === 'Approve') {
-			game['approved'] = 'yes'
+			game.approved = 'yes'
 			await ctx.db.updateGame(game)
 		} else if(body[id] === 'Reject') {
 			await ctx.db.deleteGame(id)
@@ -66,7 +66,7 @@ approval.post('reviews', async ctx => {
 		const review = await ctx.db.getReview(id)
 		//console.log(review)
 		if(body[id] === 'Approve') {
-			review['approved'] = 'yes'
+			review.approved = 'yes'
 			await ctx.db.updateReview(review)
 		} else if(body[id] === 'Reject') {
 			await ctx.db.deleteReview(id)

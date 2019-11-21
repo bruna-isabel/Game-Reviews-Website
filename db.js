@@ -46,6 +46,11 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async users_games() {
+		throw new NotImplemented('users_games is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
 	async getGames() {
 		throw new NotImplemented('getGames is not implemented')
 	}
@@ -185,6 +190,12 @@ class SqliteDbContext extends DbContext {
 		}
 	}
 
+	async users_games() {
+		const sqlite = await this.sqlitePromise
+
+		const linkedTable = await sqlite.all('SELECT `users`.`id`, `users`.`username`, `games`.`gameID`, `games`.`title` FROM `games` INNER JOIN `users` ON `users`.`id` = `games`.`submittedBy`;')
+		return linkedTable
+	}
 
 	async getGames() {
 		const sqlite = await this.sqlitePromise
