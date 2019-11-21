@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `categories`
   `name` TEXT UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS `game_categories`
+CREATE TABLE IF NOT EXISTS `gameCategories`
 (
   `gameID` INTEGER REFERENCES `games` (`id`),
   `categoryID` INTEGER REFERENCES `categories` (`id`),

@@ -13,6 +13,7 @@ const {
 
 const User = require('./models/user')
 const Game = require('./models/game')
+const Category = require('./models/category')
 
 class DbContext {
 	async getUsers() {
@@ -175,6 +176,7 @@ class SqliteDbContext extends DbContext {
 		return games.map(x => Object.assign(new Game(), x))
 	}
 
+	// eslint-disable-next-line max-lines-per-function
 	async getGame(id) {
 		const sqlite = await this.sqlitePromise
 
@@ -186,13 +188,16 @@ class SqliteDbContext extends DbContext {
 			throw new TypeError('id must be a number')
 		}
 
-		const game = await sqlite.get(query, id)
-
+		let game = await sqlite.get(query, id)
 		if (!game) {
 			throw new EntityNotFound(`game with id ${id} not found`)
 		}
 
-		return Object.assign(new Game(), game)
+		// downcasr result as Game object
+		game = Object.assign(new Game(), game)
+		game.categories = await this.getGameCategories(id)
+
+		return game
 	}
 
 	async deleteGame(id) {
@@ -248,6 +253,24 @@ class SqliteDbContext extends DbContext {
 		)
 
 		return this.getGame(lastID)
+	}
+
+	/**
+	 * Get Categories for a given game ID.
+	 * @param {number} gameID - ID of the game
+	 * @returns {Promise<Array<Category>>} Returns an array of categories
+	 */
+	async getGameCategories(gameID) {
+		const sqlite = await this.sqlitePromise
+
+		const categories = await sqlite.all(
+			'SELECT `c`.`id`, `c`.`name` FROM `gameCategories` AS `gc` ' +
+			'INNER JOIN `categories` AS `c` ON `gc`.`categoryID` = `c`.`id` ' +
+			'WHERE `gameID` = ?',
+			gameID
+		)
+
+		return categories.map(x => Object.assign(new Category(), x))
 	}
 }
 

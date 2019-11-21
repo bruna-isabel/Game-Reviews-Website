@@ -173,7 +173,8 @@ describe('game database with sqlite', () => {
 					summary: 'summary!!',
 					imageSrc: 'image2.png',
 					rating: 2,
-					submittedBy: 10
+					submittedBy: 10,
+					categories: []
 				}
 			)
 
@@ -230,3 +231,71 @@ describe('game database with sqlite', () => {
 	})
 })
 
+describe('games database with categories', () => {
+	const sqliteContext = new db.SqliteDbContext(':memory:')
+
+	beforeAll(async() => {
+		const db = await sqliteContext.sqlitePromise
+		await runSQLScript(db, BUILD_DB_SCRIPT)
+
+		// static dummy data
+		// add dummy user
+		await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\');')
+	})
+
+	beforeEach(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// mutable dummy data, reload on test
+		await db.exec('DELETE FROM `gameCategories`;')
+		await db.exec('DELETE FROM `categories`;')
+		await db.exec('DELETE FROM `games`;')
+
+		// insert dummy categories data
+		await db.exec(
+			'INSERT INTO `categories` ' +
+			'VALUES ' +
+			'(1, \'Horror\'), ' +
+			'(2, \'Action\'), ' +
+			'(3, \'Something else\');'
+		)
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, `imageSrc`, `rating`, `submittedBy`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', \'image1.png\', 5, 10), ' +
+			'(2, \'game2\', \'summary!!\', \'image2.png\', 2, 10);'
+		)
+
+		// link games and categories
+		await db.exec(
+			'INSERT INTO `gameCategories`' +
+			'VALUES' +
+			'(1, 1),' +
+			'(1, 2);'
+		)
+	})
+
+	test('should get game with linked categories', async() => {
+		expect(await sqliteContext.getGame(1))
+			.toEqual(
+				{
+					id: 1,
+					title: 'game1',
+					summary: 'summary!!!',
+					imageSrc: 'image1.png',
+					rating: 5,
+					submittedBy: 10,
+					categories: [
+						{ id: 1, name: 'Horror' },
+						{ id: 2, name: 'Action' }
+					]
+				}
+			)
+
+		expect((await sqliteContext.getGame(2)).categories).toEqual([])
+	})
+
+})
