@@ -37,6 +37,10 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async isUserAdmin(id) {
+		throw new NotImplemented('isUserAdmin is not implemented')
+	}
+	// eslint-disable-next-line no-unused-vars
 	async execute(query) {
 		throw new NotImplemented('execute is not implemented')
 	}
@@ -67,6 +71,11 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async approvalGameList(bool) {
+		throw new NotImplemented('approvalGameList is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
 	async getReviews() {
 		throw new NotImplemented('getReviews is not implemented')
 	}
@@ -89,6 +98,11 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async updateReview(review) {
 		throw new NotImplemented('updateReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async approvalReviewList(bool) {
+		throw new NotImplemented('approvalReviewList is not implemented')
 	}
 }
 
@@ -162,6 +176,16 @@ class SqliteDbContext extends DbContext {
 		return this.getUser(user.id)
 	}
 
+	async isUserAdmin(id) {
+		const user = await this.getUser(id)
+		if(user['isAdmin'] === 'yes') {
+			return true
+		} else {
+			return false
+		}
+	}
+
+
 	async getGames() {
 		const sqlite = await this.sqlitePromise
 
@@ -213,7 +237,7 @@ class SqliteDbContext extends DbContext {
 			game.submittedBy,
 			game.approved,
 			game.poster,
-			game.slugline,
+			game.splash,
 			game.gameID
 		)
 		return this.getGame(game.gameID)
@@ -233,10 +257,24 @@ class SqliteDbContext extends DbContext {
 			game.rating,
 			game.submittedBy,
 			game.poster,
-			game.slugline
+			game.splash
 		)
 		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
 		return Object.assign(new Game(), newGame)
+	}
+
+	async approvalGameList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `games` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `games` WHERE `approved` != ?'
+		}
+		const games = await sqlite.all(query, 'yes')
+		return games
 	}
 
 	async getReviews() {
@@ -306,6 +344,20 @@ class SqliteDbContext extends DbContext {
 			review.id
 		)
 		return this.getReview(review.id)
+	}
+
+	async approvalReviewList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` != ?'
+		}
+		const reviews = await sqlite.all(query, 'yes')
+		return reviews
 	}
 }
 

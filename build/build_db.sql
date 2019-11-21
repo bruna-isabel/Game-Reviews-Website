@@ -2,7 +2,8 @@ CREATE TABLE `users`
 (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `username` TEXT UNIQUE,
-  `hash` TEXT
+  `hash` TEXT,
+  `isAdmin` TEXT
 );
 
 CREATE TABLE `games` 

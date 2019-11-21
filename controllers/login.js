@@ -1,12 +1,9 @@
 'use strict'
 
 const Router = require('koa-router')
-const koaBody = require('koa-body')
 const bcrypt = require('bcrypt')
-
+//Using koabody and bodyparser together breaks the code
 const login = new Router({ prefix: '/login' })
-
-login.use(koaBody())
 
 login.get('/', async ctx => ctx.render('login.hbs'))
 

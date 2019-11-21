@@ -5,18 +5,19 @@ const Router = require('koa-router')
 const approval = new Router({prefix: '/approval'})
 
 approval.get('games', async ctx => {
-	//maybe check if user is an admin
 	try {
-		const games = await ctx.db.getGames()
-		let i
-		const unapproved = []
-		for (i = 0; i < games.length; i++) {
-			if(games[i]['approved'] !== 'yes') {
-				unapproved.push(games[i])
-			} else {
-				continue
-			}
+		//console.log(await ctx.session.authorised)
+		//If user is not logged in
+		if(await ctx.session.authorised !== true) {
+			return await ctx.render('error', {message: 'Session not authorised'})
 		}
+		//console.log(await ctx.db.isUserAdmin(await ctx.session.userID))
+		//If user is logged in, but isn't an admin
+		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
+			return await ctx.render('error', {message: 'Session not authorised'})
+		}
+
+		const unapproved = await ctx.db.approvalGameList(false)
 		await ctx.render('approvalGames', {games: unapproved})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
@@ -43,16 +44,15 @@ approval.post('games', async ctx => {
 
 approval.get('reviews', async ctx => {
 	try {
-		const reviews = await ctx.db.getReviews()
-		let i
-		const unapproved = []
-		for (i = 0; i < reviews.length; i++) {
-			if(reviews[i]['approved'] !== 'yes') {
-				unapproved.push(reviews[i])
-			} else {
-				continue
-			}
+		//If user is not logged in
+		if(await ctx.session.authorised !== true) {
+			return await ctx.render('error', {message: 'Session not authorised'})
 		}
+		//If user is logged in, but isn't an admin
+		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
+			return await ctx.render('error', {message: 'Session not authorised'})
+		}
+		const unapproved = await ctx.db.approvalReviewList(false)
 		await ctx.render('approvalReviews', {review: unapproved})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
