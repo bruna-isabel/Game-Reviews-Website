@@ -2,7 +2,7 @@ html{
     background-color: #292a2e;
     color: #e3e7e8;
     font-size: 16px;
-    height: 2000px;
+    height: 1300px;
 }
 .column{
     margin-top: 1%;
@@ -13,7 +13,7 @@ html{
     float: left;
     width: 25%;
     position: relative;
-    height: 100vmax;
+    height: 400px;
 }
 #column1 section{
     margin-bottom: 10px;
@@ -25,7 +25,6 @@ html{
     position: relative;
     border-radius: 3px;
 }
-
 #column2 section{
     background-color: #35363b;
     padding: 2%;
@@ -102,7 +101,7 @@ h2{
 .splash{
     width: 135%;
     margin-left: -17.5%;
-    margin-top: -15%;
+    margin-top: -10%;
 }
 .splash .splashGradient{
     position: relative;
@@ -119,7 +118,7 @@ body{
     width: 950px;
     margin-left: auto;
     margin-right: auto;
-    height: 500px;
+    height: auto;
     letter-spacing: 0.5px;
 }
 
@@ -280,6 +279,7 @@ figure img{
 }
 .recentReviews table tbody tr th{
     text-align: left;
+   padding-right: 135px;
 }
 .recentReviews table tbody tr td:nth-of-type(1){
     text-align: center;
@@ -397,5 +397,77 @@ textarea {
 .charts{
     height: 217px;
 }
-  
-  
+
+.userReviewStars{
+    width: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: none
+}
+.userReviewStars span{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: absolute;
+    color: #292a2e;
+}
+
+.userReviewStars span:nth-child(even){
+    width: 10px;
+    z-index: 1;
+}
+.userReviewStars span .fa-star-half{
+    width: 10px;
+    z-index: 1;
+}
+.userReviewStars span .fa{
+    font-size: 24px
+}
+.userReviewStars span .fa-ban{
+    text-align: center;
+    margin-top: 2px;
+    font-size: 12px;
+}
+.rating_bar {
+    /*this class creats 5 stars bar with empty stars */
+    /*each star is 16 px, it means 5 stars will make 80px together */
+    width: 150px;
+    /*height of empty star*/
+    height: 30px;
+    /*background image with stars */
+    background: url(/images/starbg.png);
+    background-size: 30px;
+    /*which will be repeated horizontally */
+    background-repeat: repeat-x;
+    /* as we are using sprite image, we need to position it to use right star, 
+    //0 0 is for empty */
+    background-position: 0 0;
+    /* align inner div to the left */
+    text-align: left;
+    margin-left: 49px;
+}
+.rating {
+    /* height of full star is the same, we won't specify width here */
+    height: 30px;
+    /* background image with stars */
+    background: url(/images/star.png);
+    background-size: 30px;
+    
+    /* now we will position background image to use 16px from top, 
+    //which means use full stars */
+    background-position: 0 0px;
+    /* and repeat them horizontally */
+    background-repeat: repeat-x;
+}
+#review.rating_bar {
+    width: 100px;
+    height: 20px;
+    background-size: 20px;
+    margin-top: -3px;
+    margin-left: 185px;
+}
+#review.rating{
+    height: 20px;
+    background-size: 20px;
+    margin-top: -3px;
+}

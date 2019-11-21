@@ -10,6 +10,7 @@ const Koa = require('koa')
 const Views = require('koa-views')
 const serve = require('./controllers/middleware/serve')
 const session = require('koa-session')
+const bodyParser = require('koa-bodyparser')
 
 const app = new Koa()
 const handlebars = new Views(
@@ -31,6 +32,8 @@ app.use(serve({
 	folder: path.join(__dirname, 'public'),
 	base: '/public/'
 }))
+app.use(bodyParser())
+// app.use(serve(path.join(__dirname, 'public')))
 app.use(session({key: 'session_id', renew: true}, app))
 
 // db stuff
@@ -45,6 +48,7 @@ const list = require('./controllers/list')
 const approval = require('./controllers/approval')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
+const game = require('./controllers/game')
 
 // routers
 app.use(home.routes())
@@ -52,5 +56,6 @@ app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
 app.use(logout.routes())
+app.use(game.routes())
 
 module.exports = app
