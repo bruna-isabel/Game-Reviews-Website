@@ -6,12 +6,8 @@
 
 const userValidation = require('../utils/uservalidation.js')
 
-	test ('Dummy test', () => {
-		const result = 2*3;
-		expect(result).toBe(6)
-	})
 
-	//Missing:  database username test that verifies that a username already exists
+//Missing:  database username test that verifies that a username already exists
 //tests for validating username
 
 

@@ -3,6 +3,7 @@
 
 <head>
   <title>Sign Up</title>
+  <link rel="stylesheet" type="text/css" href="css/signup.css">.
 </head>
 
 <body>
@@ -12,13 +13,28 @@
   </div>
   {{/if}}
 
-  <form method="post">
-    <input type="text" placeholder="Username" name="username" required />
-		<input type="email" placeholder="Email" name="email" required />
-    <input type="password" placeholder="Password" name="password" required />
-		<input type="confirmpassword" placeholder="Confirm Password" name="confirmpassword" required />
+  <button onclick="document.getElementById('id01').style.display='block'">Sign Up</button>
+  <div id="id01" class="modal">
 
-    <button type="submit">Create Account</button>
+  <form class = 'modalbox' method="post">
+    <section class="popup">
+        <h1>Sign up to start making reviews!</h1>
+        <hr>
+        
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Username" name="username" required />
+        <label for="email"><b>Email</b></label>
+		    <input type="text" placeholder="Email" name="email" required />
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Password" name="password" required />
+        <label for="confirmpassword"><b>Confirm Password</b></label>
+		    <input type="password" placeholder="Confirm Password" name="confirmpassword" required />
+
+      <section class="clear">
+         <button type="button" class="cancel" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
+         <button type="submit" class="signup">Create Account</button>
+      </section>
+    </section>
   </form>
 </body>
 
