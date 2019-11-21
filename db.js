@@ -10,6 +10,8 @@ const { NotImplemented } = require('./utils/errors')
 const User = require('./models/user')
 const Game = require('./models/game')
 const Review = require('./models/review')
+const Platform = require('./models/platform')
+
 
 class DbContext {
 	async getUsers() {
@@ -233,7 +235,7 @@ class SqliteDbContext extends DbContext {
 			game.rating,
 			game.submittedBy,
 			game.poster,
-			game.slugline
+			game.splash
 		)
 		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
 		return Object.assign(new Game(), newGame)
