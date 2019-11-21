@@ -164,9 +164,10 @@
                         <tr>
                             <th>{{this.user}}</th>
                             <td>{{this.review_date}}</td>
+                            <td>
 
                                 <figure class='rating_bar' id = 'review'>
-                                    <figure class="rating" style='width: calc({{rating}}% * 10);' id = "review"></figure>
+                                    <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
                                 </figure>
                             </td>
                         </tr>
