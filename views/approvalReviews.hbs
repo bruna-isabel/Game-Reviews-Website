@@ -3,29 +3,36 @@
 
 <head>
 	Approval of Reviews
+	<link href="css/list.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-	<table>
-	{{#each review}}
-	<tr>
-		<td>{{this.user}}</td>
-	</tr>
-	<tr>
-		<td>{{this.review_text}}</td>
-	</tr>
-	<tr>
-		<td>{{this.review_score}}</td>
-	</tr>
-	<tr>
-		<form action="/approval/reviews" method="post">
-			<td> <input type="submit" name="{{this.id}}" value="Approve"/> </td>
-		</form>
-		<form action="/approval/reviews" method="post">
-			<td><input type="submit" name="{{this.id}}" value="Reject"/></td>
-		</form>
-	<tr>
-	{{/each}}
+	<h1>Approval of Reviews</h1>
+	<table class='content-table'>
+	<thead>
+		<tr>
+			<th>User Name</th>
+			<th>Review</th>
+			<th>Rating</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each review}}
+		<tr>
+			<td class='user'>{{this.user}}</td>
+			<td class='review'>{{this.review_text}}</td>
+			<td class='rating'>{{this.review_score}}</td>
+			<form action="/approvalreviews" method="post">
+				<td class='statusChange'> <input type="submit" name="{{this.id}}" value="Approve"/> </td>
+			</form>
+			<form action="/approvalreviews" method="post">
+				<td class='statusChange'><input type="submit" name="{{this.id}}" value="Reject"/></td>
+			</form>
+		<tr>
+		{{/each}}
+	</tbody>
 	</table>
 </body>
 

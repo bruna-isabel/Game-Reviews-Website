@@ -31,7 +31,3 @@ CREATE TABLE `reviews`
   `review_date` DATE,
   `approved` TEXT
 );
-
-INSERT INTO `games` VALUES (1, 'game1', 'slugline', 'summary', 'releaseDate', 'director', 'publisher', 5, 'user', 'no', 'poster', 'splash');
-INSERT INTO `games` VALUES (2, 'game2', 'slugline', 'summary', 'releaseDate', 'director', 'publisher', 5, 'user', 'no', 'poster', 'splash');
-INSERT INTO `games` VALUES (3, 'game3', 'slugline', 'summary', 'releaseDate', 'director', 'publisher', 5, 'user', 'no', 'poster', 'splash');
