@@ -13,4 +13,5 @@ const app = require('./app')
 // inject the db context
 app.context.db = dbcontext
 
+// eslint-disable-next-line no-magic-numbers
 app.listen(8080)

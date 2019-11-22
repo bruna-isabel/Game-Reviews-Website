@@ -1,6 +1,7 @@
+/* eslint-disable max-lines */
 /*
- * Database controller
- */
+* Database controller
+*/
 
 'use strict'
 

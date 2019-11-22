@@ -1,5 +1,7 @@
 'use strict'
 
+// imported for JSDoc
+// eslint-disable-next-line no-unused-vars
 const Category = require('./category')
 
 /**
