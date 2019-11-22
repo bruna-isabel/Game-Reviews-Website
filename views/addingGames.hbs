@@ -13,11 +13,10 @@
 			<input type="text" placeholder="Title:" name="title" required/>
 			<input type="text" placeholder="Slugline" name="slugline" required/>
 			<input type= "text" placeholder="Summary" name="summary" required/>
+			{{#each platforms}}
 			<h1>Platforms:</h1>
-				<input type="checkbox" name="Platform1" value="Playstation"> Playstation 4 <br>
-				<input type="checkbox" name="Platform2" value="GameBoy" > Game Boy <br>
-				<input type="checkbox" name="Platform3" value="Xbox"> Xbox 360 Elite<br>
-				<input type="checkbox" name="Platform4" value="Nittendo"> Nittendo Wii<br>
+				<input type="checkbox" name="Platform1" value="{{this.name}}"/>
+			{{/each}}
 			<input type="date" placeholder="Release Date" name="release date" required/>
 			<input type="text" placeholder="Director" name="director" required/>
 			<input type="text" placeholder="Publisher" name="publisher" required/>
