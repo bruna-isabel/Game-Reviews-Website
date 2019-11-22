@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTs`users`
 CREATE TABLE IF NOT EXISTS `games`
 (
   `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `title` TEXT NOT NULL UNIQUE,
+  `title` TEXT NOT NULL,
   `summary` TEXT,
   `imageSrc` TEXT,
   `rating` INT,
