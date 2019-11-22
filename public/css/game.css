@@ -1,19 +1,33 @@
 html{
-    background-color: #292a2e;
-    color: #e3e7e8;
+    --main-shadow-color: Black;
+    --main-bg-color: #1f1f1f;
+    --main-element-color: #272727; 
+    --main-highlight-color: #3a3a3a;
+    --main-text-color: #dbdbdb; 
+    --main-button-color: #272727;
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
     font-size: 16px;
-    height: 1300px;
+    height: 100%;
 }
 .column{
     margin-top: 1%;
-    box-shadow: 0px 0px 18px #1d1e20;
+    box-shadow: 0px 0px 18px var(--main-shadow-color);
     background-color: rgba(0,0,0,0);
+}
+#column1 .charts{
+    background-color: var(--main-element-color);
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: var(--main-element-color) 2px solid;
 }
 #column1{
     float: left;
     width: 25%;
     position: relative;
-    height: 400px;
+    height: auto;
+    box-shadow: none;
+
 }
 #column1 section{
     margin-bottom: 10px;
@@ -26,22 +40,27 @@ html{
     border-radius: 3px;
 }
 #column2 section{
-    background-color: #35363b;
+    background-color: var(--main-element-color);
     padding: 2%;
     margin-bottom: 10px;
     border-radius: 3px;
-    border: #3e3f44 2px solid;
+    border: var(--main-element-color) 2px solid;
 }
 #column2 .synopsis{
     transition-duration: 0.2s;
 }
+#column2 .synopsis h2{
+    color: var(--main-text-color);
+}
 #column2 .synopsis:hover{
-    background-color: #3a3c41;
+    background-color: var(--main-highlight-color);
     transition-duration: 0.2s;
+    margin-top: -1px;
 }
 #column2 .platforms{
     background-color: rgba(0,0,0,0);
-    border: #292a2e 2px solid;
+    border: none;
+
     margin-top: 0px;
     margin-bottom: -1px;
 }
@@ -49,37 +68,50 @@ html{
     float: right;
     width: 27%;
     position: relative;
-    box-shadow: 0px 0px 18px #1d1e20;
+    box-shadow: 0px 0px 18px var(--main-shadow-color);
     background-color: rgba(0,0,0,0);
     border-radius: 3px;
-    height: 284px;
+    height: auto;
     margin-bottom: 10px;
 }
 #column3 section{
-    background-color: #35363b;
+    background-color: var(--main-element-color);
     margin-bottom: 10px;
     border-radius: 3px;
     /*height: 265px;*/
-    border: #3e3f44 2px solid;
+    border: var(--main-element-color) 2px solid;
     transition-duration: 0.2s;
+    height: auto;
 }
 #columnReviews{
-    float: left;
+    float: right;
     width: 72.5%;
-    margin-left: 2.5%;
-    height: 350px;
+    height: auto;
     position: relative;
-    margin-top: 0px;
+    margin-top: 15px;
+    box-shadow: 0px 0px 18px var(--main-shadow-color);
+    background-color: rgba(0,0,0,0);
+    border-radius: 3px;
+}
+#columnReviews h2{
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+
+}
+#columnReviews table{
+    background-color: var(--main-element-color);
+    margin-bottom: 10px;
+    border-radius: 3px;
+    /*height: 265px;*/
+    border: var(--main-element-color) 2px solid;
+    transition-duration: 0.2s;
 }
 #columnReviews section{
     margin-top: 0px;
     width: auto;
     height: 100%;
-    background-color: #35363b;
-    padding: 2%;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    border: #3e3f44 2px solid;
+
 }
 
 h1{
@@ -97,11 +129,17 @@ h1{
 }
 h2{
     font-size: 18px;
+    color: white;
+}
+.smalltext{
+    font-size: 14px;
+    color:var(--main-text-color);
+    font-weight: bold;
 }
 .splash{
-    width: 135%;
-    margin-left: -17.5%;
-    margin-top: -10%;
+    width: 125%;
+    margin-left: -12.5%;
+    margin-top: -15%;
 }
 .splash .splashGradient{
     position: relative;
@@ -109,7 +147,7 @@ h2{
     height: 820px;
     background: rgba(0,0,0,0);
     width: 100%;
-    box-shadow: inset 0 0 75px 100px #292a2e;
+    box-shadow: inset 0 0 78px 100px var(--main-bg-color);
 
 }
 body{
@@ -134,16 +172,12 @@ figure img{
     width: 100%;
 }
 #column1 figure img{
-    width: 100%;
-    border: #3e3f44 2px solid;
     border-radius: 3px;
-    margin-left: -1%;
     margin-bottom: -2%;
 }
 .purchaseButton{
-    margin-top: 0px;
-    background-color: #4CAF50;
-    border: none;
+    margin: 0px;
+    background-color: var(--main-button-color);
     color: white;
     padding: 15px 0px;
     width: 100%;
@@ -156,12 +190,14 @@ figure img{
     letter-spacing: 0px;
     cursor: pointer;
     border-radius: 3px;
-    margin-bottom: 2.5%;
+    border: var(--main-button-color) 2px solid;
+    margin-left: -1.5px;
 }
 .purchaseButton:hover{
-    background-color: #408d43;
+    background-color: #FF9900;
+    transition-duration: 0.2s;
+    margin-top: -1px;
 }
-
 .purchaseButton .fa-amazon{
     vertical-align: -1px;
 }
@@ -209,7 +245,7 @@ figure img{
     width: 50%;
     margin-top: 25vh;
     height: auto;
-    background-color: #35363b;
+    background-color: var(--main-element-color);
     border: #3e3f44 2px solid;
     animation-name: animatetop;
     animation-duration: 0.5s
@@ -233,8 +269,13 @@ figure img{
     float: right;
     font-size: 20px;
     font-weight: bold;
-    color: #8e909b;
+    color: white;
 }  
+#expandText.close {
+    font-size: 24px;
+    margin-top: -2px;
+    margin-right: 2px;
+}
 .close:hover, .close:focus {
     color:white;
     text-decoration: none;
@@ -266,7 +307,7 @@ figure img{
 .aboutGame table tbody tr th{
     font-size: 16px;
     text-align: left;
-    color: white;
+    color: var(--main-text-color);
     text-transform: uppercase;
 }
 .aboutGame table tbody tr{
@@ -279,13 +320,29 @@ figure img{
 }
 .recentReviews table tbody tr th{
     text-align: left;
-   padding-right: 135px;
+    width: 300px;
+    height: 30px;
 }
 .recentReviews table tbody tr td:nth-of-type(1){
-    text-align: center;
+    text-align: left;
+    width: 225px;
 }
-.recentReviews table tbody tr td:nth-of-type(2){
-    text-align: right;
+.recentReviews table tbody tr:nth-of-type(2) th{
+    text-align: left;
+    height: auto;
+    width: 133%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-weight: lighter;
+    margin-bottom: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    transition-duration: 0.5s;
+}
+.recentReviews table tbody tr:nth-of-type(2) th#fullReview{
+    width: 150%;
 }
 .ratings{
     position: relative;
@@ -294,7 +351,7 @@ figure img{
     text-align: left;
     height: auto;
 }
-#column3 h2{
+.charts h2{
     margin-top: 10px;
     margin-bottom: 5px;
     font-size: 18px;
@@ -312,7 +369,7 @@ figure img{
     display: inline-block;
     cursor: pointer;
     position: absolute;
-    color: #292a2e;
+    color: black;
 }
 
 .rate span:nth-child(even){
@@ -333,7 +390,6 @@ figure img{
     font-size: 12px;
 }
 .leaveReviewButton{
-    transition-duration: 0.2s;
     margin-left: 0px;
     border: none;
     padding: 14px 0px;
@@ -346,13 +402,12 @@ figure img{
     font-weight: bold;
     letter-spacing: 0px;
     cursor: pointer;
+    color: white;
 }
-.leaveReviewButton:hover{
-    background-color: #3a3c41;
-    transition-duration: 0.2s;
-    border-radius: 2px;
-}
-#column3 section:hover{
+#column3 section:nth-of-type(1):hover{
+    background-color: var(--main-highlight-color);
+    border-color: var(--main-highlight-color);
+
     transition-duration: 0.2s;
     margin-top: -1px;
     margin-bottom: 11px;
@@ -365,7 +420,7 @@ textarea {
     box-sizing: border-box;
     border-radius: 4px;
     border: none;
-    background-color: #292a2e;
+    background-color: var(--main-bg-color);
     font-size: 16px;
     resize: none;
     color: white;
@@ -390,12 +445,13 @@ textarea {
     border-radius: 3px;
 }
 .submitReviewButton:hover{
-    background-color: #292a2e;
+    background-color: var(--main-bg-color);
     transition-duration: 0.2s;
 }
 
-.charts{
-    height: 217px;
+#column3 .charts{
+    height: 213px;
+    margin-bottom: 0px;
 }
 
 .userReviewStars{
@@ -409,7 +465,7 @@ textarea {
     height: 20px;
     display: inline-block;
     position: absolute;
-    color: #292a2e;
+    color: black;
 }
 
 .userReviewStars span:nth-child(even){
@@ -464,10 +520,32 @@ textarea {
     height: 20px;
     background-size: 20px;
     margin-top: -3px;
-    margin-left: 185px;
+    margin-left: 37.5px;
+}
+#reviewfull.rating_bar {
+    float: right;
+    width: 100px;
+    height: 20px;
+    background-size: 20px;
+    margin-right: 10px;
 }
 #review.rating{
     height: 20px;
     background-size: 20px;
-    margin-top: -3px;
+}
+.submitButton{
+    background-color: var(--main-element-color);
+    margin-bottom: 10px;
+    margin-top: 2px;
+    width: 100%;
+    overflow: visible;
+    border-radius: 3px;
+    border: var(--main-element-color) 2px solid;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+.submitButton:hover{
+    background-color: var(--main-highlight-color);
+    transition-duration: 0.2s;
 }

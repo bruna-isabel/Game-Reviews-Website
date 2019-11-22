@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+		<head>
+		<meta charset="utf-8">
+		<title>Game</title>
+        <link href="css/game.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        </head>
+				            <figure class="splash">
+                    <img src="images/{{thisgame.splash}}" alt="Splash image" class="centre"/>
+                    <figure class="splashGradient"></figure>
+            </figure>
+	<body>
+												<section style="padding-bottom: 25px"></section>
+
+
+										        <section class = "column" id="column1" style="margin-top: -95px;">
+
+            <section>
+                    <figure>
+                            <img src="images/{{thisgame.poster}}" alt="Game poster"/>
+                    </figure>
+            </section>
+						            <section class = "charts">
+            
+            <h2>AVERAGE USER REVIEW</h2>
+                    <figure class='rating_bar'>
+                        <figure class="rating" style="width: calc({{thisgame.rating}}% * 10);"></figure>
+                        </figure>
+            <p style="text-align:center; font-size: 12px;">{{thisgame.rating}}/10 from {{reviewNo}} reviews.</p>
+            </section>
+                                    	<form action="/game{{thisgame.gameID}}" method="post" style="margin: auto; ">
+                                            <input type="submit" value="Back to game"  class="submitButton" >
+                                      </form>
+
+        </section>
+		        <section class = "column" id = "columnReviews" style="width: 72.5%; float: right">
+		<h1>
+			All reviews for {{thisgame.title}}
+		</h1>
+		             <section class="recentReviews">
+								
+
+                {{#each review}}
+                                
+                <table  class='review{{@index}}'>
+									
+                    <tbody>
+                                                <tr>
+                                                    <th><span style = "color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                                                    <td><span class="close" id = "expandText"onclick= "expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
+                                                        <figure class='rating_bar' id = 'reviewfull' >
+                                                            <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
+                                                        </figure>
+                                                        
+                                                    </td>
+                                
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="smalltext" id = "fullReview">{{{this.review_text}}}</th>
+                                                </tr>
+ 
+                    </tbody>
+                
+            </table>
+            {{/each}}
+
+        </section>
+				</section>
+	</body>
+	    <script src="GamePage.js"></script>
+
+</html>

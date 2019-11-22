@@ -69,8 +69,18 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async getPlatforms() {
+		throw new NotImplemented('getPlatforms is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
 	async getReviews() {
 		throw new NotImplemented('getReviews is not implemented')
+	}
+	
+	// eslint-disable-next-line no-unused-vars
+	async getReviewsForGame() {
+		throw new NotImplemented('getReviewsForGame is not implemented')
 	}
 
 	// eslint-disable-next-line no-unused-vars
@@ -241,10 +251,36 @@ class SqliteDbContext extends DbContext {
 		return Object.assign(new Game(), newGame)
 	}
 
+	async getPlatforms() {
+		const sqlite = await this.sqlitePromise
+		const platforms = [];
+		const platformIDs = arguments[0]
+		for (var i = 0; i < platformIDs.length; i++)
+		{
+			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
+		}
+		return platforms;
+	}
+
 	async getReviews() {
 		const sqlite = await this.sqlitePromise
 
 		const reviews = await sqlite.all('SELECT * FROM `reviews`;')
+		return reviews
+	}
+
+	async getReviewsForGame(gameID) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof gameID === 'number') {
+			query = 'SELECT * FROM `reviews` WHERE `game` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		const reviews = await sqlite.all(query, gameID)
 		return reviews
 	}
 

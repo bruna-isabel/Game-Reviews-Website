@@ -9,6 +9,7 @@ CREATE TABLE `games`
 (
     `gameID` INTEGER PRIMARY KEY AUTOINCREMENT,
     `title` TEXT NOT NULL UNIQUE,
+    `platforms` TEXT,
     `slugline` TEXT,
     `summary` TEXT,
     `releaseDate` TEXT,
@@ -25,7 +26,7 @@ CREATE TABLE `reviews`
 (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `user` TEXT,
-  `game` TEXT,
+  `game` INTEGER,
   `review_score` INT,
   `review_text` TEXT,
   `review_date` DATE,
@@ -41,6 +42,7 @@ CREATE TABLE 'platforms'
 INSERT INTO `games` VALUES 
   (1, 
   'The Last of Us', 
+  '31',
   'Hope is the key to survival.', 
   'Set in the post-apocalyptic United States, the game tells the story of survivors Joel and Ellie as they work together to survive their westward journey across what remains of the country to find a possible cure for the modern fungal plague that has nearly decimated the entire human race.', 
   '04/06/2013', 
@@ -55,6 +57,7 @@ INSERT INTO `games` VALUES
 INSERT INTO `games` VALUES 
   (2, 
   'The Legend of Zelda: Breath of the Wild', 
+  '34,37',
   'Step into a world of discovery, exploration and adventure.', 
   'No kingdom. No memories. After a 100-year slumber, Link wakes up alone in a world he no longer remembers. Now the legendary hero must explore a vast and dangerous land and regain his memories before Hyrule is lost forever. Armed only with what he can scavenge, Link sets out to find answers and the resources needed to survive.', 
   '03/03/2017', 

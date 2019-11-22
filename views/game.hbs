@@ -31,7 +31,7 @@
                                         <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
 
                                     <h2>LEAVE A REVIEW</h2>
-                                    <p>{{thisgame.title}} ({{thisgame.platforms}})</p>
+                                    <p>{{thisgame.title}}({{platforms.platforms}})</p>
                                     <fieldset class="rate">
                                   <span id = "10" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
                                         <figure class="fa fa-star"></figure>
@@ -67,16 +67,18 @@
                                         <figure></figure>
                                         </span>         
                                     </fieldset>
-                                    <form>
-                                        </form>
+
                                     	<form action="/add" method="post">
                                         	<p><br /><textarea name="rvtext"></textarea></p>
-                                            <input type="hidden" id="gameName" name="gameName" value="...">
+                                            <input type="hidden" id="gameName" name="gameName" value="{{thisgame.title}}">
+                                            <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
                                             <input type="hidden" id="starRating" name="starRating" value="...">
-                                            <p ><input type="submit" value="Submit Review" class = "leaveReviewButton"></p>
+                                            <section style="width: 150px;">
+                                            <p ><input type="submit" value="Submit Review" class="submitButton"></p>
+                                            </section>
                                         </form>
-                                </section>
 
+                                </section>
                             </section>
 
         <section class = "column" id="column1">
@@ -87,13 +89,11 @@
                     </figure>
             </section>
 
-        <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords=The Legend of Zelda: Breath of the Wild">
+        <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords={{thisgame.title}}">
                 <section class = "purchaseButton">
                     <i class="fab fa-amazon" aria-hidden="true"></i> PURCHASE
                 </section>
-</a>
-                <section>
-                    </section>
+            </a>
 
 
         </section>
@@ -101,7 +101,7 @@
         <section class = "column" id="column2">
                 <section class = "platforms">
                         <article>
-                            <p>{{thisgame.platforms}}</p> 
+                            <p>{{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</p> 
                         </article>
                     </section>
                 <section class= "synopsis">
@@ -137,7 +137,7 @@
 
         <section class = "column" id="column3">
             <section>
-             <fieldset class = "leaveReviewButton" onclick= "clickReview()">Leave a review...</fieldset>
+             <fieldset class = "leaveReviewButton" onclick= "clickReview()">Rate and review...</fieldset>
             </section>
             <section class = "charts">
             
@@ -145,7 +145,7 @@
                     <figure class='rating_bar'>
                         <figure class="rating" style="width: calc({{thisgame.rating}}% * 10);"></figure>
                         </figure>
-            <p style="text-align:center; font-size: 12px;">{{thisgame.rating}}/10 from ...ratings.</p>
+            <p style="text-align:center; font-size: 12px;">{{thisgame.rating}}/10 from {{reviewNo}} reviews.</p>
             </section>
         </section>
 
@@ -153,25 +153,42 @@
         <section class = "column" id = "columnReviews">
              <section class="recentReviews">
                 <h2>
-                    Recent User Ratings
+                    Recent User Reviews
+                                <span class = "smalltext" style="text-align: right;">
+                    <span>
+                            	<form action="/showAllReviews" method="post" style="width: 150px; float: right" >
+                                                <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
+                                            <input type="submit" value="Show All {{reviewNo}} Reviews"  class="submitButton">
+                    </span>
+                                                    
+                </span>
                 </h2>
-                <table>
+
+
+                {{#each review}}
+                                
+                <table id = "reviewTable"  class='review{{@index}}'>
                     <tbody>
-                        {{#each review}}
-                        <tr>
-                            <th>{{this.user}}</th>
-                            <td>{{this.review_date}}</td>
-                            <td>
+                                                <tr>
+                                                    <th><span style = "color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                                                    <td><span class="close" id = "expandText"onclick= "expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
 
-                                <figure class='rating_bar' id = 'review'>
-                                    <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
-                                </figure>
-                            </td>
-                        </tr>
-                        {{/each}}
-
+                                                        <figure class='rating_bar' id = 'reviewfull'>
+                                                            <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
+                                                        </figure>
+                                                        
+                                                    </td>
+                                
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="smalltext">{{this.review_text}}</th>
+                                                </tr>
+ 
                     </tbody>
+                
             </table>
+            {{/each}}
+
         </section>
         </section>
 
