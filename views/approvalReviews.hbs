@@ -3,7 +3,7 @@
 
 <head>
 	Approval of Reviews
-	<link href="css/list.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/list.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -24,10 +24,10 @@
 			<td class='user'>{{this.user}}</td>
 			<td class='review'>{{this.review_text}}</td>
 			<td class='rating'>{{this.review_score}}</td>
-			<form action="/approvalreviews" method="post">
+			<form action="/approval/reviews" method="post">
 				<td class='statusChange'> <input type="submit" name="{{this.id}}" value="Approve"/> </td>
 			</form>
-			<form action="/approvalreviews" method="post">
+			<form action="/approval/reviews" method="post">
 				<td class='statusChange'><input type="submit" name="{{this.id}}" value="Reject"/></td>
 			</form>
 		<tr>

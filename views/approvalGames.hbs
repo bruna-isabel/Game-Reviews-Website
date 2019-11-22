@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<link href="css/list.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/list.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -28,10 +28,10 @@
 				<td class='releaseDate'>{{this.releaseDate}}</td>
 				<td class='rating'>{{this.rating}}</td>
 
-				<form action="/approvalgames" method="post">
+				<form action="/approval/games" method="post">
 					<td class='statusChange'> <input type="submit" name="{{this.gameID}}" value="Approve"/> </td>
 				</form>
-				<form action="/approvalgames" method="post">
+				<form action="/approval/games" method="post">
 					<td><input type="submit" name="{{this.gameID}}" value="Reject"/></td>
 				</form>
 			</tr>

@@ -4,7 +4,7 @@ const Router = require('koa-router')
 
 const approval = new Router({prefix: '/approval'})
 
-approval.get('games', async ctx => {
+approval.get('/games', async ctx => {
 	try {
 		//console.log(await ctx.session.authorised)
 		//If user is not logged in
@@ -24,7 +24,7 @@ approval.get('games', async ctx => {
 	}
 })
 
-approval.post('games', async ctx => {
+approval.post('/games', async ctx => {
 	try {
 		const body = ctx.request.body
 		//console.log(body)
@@ -42,7 +42,7 @@ approval.post('games', async ctx => {
 	}
 })
 
-approval.get('reviews', async ctx => {
+approval.get('/reviews', async ctx => {
 	try {
 		//If user is not logged in
 		if(await ctx.session.authorised !== true) {
@@ -59,7 +59,7 @@ approval.get('reviews', async ctx => {
 	}
 })
 
-approval.post('reviews', async ctx => {
+approval.post('/reviews', async ctx => {
 	try {
 		const body = ctx.request.body
 		const id = parseInt(Object.keys(body)[0])

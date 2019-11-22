@@ -21,7 +21,6 @@ const handlebars = new Views(
 	}
 )
 
-app.use(require('koa-static')('public'))
 const SECRET_KEY = process.env.SECRET_KEY || 'dummy'
 app.keys = [SECRET_KEY]
 
