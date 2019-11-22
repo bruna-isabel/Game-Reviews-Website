@@ -27,12 +27,10 @@ else
 {
     document.getElementById("synopsisPara").style = "-webkit-line-clamp: 5";
 }
-if (document.getElementById("score/10text").innerHTML.includes("from 0 reviews"))
-{
-    document.getElementById("score/10text").innerHTML = "No Reviews, be the first to review!"
-}
+
 var modal = document.getElementById("synopsisModal");
 var reviewModal = document.getElementById("reviewModal");
+var aboutGameModal = document.getElementById("aboutGameModal");
 
 var synopsis = document.getElementById("synopsis");
 var modalText = document.getElementById("modalText")
@@ -43,9 +41,14 @@ function clickSynopsis() {
     modalText.children[2].innerHTML = document.getElementsByClassName("synopsisPara")[0].innerHTML;
 }
 
+function clickAboutGame() {
+    aboutGameModal.style.display = "block";
+}
+
 function clickReview() {
     reviewModal.style.display = "block";
 }
+
 
 function expandReviews(index) {
     var table = document.getElementsByClassName('review'+index)[0];
@@ -68,6 +71,7 @@ function expandReviews(index) {
 function closeModal() {
     modal.style.display = "none";
     reviewModal.style.display = "none";
+    aboutGameModal.style.display = "none";
 }
 
 

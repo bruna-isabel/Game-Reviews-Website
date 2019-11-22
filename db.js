@@ -260,22 +260,23 @@ class SqliteDbContext extends DbContext {
 	async getAvgScore(id) {
 		const sqlite = await this.sqlitePromise
 
-		var allScoresForGame = [];
-		var totalOfScores = 0;
+		let allScoresForGame = [];
+		let totalOfScores = 0;
 		allScoresForGame = (await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id));
-		for (var i = 0; i < allScoresForGame.length; i++)
+		for (let  i = 0; i < allScoresForGame.length; i++)
 		{
 			totalOfScores += allScoresForGame[i].review_score;
 		}
 
-		return totalOfScores/(allScoresForGame.length);
+		const averageReviewScore = totalOfScores/(allScoresForGame.length)
+		return +averageReviewScore.toFixed(2);
 	}
 	async getPlatforms() {
 		const sqlite = await this.sqlitePromise
 
 		const platforms = [];
 		const platformIDs = arguments[0]
-		for (var i = 0; i < platformIDs.length; i++)
+		for (let i = 0; i < platformIDs.length; i++)
 		{
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
