@@ -26,10 +26,7 @@ const list = require('./controllers/list')
 const approval = require('./controllers/approval')
 const adding = require('./controllers/adding')
 
-<<<<<<< HEAD
 app.use(require('koa-static')('public'))
-=======
->>>>>>> feature/game-addition
 const SECRET_KEY = process.env.SECRET_KEY || 'dummy'
 app.keys = [SECRET_KEY]
 
@@ -59,10 +56,7 @@ app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
 app.use(logout.routes())
-<<<<<<< HEAD
 app.use(game.routes())
-=======
 app.use(adding.routes())
->>>>>>> feature/game-addition
 
 module.exports = app

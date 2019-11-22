@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 'use strict'
-<<<<<<< HEAD
 
 const port = 8080
 
@@ -17,10 +16,8 @@ const app = require('./app')
 app.context.db = dbcontext
 
 app.listen(port)
-=======
 const port = 8080
 
 const app = require('./app')
 
 app.listen(8080)
->>>>>>> feature/game-addition
