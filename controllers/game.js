@@ -11,7 +11,16 @@ game.get('/game:id', async ctx => {
 		const reviewCount = reviews.length;
 		const platformsIds = gamedata.platforms.split(',');
 		const platforms = await ctx.db.getPlatforms(platformsIds);
-		await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms})
+		var avgScore = 0;
+		if (reviewCount > 0)
+		{
+			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
+		}
+		else
+		{
+			avgScore = 0;
+		}
+		await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore})
 	} catch(err) {
 		ctx.body = err.message
 	}
@@ -21,8 +30,17 @@ game.get('/allReviews:id', async ctx => {
 	try {
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse();
-		const reviewCount = reviews.length+1;
-		await ctx.render('allReviews', {review: reviews, thisgame: gamedata, reviewNo: reviewCount})
+		const reviewCount = reviews.length;
+		var avgScore = 0;
+		if (reviewCount > 0)
+		{
+			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
+		}
+		else
+		{
+			avgScore = 0;
+		}
+		await ctx.render('allReviews', {review: reviews, thisgame: gamedata, reviewNo: reviewCount, avgScore: avgScore})
 	} catch(err) {
 		ctx.body = err.message
 	}
