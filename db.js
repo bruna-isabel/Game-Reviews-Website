@@ -67,6 +67,11 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async getAvgScore(id) {
+		throw new NotImplemented('getAvgScore is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
 	async getPlatforms() {
 		throw new NotImplemented('getPlatforms is not implemented')
 	}
@@ -81,6 +86,7 @@ class DbContext {
 		throw new NotImplemented('getReviewsForGame is not implemented')
 	}
 
+	
 	// eslint-disable-next-line no-unused-vars
 	async getReview(id) {
 		throw new NotImplemented('getReview is not implemented')
@@ -249,14 +255,29 @@ class SqliteDbContext extends DbContext {
 		return Object.assign(new Game(), newGame)
 	}
 
+	async getAvgScore(id) {
+		const sqlite = await this.sqlitePromise
+
+		var allScoresForGame = [];
+		var totalOfScores = 0;
+		allScoresForGame = (await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id));
+		for (var i = 0; i < allScoresForGame.length; i++)
+		{
+			totalOfScores += allScoresForGame[i].review_score;
+		}
+
+		return totalOfScores/(allScoresForGame.length);
+	}
 	async getPlatforms() {
 		const sqlite = await this.sqlitePromise
+
 		const platforms = [];
 		const platformIDs = arguments[0]
 		for (var i = 0; i < platformIDs.length; i++)
 		{
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
+
 		return platforms;
 	}
 

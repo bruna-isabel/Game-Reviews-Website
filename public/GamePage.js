@@ -27,7 +27,10 @@ else
 {
     document.getElementById("synopsisPara").style = "-webkit-line-clamp: 5";
 }
-
+if (document.getElementById("score/10text").innerHTML.includes("from 0 reviews"))
+{
+    document.getElementById("score/10text").innerHTML = "No Reviews, be the first to review!"
+}
 var modal = document.getElementById("synopsisModal");
 var reviewModal = document.getElementById("reviewModal");
 

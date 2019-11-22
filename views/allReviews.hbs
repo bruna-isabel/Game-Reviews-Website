@@ -24,11 +24,11 @@
             </section>
 						            <section class = "charts">
             
-            <h2>AVERAGE USER REVIEW</h2>
-                    <figure class='rating_bar'>
-                        <figure class="rating" style="width: calc({{thisgame.rating}}% * 10);"></figure>
+            <h2>AVERAGE USER SCORE</h2>
+                    <figure class='rating_bar' style="margin-left: 40px">
+                        <figure class="rating" style="width: calc({{avgScore}}% * 10);"></figure>
                         </figure>
-            <p style="text-align:center; font-size: 12px;">{{thisgame.rating}}/10 from {{reviewNo}} reviews.</p>
+            <p style="text-align:center; font-size: 12px;" id = "score/10text">{{avgScore}}/10 from {{reviewNo}} reviews.</p>
             </section>
                                     	<form action="/game{{thisgame.gameID}}" method="post" style="margin: auto; ">
                                             <input type="submit" value="Back to game"  class="submitButton" >
@@ -69,6 +69,11 @@
         </section>
 				</section>
 	</body>
-	    <script src="GamePage.js"></script>
+	    <script >
+				if (document.getElementById("score/10text").innerHTML.includes("from 0 reviews"))
+				{
+						document.getElementById("score/10text").innerHTML = "No Reviews."
+				}
+			</script>
 
 </html>
