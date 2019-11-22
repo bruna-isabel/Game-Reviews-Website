@@ -1,6 +1,4 @@
-/*
- * Database controller
- */
+/*Database controller*/
 
 'use strict'
 
@@ -274,14 +272,14 @@ class SqliteDbContext extends DbContext {
 	async getPlatforms() {
 		const sqlite = await this.sqlitePromise
 
-		const platforms = [];
+		const platforms = []
 		const platformIDs = arguments[0]
 		for (let i = 0; i < platformIDs.length; i++)
 		{
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
 
-		return platforms;
+		return platforms
 	}
 
 	async getReviews() {
@@ -339,7 +337,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 		const d = new Date();
 		const month = Number(d.getMonth()+1)
-		const currentDate = "" + d.getDate() + '/' + month + '/' + d.getFullYear() + "";
+		const currentDate = `${  d.getDate()  }/${  month  }/${  d.getFullYear()  }`
 
 		await sqlite.run(
 			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
