@@ -261,8 +261,7 @@ class SqliteDbContext extends DbContext {
 		let allScoresForGame = [];
 		let totalOfScores = 0;
 		allScoresForGame = (await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id));
-		for (let  i = 0; i < allScoresForGame.length; i++)
-		{
+		for (let  i = 0; i < allScoresForGame.length; i++){
 			totalOfScores += allScoresForGame[i].review_score;
 		}
 
@@ -274,8 +273,7 @@ class SqliteDbContext extends DbContext {
 
 		const platforms = []
 		const platformIDs = arguments[0]
-		for (let i = 0; i < platformIDs.length; i++)
-		{
+		for (let i = 0; i < platformIDs.length; i++){
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
 
