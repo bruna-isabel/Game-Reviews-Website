@@ -45,7 +45,6 @@ function serve(opts) {
  * @param {string} filename - filename of the file being served
  */
 function serveFile(ctx, filename) {
-	console.log(filename, getMimeType(filename))
 	ctx.set('Content-Type', getMimeType(filename))
 	ctx.body = fs.readFileSync(filename, 'utf8')
 }
