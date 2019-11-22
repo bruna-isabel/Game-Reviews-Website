@@ -44,8 +44,6 @@ const dbcontext = new db.SqliteDbContext(path.join(__dirname, 'app.db'))
 app.context.db = dbcontext
 
 const login = require('./controllers/login')
-const list = require('./controllers/list')
-const approval = require('./controllers/approval')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 const game = require('./controllers/game')

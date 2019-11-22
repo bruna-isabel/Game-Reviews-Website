@@ -258,27 +258,25 @@ class SqliteDbContext extends DbContext {
 	async getAvgScore(id) {
 		const sqlite = await this.sqlitePromise
 
-		var allScoresForGame = [];
-		var totalOfScores = 0;
-		allScoresForGame = (await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id));
-		for (var i = 0; i < allScoresForGame.length; i++)
-		{
-			totalOfScores += allScoresForGame[i].review_score;
+		let allScoresForGame = []
+		let totalOfScores = 0
+		allScoresForGame = await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id)
+		for (let i = 0; i < allScoresForGame.length; i++) {
+			totalOfScores += allScoresForGame[i].review_score
 		}
 
-		return totalOfScores/(allScoresForGame.length);
+		return totalOfScores/ allScoresForGame.length
 	}
 	async getPlatforms() {
 		const sqlite = await this.sqlitePromise
 
-		const platforms = [];
+		const platforms = []
 		const platformIDs = arguments[0]
-		for (var i = 0; i < platformIDs.length; i++)
-		{
+		for (let i = 0; i < platformIDs.length; i++) {
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
 
-		return platforms;
+		return platforms
 	}
 
 	async getReviews() {
@@ -336,7 +334,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 		const d = new Date();
 		const month = Number(d.getMonth()+1)
-		const currentDate = "" + d.getDate() + '/' + month + '/' + d.getFullYear() + "";
+		const currentDate = `${  d.getDate()  }/${  month  }/${  d.getFullYear()  }`
 
 		await sqlite.run(
 			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
