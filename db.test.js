@@ -13,6 +13,7 @@ const {
 
 const User = require('./models/user')
 const Game = require('./models/game')
+const Category = require('./models/category')
 
 const BUILD_DB_SCRIPT = path.join(__dirname, './build/build_db.sql')
 
@@ -150,7 +151,8 @@ describe('game database with sqlite', () => {
 					summary: 'summary!!!',
 					imageSrc: 'image1.png',
 					rating: 5,
-					submittedBy: 10
+					submittedBy: 10,
+					categories: []
 				},
 				{
 					id: 2,
@@ -158,7 +160,8 @@ describe('game database with sqlite', () => {
 					summary: 'summary!!',
 					imageSrc: 'image2.png',
 					rating: 2,
-					submittedBy: 10
+					submittedBy: 10,
+					categories: []
 				}
 			]
 		)
@@ -251,6 +254,9 @@ describe('games database with categories', () => {
 		await db.exec('DELETE FROM `categories`;')
 		await db.exec('DELETE FROM `games`;')
 
+		// reset auto increment for categories
+		await db.exec('DELETE FROM sqlite_sequence WHERE name = \'categories\';')
+
 		// insert dummy categories data
 		await db.exec(
 			'INSERT INTO `categories` ' +
@@ -298,4 +304,79 @@ describe('games database with categories', () => {
 		expect((await sqliteContext.getGame(2)).categories).toEqual([])
 	})
 
+	test('should get categories by gameID', async() => {
+		expect(await sqliteContext.getGameCategories(1))
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' },
+					{ id: 2, name: 'Action' }
+				]
+			)
+
+		// check empty return
+		expect(await sqliteContext.getGameCategories(2))
+			.toEqual([])
+
+		// check for error on nonexistant game
+		await expect(sqliteContext.getGameCategories(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+	})
+
+	test('should add new game with existing categories', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const category = await sqliteContext.getCategory(1)
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.createGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' }
+				]
+			)
+	})
+
+	test('should add new game with new categories', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const category = new Category('Open World')
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.createGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 4, name: 'Open World' }
+				]
+			)
+	})
+
+	test('should update existing game with existing categories', async() => {
+		const game = await sqliteContext.getGame(2)
+		const category = await sqliteContext.getCategory(3)
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.updateGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 3, name: 'Something else' }
+				]
+			)
+	})
+
+	test('should update existing game with new category', async() => {
+		const game = await sqliteContext.getGame(1)
+
+		game.categories.push(new Category('New'))
+
+		expect((await sqliteContext.updateGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' },
+					{ id: 2, name: 'Action' },
+					{ id: 4, name: 'New' }
+				]
+			)
+	})
 })
