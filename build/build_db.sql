@@ -15,7 +15,6 @@ CREATE TABLE `games`
     `releaseDate` TEXT,
     `director` TEXT,
     `publisher` TEXT,
-    `rating` INT,
     `submittedBy` TEXT,
     `approved` TEXT,
     `poster` TEXT,
@@ -46,9 +45,8 @@ INSERT INTO `games` VALUES
   'Hope is the key to survival.', 
   'Set in the post-apocalyptic United States, the game tells the story of survivors Joel and Ellie as they work together to survive their westward journey across what remains of the country to find a possible cure for the modern fungal plague that has nearly decimated the entire human race.', 
   '04/06/2013', 
-  'Bruce Straley, Neil Druckmann', 
+  'Naughty Dog', 
   'Sony Computer Entertainment', 
-  9.32, 
   'user1', 
   'no', 
   'tlou.jpg', 
@@ -61,13 +59,40 @@ INSERT INTO `games` VALUES
   'Step into a world of discovery, exploration and adventure.', 
   'No kingdom. No memories. After a 100-year slumber, Link wakes up alone in a world he no longer remembers. Now the legendary hero must explore a vast and dangerous land and regain his memories before Hyrule is lost forever. Armed only with what he can scavenge, Link sets out to find answers and the resources needed to survive.', 
   '03/03/2017', 
-  'Hidemaro Fujibayashi', 
+  'Nintendo EPD', 
   'Nintendo', 
-  9.8, 
   'user1', 
   'no', 
   'botw.jpg', 
   'botwsplash.png');
+
+INSERT INTO `games` VALUES 
+  (3,
+  "Marvel's Spider-Man", 
+  '36',
+  'Be Greater.', 
+  'After eight years behind the mask, Peter Parker is a crime-fighting expert. Feel the full power of a more experienced Spider-Man with improvisational combat, dynamic acrobatics, fluid urban traversal, and environmental interactions. A rookie no longer, this is the most masterful Spider-Man you’ve ever played.', 
+  '07/09/2018', 
+  'Insomniac Games', 
+  'Sony Interactive Entertainment', 
+  'user1', 
+  'no', 
+  'spiderman.jpg', 
+  'spidermansplash.jpg');
+
+INSERT INTO `games` VALUES 
+  (4,
+  "Football Manager 2020", 
+  '38,37,39,40,41',
+  'Your club, your way.', 
+  'Manage your football club, your way. Every decision counts in FM20 with new features rewarding planning and progression like never before, empowering managers to develop both your club’s and your own unique managerial identity.', 
+  '19/11/2019', 
+  'Sports Interactive', 
+  'SEGA', 
+  'user1', 
+  'no', 
+  'fm20poster.jpg', 
+  'fm20splash.jpg');
 
 INSERT INTO 'platforms' VALUES (1, 'Atari 2600');
 INSERT INTO 'platforms' VALUES (2, 'Color TV-Game');
@@ -103,6 +128,12 @@ INSERT INTO 'platforms' VALUES (31, 'PlayStation 3');
 INSERT INTO 'platforms' VALUES (32, 'Nintendo 3DS ');
 INSERT INTO 'platforms' VALUES (33, 'PlayStation Vita');
 INSERT INTO 'platforms' VALUES (34, 'Wii U');
-INSERT INTO 'platforms' VALUES (35, 'Xbox One ');
-INSERT INTO 'platforms' VALUES (36, 'PlayStation 4 ');
+INSERT INTO 'platforms' VALUES (35, 'Xbox One');
+INSERT INTO 'platforms' VALUES (36, 'PlayStation 4');
 INSERT INTO 'platforms' VALUES (37, 'Nintendo Switch');
+INSERT INTO 'platforms' VALUES (38, 'Microsoft Windows');
+INSERT INTO 'platforms' VALUES (39, 'macOS');
+INSERT INTO 'platforms' VALUES (40, 'iOS');
+INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
+INSERT INTO 'platforms' VALUES (42, 'Linux');
+

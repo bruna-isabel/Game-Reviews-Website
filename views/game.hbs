@@ -24,7 +24,34 @@
                                     <h2>MODAL HEADER</h2>
                                     <p>MODAL TEXT</p>
                                 </section>
-                            </section>
+                        </section>
+
+                        <section id="aboutGameModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+                                <section style="margin-bottom: 0%">
+                                                                        <h2>{{thisgame.title}} ({{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}})</h2>
+
+                                        <article class = "aboutGame">
+                                                <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Release Date</th>
+                                                                <td>{{thisgame.releaseDate}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Director</td>
+                                                                <td>{{thisgame.director}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Publisher</th>
+                                                                <td>{{thisgame.publisher}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                </table>
+                                    </section>
+                                </section>
+                        </section>
 
                         <section id="reviewModal" class="modal">
                                 <section id = "modalText" class="modal-content">
@@ -114,8 +141,8 @@
                     
                 </section>
                     
-            <section style="margin-bottom: 0%">
-                    <article class = "aboutGame">
+            <section style="margin-bottom: 0%" onclick="clickAboutGame()" class = "aboutGame" id="hidden">
+                    <article >
                             <table>
                                     <tbody>
                                         <tr>
@@ -137,7 +164,7 @@
 
         <section class = "column" id="column3">
             <section>
-             <fieldset class = "leaveReviewButton" onclick= "clickReview()">Rate and review...</fieldset>
+             <fieldset class = "leaveReviewButton" onclick= "clickReview()">RATE AND REVIEW</fieldset>
             </section>
             <section class = "charts">
             
