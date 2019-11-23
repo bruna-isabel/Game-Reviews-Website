@@ -16,5 +16,3 @@ const app = require('./app')
 app.context.db = dbcontext
 
 app.listen(port)
-
-app.listen(8080)

@@ -11,7 +11,7 @@ game.get('/game:id', async ctx => {
 		const reviewCount = reviews.length;
 		const platformsIds = gamedata.platforms.split(',');
 		const platforms = await ctx.db.getPlatforms(platformsIds);
-		var avgScore = 0;
+		let avgScore = 0;
 		if (reviewCount > 0)
 		{
 			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
@@ -31,7 +31,7 @@ game.get('/allReviews:id', async ctx => {
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse();
 		const reviewCount = reviews.length;
-		var avgScore = 0;
+		let avgScore = 0;
 		if (reviewCount > 0)
 		{
 			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
@@ -50,7 +50,7 @@ game.post('/add', async ctx => {
 	try {
 		const body = ctx.request.body
 		console.log(body.gameName);
-		var reviewText = body.rvtext;
+		let reviewText = body.rvtext;
 		const review = new Review(ctx.session.userID, body.gameID, body.starRating, reviewText, "DD/MM/YYYY", "no");
 		console.log(review);
 		await ctx.db.createReview(review);
