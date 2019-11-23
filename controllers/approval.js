@@ -4,6 +4,7 @@ const Router = require('koa-router')
 
 const approval = new Router({prefix: '/approval'})
 
+// eslint-disable-next-line max-lines-per-function
 approval.get('/games', async ctx => {
 	try {
 		//console.log(await ctx.session.authorised)
@@ -11,6 +12,7 @@ approval.get('/games', async ctx => {
 		if(await ctx.session.authorised !== true) {
 			return await ctx.render('error', {message: 'Session not authorised'})
 		}
+
 		//console.log(await ctx.db.isUserAdmin(await ctx.session.userID))
 		//If user is logged in, but isn't an admin
 		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
@@ -18,6 +20,14 @@ approval.get('/games', async ctx => {
 		}
 
 		const unapproved = await ctx.db.approvalGameList(false)
+
+		//changing submittedBy from an ID to the username
+		let game
+		for(game of unapproved) {
+			const user = await ctx.db.getUser(game.submittedBy)
+			game.submittedBy = user.username
+		}
+
 		await ctx.render('approvalGames', {games: unapproved})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})

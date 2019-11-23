@@ -11,10 +11,10 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th>Title</th>
-				<th>Summary</th>
+				<th class='left'>Title</th>
+				<th class='left'>Summary</th>
 				<th>Release Date</th>
-				<th>Avg. Rating</th>
+				<th>Submitted By</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -26,7 +26,7 @@
 				<td class='title'><a href="/game{{this.gameID}}">{{this.title}}</a></td>
 				<td class='summary'>{{this.summary}}</td>
 				<td class='releaseDate'>{{this.releaseDate}}</td>
-				
+				<td class='rating'>{{this.submittedBy}}</td>
 
 				<form action="/approval/games" method="post">
 					<td class='statusChange'> <input type="submit" name="{{this.gameID}}" value="Approve"/> </td>
