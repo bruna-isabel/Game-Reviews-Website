@@ -14,7 +14,7 @@ CREATE TABLE `games`
     `slugline` TEXT,
     `summary` TEXT,
     `releaseDate` TEXT,
-    `director` TEXT,
+    `developer` TEXT,
     `publisher` TEXT,
     `submittedBy` INT,
     `approved` TEXT,
