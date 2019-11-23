@@ -8,7 +8,7 @@ const mimes = {
 	'text/css': ['css'],
 	'text/xml': ['xml'],
 	'image/gif': ['gif'],
-	'image/jpeg': ['jpeg jpg'],
+	'image/jpeg': ['jpeg', 'jpg'],
 	'application/javascript': ['js'],
 	'application/atom+xml': ['atom'],
 	'application/rss+xml': ['rss'],
@@ -18,8 +18,8 @@ const mimes = {
 	'text/vnd.wap.wml': ['wml'],
 	'text/x-component': ['htc'],
 	'image/png': ['png'],
-	'image/svg+xml': ['svg svgz'],
-	'image/tiff': ['tif tiff'],
+	'image/svg+xml': ['svg', 'svgz'],
+	'image/tiff': ['tif', 'tiff'],
 	'image/vnd.wap.wbmp': ['wbmp'],
 	'image/webp': ['webp'],
 	'image/x-icon': ['ico'],
@@ -97,6 +97,11 @@ const mimes = {
 	'video/x-msvideo': ['avi']
 }
 
+/**
+ * Gets the mimetype for a given file using the file extension
+ * @param {string} file - Filename of the file
+ * @return {string|null} The mimetype of the file
+ */
 function getMimeType(file) {
 	// get the file extension from filename
 	const ext = path.extname(file).slice(1)
