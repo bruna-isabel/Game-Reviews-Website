@@ -273,11 +273,17 @@ class SqliteDbContext extends DbContext {
 
 		const platforms = []
 		const platformIDs = arguments[0]
-		for (let i = 0; i < platformIDs.length; i++){
+		for (let i = 0; i < platformIDs.length; i++) {
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
 
 		return platforms
+	}
+
+	async getAllPlatforms() {
+		const sqlite = await this.sqlitePromise
+		const names = await sqlite.all('SELECT `name` FROM `platforms`; ')
+		return names
 	}
 
 	async getReviews() {
