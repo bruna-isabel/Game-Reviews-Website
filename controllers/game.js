@@ -51,7 +51,8 @@ game.post('/add', async ctx => {
 		const body = ctx.request.body
 		console.log(body.gameName);
 		let reviewText = body.rvtext;
-		const review = new Review(ctx.session.userID, body.gameID, body.starRating, reviewText, "DD/MM/YYYY", "no");
+		const user = await ctx.db.getUser(ctx.session.userID)
+		const review = new Review(user.username, body.gameID, body.starRating, reviewText, "DD/MM/YYYY", "no");
 		console.log(review);
 		await ctx.db.createReview(review);
 		ctx.redirect(`/game${body.gameID}`)

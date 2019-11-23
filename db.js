@@ -37,8 +37,17 @@ class DbContext {
 	}
 
 	// eslint-disable-next-line no-unused-vars
+	async isUserAdmin(id) {
+		throw new NotImplemented('isUserAdmin is not implemented')
+	}
+	// eslint-disable-next-line no-unused-vars
 	async execute(query) {
 		throw new NotImplemented('execute is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async users_games() {
+		throw new NotImplemented('users_games is not implemented')
 	}
 
 	// eslint-disable-next-line no-unused-vars
@@ -75,6 +84,9 @@ class DbContext {
 	async getPlatforms() {
 		throw new NotImplemented('getPlatforms is not implemented')
 	}
+	async approvalGameList(bool) {
+		throw new NotImplemented('approvalGameList is not implemented')
+	}
 
 	// eslint-disable-next-line no-unused-vars
 	async getReviews() {
@@ -105,6 +117,11 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async updateReview(review) {
 		throw new NotImplemented('updateReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async approvalReviewList(bool) {
+		throw new NotImplemented('approvalReviewList is not implemented')
 	}
 }
 
@@ -178,6 +195,22 @@ class SqliteDbContext extends DbContext {
 		return this.getUser(user.id)
 	}
 
+	async isUserAdmin(id) {
+		const user = await this.getUser(id)
+		if(user['isAdmin'] === 'yes') {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	async users_games() {
+		const sqlite = await this.sqlitePromise
+
+		const linkedTable = await sqlite.all('SELECT `users`.`id`, `users`.`username`, `games`.`gameID`, `games`.`title` FROM `games` INNER JOIN `users` ON `users`.`id` = `games`.`submittedBy`;')
+		return linkedTable
+	}
+
 	async getGames() {
 		const sqlite = await this.sqlitePromise
 
@@ -218,18 +251,18 @@ class SqliteDbContext extends DbContext {
 	async updateGame(game) {
 		const sqlite = await this.sqlitePromise
 		await sqlite.run(
-			'UPDATE `games` SET `title`= ? , `slugline` = ?, `summary`= ? , `releaseDate`=?, `director`=?, `publisher`=?, `rating`= ? , `submittedBy`= ?, `approved` = ?, `poster`=?, `splash`=? WHERE `gameID`= ? ;',
+			'UPDATE `games` SET `title`= ? , `platforms`=?, `slugline` = ?, `summary`= ? , `releaseDate`=?, `director`=?, `publisher`=?, `submittedBy`= ?, `approved` = ?, `poster`=?, `splash`=? WHERE `gameID`= ? ;',
 			game.title,
+			game.platforms,
 			game.slugline,
 			game.summary,
 			game.releaseDate,
 			game.director,
 			game.publisher,
-			game.rating,
 			game.submittedBy,
 			game.approved,
 			game.poster,
-			game.slugline,
+			game.splash,
 			game.gameID
 		)
 		return this.getGame(game.gameID)
@@ -239,14 +272,14 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title`= ? , `slugline` = ?, `summary`= ? , `releaseDate`=?, , `director`=?, `publisher`=?, `rating`= ? , `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
+			'INSERT INTO `games` VALUES `title`= ? , `platforms` =?, `slugline` = ?, `summary`= ? , `releaseDate`=?, , `director`=?, `publisher`=?, `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
 			game.title,
+			game.platforms,
 			game.slugline,
 			game.summary,
 			game.releaseDate,
 			game.director,
 			game.publisher,
-			game.rating,
 			game.submittedBy,
 			game.poster,
 			game.splash
@@ -278,6 +311,19 @@ class SqliteDbContext extends DbContext {
 		}
 
 		return platforms
+	}
+	async approvalGameList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `games` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `games` WHERE `approved` != ?'
+		}
+		const games = await sqlite.all(query, 'yes')
+		return games
 	}
 
 	async getAllPlatforms() {
@@ -345,7 +391,7 @@ class SqliteDbContext extends DbContext {
 
 		await sqlite.run(
 			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
-			'USER_NAME',
+			review.user,
 			review.game,
 			review.review_score,
 			review.review_text,
@@ -368,6 +414,20 @@ class SqliteDbContext extends DbContext {
 			review.id
 		)
 		return this.getReview(review.id)
+	}
+
+	async approvalReviewList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` != ?'
+		}
+		const reviews = await sqlite.all(query, 'yes')
+		return reviews
 	}
 }
 
