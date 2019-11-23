@@ -2,7 +2,8 @@ CREATE TABLE `users`
 (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `username` TEXT UNIQUE,
-  `hash` TEXT
+  `hash` TEXT,
+  `isAdmin` TEXT
 );
 
 CREATE TABLE `games` 
@@ -15,7 +16,7 @@ CREATE TABLE `games`
     `releaseDate` TEXT,
     `director` TEXT,
     `publisher` TEXT,
-    `submittedBy` TEXT,
+    `submittedBy` INT,
     `approved` TEXT,
     `poster` TEXT,
     `splash` TEXT
@@ -47,7 +48,7 @@ INSERT INTO `games` VALUES
   '04/06/2013', 
   'Naughty Dog', 
   'Sony Computer Entertainment', 
-  'user1', 
+  1, 
   'no', 
   'tlou.jpg', 
   'tlousplash.jpg');
@@ -61,7 +62,7 @@ INSERT INTO `games` VALUES
   '03/03/2017', 
   'Nintendo EPD', 
   'Nintendo', 
-  'user1', 
+  2, 
   'no', 
   'botw.jpg', 
   'botwsplash.png');
@@ -137,3 +138,5 @@ INSERT INTO 'platforms' VALUES (40, 'iOS');
 INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'noo');

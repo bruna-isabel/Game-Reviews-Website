@@ -8,7 +8,7 @@ const path = require('path')
 
 const Koa = require('koa')
 const Views = require('koa-views')
-const serve = require('koa-static')
+const serve = require('./controllers/middleware/serve')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 
@@ -26,12 +26,16 @@ const list = require('./controllers/list')
 const approval = require('./controllers/approval')
 const adding = require('./controllers/adding')
 
-app.use(require('koa-static')('public'))
 const SECRET_KEY = process.env.SECRET_KEY || 'dummy'
 app.keys = [SECRET_KEY]
 
 // middleware
 app.use(handlebars)
+// uses ./controllers/middleware/serve.js middleware
+app.use(serve({
+	folder: path.join(__dirname, 'public'),
+	base: '/public/'
+}))
 app.use(bodyParser())
 // app.use(serve(path.join(__dirname, 'public')))
 app.use(session({key: 'session_id', renew: true}, app))

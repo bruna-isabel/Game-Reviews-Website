@@ -5,18 +5,20 @@ const Router = require('koa-router')
 const list = new Router({prefix: '/list'})
 
 list.get('/', async ctx => {
-	const games = await ctx.db.getGames()
-	let i
-	const approved = []
-	for (i = 0; i < games.length; i++) {
-		if(games[i]['approved'] === 'yes') {
-			approved.push(games[i])
-		} else {
-			continue
+	try {
+		const approved = await ctx.db.approvalGameList(true)
+
+		//changing submittedBy from an ID to the username
+		let game
+		for(game of approved) {
+			const user = await ctx.db.getUser(game.submittedBy)
+			game.submittedBy = user.username
 		}
+
+		await ctx.render('listpage.hbs', {games: approved})
+	} catch(err) {
+		await ctx.render('error', {message: err.message})
 	}
-	console.log(approved)
-	await ctx.render('listpage.hbs', {games: approved})
 })
 
 list.post('/', async ctx => {
@@ -25,4 +27,3 @@ list.post('/', async ctx => {
 })
 
 module.exports = list
-

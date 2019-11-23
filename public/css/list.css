@@ -1,0 +1,106 @@
+html{
+	background-color: #292a2e;
+	color: #e3e7e8;
+	font-size: 16px;
+	height: 1300px;
+}
+h1{
+	color: #A9A9A9;
+	text-align: center;
+}
+.content-table{
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	min-width: 400px;
+	border-radius: 6.5px;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	width: 70%;
+	float: center;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+.content-table thead tr{
+	background-color: #303136;
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+}
+.content-table th,
+.content-table td{
+	padding: 12px 15px;
+}
+.content-table tbody tr:nth-of-type(even){
+	background-color:	#303136;
+}
+.content-table tbody tr:last-of-type{
+	border-bottom: 2px solid #696969;
+}
+.image{
+	height: 75px;
+	margin: 8em;
+	width: 7em;
+}
+.title{
+	font-size: 20px;
+	width: 20em;
+	font-weight: bold;
+}
+.summary{
+	text-align: left;
+	width: 30em;
+	font-size: 15px;
+}
+.releasedate{
+	text-align: center;
+	width: 5em;
+}
+.rating{
+	text-align: center;
+	width: 5em;
+}
+.statusChange{
+	width: 5em;
+}
+input[type=submit]{
+	background-color: #303136;
+	color: white;
+	padding: 7px 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 6.5px;
+}
+.user{
+	text-align: center;
+	font-weight: bold;
+	width: 13em;
+}
+.review{
+	text-align: left;
+	font-weight: 30em;
+}
+
+a:link {
+	color: #A9A9A9;
+	text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+	color: #A9A9A9;
+	text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+	color: #A9A9A9;
+	text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+	color: #A9A9A9;
+	text-decoration: underline;
+}
