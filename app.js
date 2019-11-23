@@ -22,7 +22,7 @@ const handlebars = new Views(
 
 const SECRET_KEY = process.env.SECRET_KEY || 'dummy'
 app.keys = [SECRET_KEY]
-)
+
 
 // middleware
 app.use(handlebars)
@@ -40,7 +40,7 @@ const home = require('./controllers/home')
 const login = require('./controllers/login')
 const logout = require('./controllers/logout')
 const signup = require('./controllers/signup')
-const homepage = require('./controllers/homepage'
+const homepage = require('./controllers/homepage')
 
 // routers
 app.use(home.routes())

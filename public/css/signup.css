@@ -18,7 +18,7 @@ form {
 }
 
 label, h1 {
-	color: rgb(143, 143, 127);
+	color: rgb(247, 247, 239);
 	text-align: center;
 }
 
@@ -50,4 +50,8 @@ label, h1 {
   border: 1px solid rgb(15, 15, 15);
 	width: 50%; /* Could be more or less, depending on screen size */
 	opacity: 0.5;
+}
+
+.error-msg{
+  color: white;
 }

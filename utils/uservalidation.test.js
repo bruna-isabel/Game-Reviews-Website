@@ -6,11 +6,6 @@
 
 const userValidation = require('../utils/uservalidation.js')
 
-
-//Missing:  database username test that verifies that a username already exists
-//tests for validating username
-
-
 describe('username', () => {
 
 	test('should be inserted', () => {
@@ -18,43 +13,16 @@ describe('username', () => {
 	})
 
 	test('should only have legal characters', () => {
-		expect(userValidation.validateUsername('aaaaaaa')).toBeTruthy;
-		expect(userValidation.validateUsername('aaaaaaa1')).toBeTruthy;
-		expect(userValidation.validateUsername('aaaaaaA')).toBeTruthy;
+		expect(userValidation.validateUsername('aaaaaaa')).toBeTruthy
+		expect(userValidation.validateUsername('aaaaaaa1')).toBeTruthy
+		expect(userValidation.validateUsername('aaaaaaA')).toBeTruthy
 		expect(() => userValidation.validateUsername('aaaaaaa¶')).toThrowError('username contains illegal characters')
 	})
 
 	test ('should have min 4 and max 30 characters', () => {
 		expect(() => userValidation.validateUsername('abc')).toThrowError('username must have in between 4 and 30 characters')
-		expect(() => userValidation.validateUsername('1234567890123456789012345678901')).toThrowError('username must have in between 4 and 30 characters');
-		expect( userValidation.validateUsername('abcderfj')).toBeTruthy;
-	})
-
-})
-
-describe('email', () => {
-
-	//It's missing the database email test that verifies that an email already exists
-
-
-	test('should be inserted', ()  => {
-		expect(() => userValidation.validateEmail('')).toThrowError('email was not entered')
-	})
-
-	test ('should be in correct format',  () => {
-		expect( userValidation.validateEmail('aaaa@bbbb.com')).toBeTruthy;
-		expect( userValidation.validateEmail('aaaa1@bbbb.co.uk')).toBeTruthy;
-		expect( () => userValidation.validateEmail('@bbb.com')).toThrowError('email is in the wrong format');
-		expect( () => userValidation.validateEmail('aaa1@.com')).toThrowError('email is in the wrong format');
-		expect( () => userValidation.validateEmail('aaa@bbb')).toThrowError('email is in the wrong format');
-		expect( () => userValidation.validateEmail('@bbbcom')).toThrowError('email is in the wrong format'); 
-
-	})
-
-	test ('should have lowercase letters only', () => {
-		expect( () => userValidation.validateEmail('aaAA@bbbb.com')).toThrowError('email contains uppercase letters');
-		expect( () => userValidation.validateEmail('aaaAA@bbBB.com')).toThrowError('email contains uppercase letters');
-		expect( userValidation.validateEmail('aaaa@bbbb.com')).toBeTruthy;
+		expect(() => userValidation.validateUsername('1234567890123456789012345678901')).toThrowError('username must have in between 4 and 30 characters')
+		expect( userValidation.validateUsername('abcderfj')).toBeTruthy
 	})
 
 })
@@ -66,19 +34,19 @@ describe('password', () => {
 	})
 
 	test ('should only have legal characters', () => {
-		expect(userValidation.validatePassword('aAaaa2aa!a')).toBeTruthy;
+		expect(userValidation.validatePassword('aAaaa2aa!a')).toBeTruthy
 		expect( () => userValidation.validatePassword('aa1aaAaaaa¶')).toThrowError('password contains illegal characters');
 	})
 	test ('should have min 8 and max 15 characters', () => {
 		expect( () => userValidation.validatePassword('a!A1ec')).toThrowError('password has to be inbetween 8 and 15 characters');
-		expect( () =>  userValidation.validatePassword('1234567890123456789!Aa1')).toThrowError('password has to be inbetween 8 and 15 characters');
-		expect( userValidation.validateUsername('abcderfJ2!')).toBeTruthy;
+		expect( () => userValidation.validatePassword('1234567890123456789!Aa1')).toThrowError('password has to be inbetween 8 and 15 characters');
+		expect( userValidation.validateUsername('abcderfJ2!')).toBeTruthy
 	})
 
 	test ('should have one lowercase, one uppercase, one number and one symbol', () => {
-		expect( userValidation.validatePassword('a1eC2019!')).toBeTruthy;
-		expect(() =>  userValidation.validatePassword('aleC!alec')).toThrowError('password does not have all the right requirements' );
-		expect(() =>  userValidation.validatePassword('alec2029!')).toThrowError('password does not have all the right requirements ');
+		expect( userValidation.validatePassword('a1eC2019!')).toBeTruthy
+		expect(() => userValidation.validatePassword('aleC!alec')).toThrowError('password does not have all the right requirements' );
+		expect(() => userValidation.validatePassword('alec2029!')).toThrowError('password does not have all the right requirements ');
 		expect(() => userValidation.validatePassword('ALEC2029!')).toThrowError('password does not have all the right requirements ');
 		expect(() => userValidation.validatePassword('alec12lec')).toThrowError('password does not have all the right requirements ');
 		})
@@ -87,7 +55,7 @@ describe('password', () => {
 describe('confirm password', () => {
 	test('should be equal to password', () => {
 
-		expect(() => userValidation.validateConfirmPassword('ALEC@2029!', 'ALEC&2029!')).toThrowError('password does not match Confirm Password')
+		expect(() => userValidation.validateConfirmPassword('ALEc@2029!', 'ALEc&2029!')).toThrowError('password does not match Confirm Password')
 	})
 
 })
