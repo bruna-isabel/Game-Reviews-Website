@@ -7,7 +7,7 @@ const adding = new Router({prefix: '/adding'})
 
 adding.get('/adding', async ctx => {
 	console.log( ctx.session.userID )
-	let a = ctx.session.userID
+	const a = ctx.session.userID
 	const user = await ctx.db.getUser(a)
 
 	if(!user) {
