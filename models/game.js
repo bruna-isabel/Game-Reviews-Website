@@ -1,14 +1,14 @@
 'use strict'
 
 class Game {
-	constructor(title, platforms, slugline, summary, releaseDate, director, publisher, submittedBy, approved, poster, splash) {
+	constructor(title, platforms, slugline, summary, releaseDate, developer, publisher, submittedBy, approved, poster, splash) {
 		this.gameID = -1
 		this.title = title
 		this.platforms = platforms
 		this.slugline = slugline
 		this.summary = summary
 		this.releaseDate = releaseDate
-		this.director = director
+		this.developer = developer
 		this.publisher = publisher
 		this.submittedBy = submittedBy
 		this.approved = approved

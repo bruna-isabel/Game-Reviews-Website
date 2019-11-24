@@ -301,11 +301,10 @@ class SqliteDbContext extends DbContext {
 		const averageReviewScore = totalOfScores/(allScoresForGame.length)
 		return +averageReviewScore.toFixed(2);
 	}
-	async getPlatforms() {
+	async getPlatforms(platformIDs) {
 		const sqlite = await this.sqlitePromise
 
 		const platforms = []
-		const platformIDs = arguments[0]
 		for (let i = 0; i < platformIDs.length; i++) {
 			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
 		}
