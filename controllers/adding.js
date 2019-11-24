@@ -8,15 +8,13 @@ const adding = new Router({prefix: '/adding'})
 adding.get('/game', async ctx => {
 	console.log( ctx.session.userID )
 	const a = ctx.session.userID
-	const user = await ctx.db.getUser(a)
+	const user = await ctx.db.getUser(Number(a))
 	const platformnames = await ctx.db.getAllPlatforms()
 	await ctx.render('addingGames.hbs', {platforms: platformnames})
 
 	if(!user) {
 		console.log('you are not allowed to add any games')
 	}
-
-	return ctx.render('addingGames.hbs')
 })
 
 
