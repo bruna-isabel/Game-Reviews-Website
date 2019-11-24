@@ -1,4 +1,4 @@
-CREATE TABLE `users`
+CREATE TABLE IF NOT EXISTS `users`
 (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `username` TEXT UNIQUE,
@@ -6,7 +6,7 @@ CREATE TABLE `users`
   `isAdmin` TEXT
 );
 
-CREATE TABLE `games` 
+CREATE TABLE IF NOT EXISTS `games` 
 (
     `gameID` INTEGER PRIMARY KEY AUTOINCREMENT,
     `title` TEXT NOT NULL UNIQUE,
@@ -22,7 +22,7 @@ CREATE TABLE `games`
     `splash` TEXT
 );
 
-CREATE TABLE `reviews`
+CREATE TABLE IF NOT EXISTS `reviews`
 (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `user` TEXT,
@@ -33,7 +33,7 @@ CREATE TABLE `reviews`
   `approved` TEXT
 );
 
-CREATE TABLE 'platforms'
+CREATE TABLE IF NOT EXISTS 'platforms'
 (
   'id' INTEGER PRIMARY KEY,
   'name' TEXT
@@ -139,4 +139,4 @@ INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
-INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'noo');
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
