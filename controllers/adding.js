@@ -1,7 +1,6 @@
 'use strict'
 
 const Router = require('koa-router')
-const koaBody = require('koa-body')()
 
 const adding = new Router({prefix: '/adding'})
 
