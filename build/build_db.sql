@@ -48,7 +48,7 @@ INSERT INTO `games` VALUES
   '04/06/2013', 
   'Naughty Dog', 
   'Sony Computer Entertainment', 
-  1, 
+  1,
   'no', 
   'tlou.jpg', 
   'tlousplash.jpg');
