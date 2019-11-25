@@ -11,7 +11,12 @@ const Views = require('koa-views')
 const serve = require('./controllers/middleware/serve')
 const session = require('koa-session')
 
+// const findPartials = (folder) =>
+//   fs.readdirSync(folder)
+//     .filter(x => x.endsWith('partial.hbs'))
+
 const app = new Koa()
+const viewPath = path.join(__dirname, '/views')
 const handlebars = new Views(
 	path.join(__dirname, '/views'),
 	{
