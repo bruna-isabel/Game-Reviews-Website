@@ -204,6 +204,7 @@ class SqliteDbContext extends DbContext {
 		}
 	}
 
+	// eslint-disable-next-line camelcase
 	async users_games() {
 		const sqlite = await this.sqlitePromise
 
@@ -272,7 +273,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title`= ? , `platforms` =?, `slugline` = ?, `summary`= ? , `releaseDate`=?, , `developer`=?, `publisher`=?, `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
+			'INSERT INTO `games` (`title`, `platforms`, `slugline`, `summary`, `releaseDate`, `developer`, `publisher`, `submittedBy`, `approved`, `poster`, `splash`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,
 			game.title,
 			game.platforms,
 			game.slugline,
@@ -281,6 +282,7 @@ class SqliteDbContext extends DbContext {
 			game.developer,
 			game.publisher,
 			game.submittedBy,
+			'no',
 			game.poster,
 			game.splash
 		)
@@ -293,13 +295,13 @@ class SqliteDbContext extends DbContext {
 
 		let allScoresForGame = [];
 		let totalOfScores = 0;
-		allScoresForGame = (await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id));
-		for (let  i = 0; i < allScoresForGame.length; i++){
-			totalOfScores += allScoresForGame[i].review_score;
+		allScoresForGame = await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id)
+		for (let i = 0; i < allScoresForGame.length; i++) {
+			totalOfScores += allScoresForGame[i].review_score
 		}
 
-		const averageReviewScore = totalOfScores/(allScoresForGame.length)
-		return +averageReviewScore.toFixed(2);
+		const averageReviewScore = totalOfScores/allScoresForGame.length
+		return +averageReviewScore.toFixed(2)
 	}
 	async getPlatforms(platformIDs) {
 		const sqlite = await this.sqlitePromise
@@ -327,9 +329,17 @@ class SqliteDbContext extends DbContext {
 
 	async getAllPlatforms() {
 		const sqlite = await this.sqlitePromise
-		const names = await sqlite.all('SELECT `name` FROM `platforms`; ')
+		const names = await sqlite.all('SELECT * FROM `platforms`; ')
 		return names
 	}
+	async addPlatforms(platform) {
+		const sqlite = await this.aqlitePromise
+		await sqlite.run(
+			'INSERT INTO `games` VALUES `platforms` = ?',
+			platform.id
+		)
+	}
+
 
 	async getReviews() {
 		const sqlite = await this.sqlitePromise

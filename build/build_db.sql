@@ -48,7 +48,7 @@ INSERT INTO `games` VALUES
   '04/06/2013', 
   'Naughty Dog', 
   'Sony Computer Entertainment', 
-  1, 
+  1,
   'no', 
   'tlou.jpg', 
   'tlousplash.jpg');
@@ -76,7 +76,7 @@ INSERT INTO `games` VALUES
   '07/09/2018', 
   'Insomniac Games', 
   'Sony Interactive Entertainment', 
-  'user1', 
+  2, 
   'no', 
   'spiderman.jpg', 
   'spidermansplash.jpg');
@@ -90,7 +90,7 @@ INSERT INTO `games` VALUES
   '19/11/2019', 
   'Sports Interactive', 
   'SEGA', 
-  'user1', 
+  1, 
   'no', 
   'fm20poster.jpg', 
   'fm20splash.jpg');
