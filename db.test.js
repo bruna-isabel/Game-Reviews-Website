@@ -1,9 +1,21 @@
 'use strict'
 
+const path = require('path')
+
 const db = require('./db')
 
-const { NotImplemented } = require('./utils/errors')
+const { runSQLScript } = require('./build/utils')
+
+const {
+	NotImplemented,
+	EntityNotFound
+} = require('./utils/errors')
+
 const User = require('./models/user')
+const Game = require('./models/game')
+const Category = require('./models/category')
+
+const BUILD_DB_SCRIPT = path.join(__dirname, './build/build_db.sql')
 
 describe('abstract database context', () => {
 	const context = new db.DbContext()
@@ -40,19 +52,17 @@ describe('user database with sqlite', () => {
 	// create an in memory db
 	const sqliteContext = new db.SqliteDbContext(':memory:')
 
+	beforeAll(async() => {
+		const db = await sqliteContext.sqlitePromise
+		await runSQLScript(db, BUILD_DB_SCRIPT)
+	})
+
 	beforeEach(async() => {
-		await sqliteContext.sqlitePromise.then(async db => {
-			// clear table
-			await db.exec('DROP TABLE IF EXISTS `users`;')
-
-			// create user table
-			await db.exec(
-				'CREATE TABLE `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT UNIQUE, `hash` TEXT);'
-			)
-
-			// insert test users
-			await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\'), (11, \'hello\', \'world\');')
-		})
+		const db = await sqliteContext.sqlitePromise
+		// clear table
+		await db.exec('DELETE FROM `users`;')
+		// insert test users
+		await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\'), (11, \'hello\', \'world\');')
 	})
 
 	test('should get a user by id', async() => {
@@ -106,5 +116,273 @@ describe('user database with sqlite', () => {
 		user.hash = 'test1'
 
 		expect(await sqliteContext.updateUser(user)).toEqual(user)
+	})
+})
+
+describe('game database with sqlite', () => {
+	// create an in memory db
+	const sqliteContext = new db.SqliteDbContext(':memory:')
+
+	beforeAll(async() => {
+		// set up db
+		const db = await sqliteContext.sqlitePromise
+		await runSQLScript(db, BUILD_DB_SCRIPT)
+
+		// add dummy user
+		await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\'), (11, \'hello\', \'world\');')
+	})
+
+	beforeEach(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// clear games data
+		await db.exec('DELETE FROM `games`;')
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, `imageSrc`, `rating`, `submittedBy`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', \'image1.png\', 5, 10), ' +
+			'(2, \'game2\', \'summary!!\', \'image2.png\', 2, 10);'
+		)
+	})
+
+	test('should get all games', async() => {
+		expect(await sqliteContext.getGames()).toEqual(
+			[
+				{
+					id: 1,
+					title: 'game1',
+					summary: 'summary!!!',
+					imageSrc: 'image1.png',
+					rating: 5,
+					submittedBy: 10,
+					categories: []
+				},
+				{
+					id: 2,
+					title: 'game2',
+					summary: 'summary!!',
+					imageSrc: 'image2.png',
+					rating: 2,
+					submittedBy: 10,
+					categories: []
+				}
+			]
+		)
+	})
+
+	test('should get game by id', async() => {
+		expect(await sqliteContext.getGame(2))
+			.toEqual(
+				{
+					id: 2,
+					title: 'game2',
+					summary: 'summary!!',
+					imageSrc: 'image2.png',
+					rating: 2,
+					submittedBy: 10,
+					categories: []
+				}
+			)
+
+		await expect(sqliteContext.getGame(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+	})
+
+	test('should update a game', async() => {
+		const game = await sqliteContext.getGame(1)
+		game.title = 'new title'
+
+		expect((await sqliteContext.updateGame(game)).title)
+			.toEqual('new title')
+
+		// check for missing id
+		game.id = 3
+		await expect(sqliteContext.updateGame(game))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+
+		// check for missing user
+		game.id = 1
+		game.submittedBy = 1
+		await expect(sqliteContext.updateGame(game))
+			.rejects
+			.toThrowError(new EntityNotFound('user with id 1 not found'))
+	})
+
+	test('should delete a game', async() => {
+		await sqliteContext.deleteGame(1)
+
+		// get non existent game
+		await expect(sqliteContext.getGame(1))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 1 not found'))
+
+		// check non existent game deletion
+		await expect(sqliteContext.deleteGame(1))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 1 not found'))
+	})
+
+	test('should create a game', async() => {
+		const game = new Game('title1', 'hello', 'world', 5, 10)
+		const returned = await sqliteContext.createGame(game)
+
+		expect(returned.id).not.toEqual(-1)
+		expect(returned.title).toEqual('title1')
+		expect(returned.summary).toEqual('hello')
+		expect(returned.imageSrc).toEqual('world')
+		expect(returned.rating).toEqual(5)
+		expect(returned.submittedBy).toEqual(10)
+	})
+})
+
+describe('games database with categories', () => {
+	const sqliteContext = new db.SqliteDbContext(':memory:')
+
+	beforeAll(async() => {
+		const db = await sqliteContext.sqlitePromise
+		await runSQLScript(db, BUILD_DB_SCRIPT)
+
+		// static dummy data
+		// add dummy user
+		await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\');')
+	})
+
+	beforeEach(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// mutable dummy data, reload on test
+		await db.exec('DELETE FROM `gameCategories`;')
+		await db.exec('DELETE FROM `categories`;')
+		await db.exec('DELETE FROM `games`;')
+
+		// reset auto increment for categories
+		await db.exec('DELETE FROM sqlite_sequence WHERE name = \'categories\';')
+
+		// insert dummy categories data
+		await db.exec(
+			'INSERT INTO `categories` ' +
+			'VALUES ' +
+			'(1, \'Horror\'), ' +
+			'(2, \'Action\'), ' +
+			'(3, \'Something else\');'
+		)
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, `imageSrc`, `rating`, `submittedBy`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', \'image1.png\', 5, 10), ' +
+			'(2, \'game2\', \'summary!!\', \'image2.png\', 2, 10);'
+		)
+
+		// link games and categories
+		await db.exec(
+			'INSERT INTO `gameCategories`' +
+			'VALUES' +
+			'(1, 1),' +
+			'(1, 2);'
+		)
+	})
+
+	test('should get game with linked categories', async() => {
+		expect(await sqliteContext.getGame(1))
+			.toEqual(
+				{
+					id: 1,
+					title: 'game1',
+					summary: 'summary!!!',
+					imageSrc: 'image1.png',
+					rating: 5,
+					submittedBy: 10,
+					categories: [
+						{ id: 1, name: 'Horror' },
+						{ id: 2, name: 'Action' }
+					]
+				}
+			)
+
+		expect((await sqliteContext.getGame(2)).categories).toEqual([])
+	})
+
+	test('should get categories by gameID', async() => {
+		expect(await sqliteContext.getGameCategories(1))
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' },
+					{ id: 2, name: 'Action' }
+				]
+			)
+
+		// check empty return
+		expect(await sqliteContext.getGameCategories(2))
+			.toEqual([])
+
+		// check for error on nonexistant game
+		await expect(sqliteContext.getGameCategories(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+	})
+
+	test('should add new game with existing categories', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const category = await sqliteContext.getCategory(1)
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.createGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' }
+				]
+			)
+	})
+
+	test('should add new game with new categories', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const category = new Category('Open World')
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.createGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 4, name: 'Open World' }
+				]
+			)
+	})
+
+	test('should update existing game with existing categories', async() => {
+		const game = await sqliteContext.getGame(2)
+		const category = await sqliteContext.getCategory(3)
+
+		game.categories.push(category)
+
+		expect((await sqliteContext.updateGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 3, name: 'Something else' }
+				]
+			)
+	})
+
+	test('should update existing game with new category', async() => {
+		const game = await sqliteContext.getGame(1)
+
+		game.categories.push(new Category('New'))
+
+		expect((await sqliteContext.updateGame(game)).categories)
+			.toEqual(
+				[
+					{ id: 1, name: 'Horror' },
+					{ id: 2, name: 'Action' },
+					{ id: 4, name: 'New' }
+				]
+			)
 	})
 })
