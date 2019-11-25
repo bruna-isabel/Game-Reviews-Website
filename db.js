@@ -332,15 +332,6 @@ class SqliteDbContext extends DbContext {
 		const names = await sqlite.all('SELECT * FROM `platforms`; ')
 		return names
 	}
-	async addPlatforms(platform) {
-		const sqlite = await this.aqlitePromise
-		await sqlite.run(
-			'INSERT INTO `games` VALUES `platforms` = ?',
-			platform.id
-		)
-	}
-
-
 	async getReviews() {
 		const sqlite = await this.sqlitePromise
 

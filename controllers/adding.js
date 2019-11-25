@@ -20,9 +20,11 @@ adding.get('/game', async ctx => {
 
 adding.post('/game', async ctx => {
 	const body = ctx.request.body
-	await ctx.db.addGame(body)
 	body.submittedBy = ctx.session.userID
-	const platform = await ctx.db.getPlatforms()
-	await ctx.db.addPlatforms(platform)
+	const platforms = body.platforms
+	body.platforms = platforms.join(',')
+	console.log(body)
+	await ctx.db.addGame(body)
+	console.log(platforms)
 })
 module.exports = adding

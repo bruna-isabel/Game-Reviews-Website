@@ -13,13 +13,13 @@
 			<input type="text" placeholder="Title:" name="title" required/>
 			<h1>Platforms:</h1>
 						{{#each platforms}}
-				<input type="checkbox" name="Platform1" value="{{this.id}}" />{{this.name}}
+				<input type="checkbox" name="platforms" value="{{this.id}}" />{{this.name}}
 			{{/each}}
 			<input type="text" placeholder="Slugline" name="slugline" required/>
 			<input type= "text" placeholder="Summary" name="summary" required/>
 			
 			<input type="date" placeholder="Release Date" name="releaseDate" required/>
-			<input type="text" placeholder="Director" name="director" required/>
+			<input type="text" placeholder="Developer" name="developer" required/>
 			<input type="text" placeholder="Publisher" name="publisher" required/>
 			<input type="text" placeholder="Poster" name="poster" required/>
 			<input type="text" placeholder="splash" name="splash" required/>
