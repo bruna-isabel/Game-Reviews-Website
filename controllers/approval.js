@@ -4,13 +4,15 @@ const Router = require('koa-router')
 
 const approval = new Router({prefix: '/approval'})
 
-approval.get('/games', async ctx => {
+const {authenticateUser} = require('./middleware/auth')
+
+approval.get('/games', authenticateUser, async ctx => {
 	try {
 		//console.log(await ctx.session.authorised)
 		//If user is not logged in
-		if(await ctx.session.authorised !== true) {
-			return await ctx.render('error', {message: 'Session not authorised'})
-		}
+		//if(await ctx.session.authorised !== true) {
+		//	return await ctx.render('error', {message: 'Session not authorised'})
+		//}
 		//console.log(await ctx.db.isUserAdmin(await ctx.session.userID))
 		//If user is logged in, but isn't an admin
 		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
@@ -24,7 +26,7 @@ approval.get('/games', async ctx => {
 	}
 })
 
-approval.post('/games', async ctx => {
+approval.post('/games', authenticateUser, async ctx => {
 	try {
 		const body = ctx.request.body
 		//console.log(body)
@@ -42,12 +44,12 @@ approval.post('/games', async ctx => {
 	}
 })
 
-approval.get('/reviews', async ctx => {
+approval.get('/reviews', authenticateUser, async ctx => {
 	try {
 		//If user is not logged in
-		if(await ctx.session.authorised !== true) {
-			return await ctx.render('error', {message: 'Session not authorised'})
-		}
+		//if(await ctx.session.authorised !== true) {
+		//	return await ctx.render('error', {message: 'Session not authorised'})
+		//}
 		//If user is logged in, but isn't an admin
 		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
 			return await ctx.render('error', {message: 'Session not authorised'})
@@ -59,7 +61,7 @@ approval.get('/reviews', async ctx => {
 	}
 })
 
-approval.post('/reviews', async ctx => {
+approval.post('/reviews', authenticateUser, async ctx => {
 	try {
 		const body = ctx.request.body
 		const id = parseInt(Object.keys(body)[0])
