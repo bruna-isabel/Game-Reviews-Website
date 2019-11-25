@@ -38,10 +38,12 @@ app.context.db = dbcontext
 const home = require('./controllers/home')
 const login = require('./controllers/login')
 const logout = require('./controllers/logout')
+const games = require('./controllers/listrouter')
 
 // routers
 app.use(home.routes())
 app.use(login.routes())
 app.use(logout.routes())
-
+app.use(games.routes())
+app.use(serve(path.join(__dirname, './public')))
 module.exports = app

@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, Verdana, sans-serif;
+    background-color: black;
+    text-align: center;
+}
+h1{
+    color:white;
+    text-align: center;
+    font-size: 60px;
+    font-style: italic;
+}
+li {
+    color:white;
+    font-size: 40px;
+    margin-top: 30px;
+}
+p{
+    color: white;
+}
