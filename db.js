@@ -252,13 +252,13 @@ class SqliteDbContext extends DbContext {
 	async updateGame(game) {
 		const sqlite = await this.sqlitePromise
 		await sqlite.run(
-			'UPDATE `games` SET `title`= ? , `platforms`=?, `slugline` = ?, `summary`= ? , `releaseDate`=?, `director`=?, `publisher`=?, `submittedBy`= ?, `approved` = ?, `poster`=?, `splash`=? WHERE `gameID`= ? ;',
+			'UPDATE `games` SET `title`= ? , `platforms`=?, `slugline` = ?, `summary`= ? , `releaseDate`=?, `developer`=?, `publisher`=?, `submittedBy`= ?, `approved` = ?, `poster`=?, `splash`=? WHERE `gameID`= ? ;',
 			game.title,
 			game.platforms,
 			game.slugline,
 			game.summary,
 			game.releaseDate,
-			game.director,
+			game.developer,
 			game.publisher,
 			game.submittedBy,
 			game.approved,
@@ -273,15 +273,16 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title`= ? , `platforms` =?, `slugline` = ?, `summary`= ? , `releaseDate`=?, , `director`=?, `publisher`=?, `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
+			'INSERT INTO `games` (`title`, `platforms`, `slugline`, `summary`, `releaseDate`, `developer`, `publisher`, `submittedBy`, `approved`, `poster`, `splash`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,
 			game.title,
 			game.platforms,
 			game.slugline,
 			game.summary,
 			game.releaseDate,
-			game.director,
+			game.developer,
 			game.publisher,
 			game.submittedBy,
+			'no',
 			game.poster,
 			game.splash
 		)
