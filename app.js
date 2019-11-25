@@ -16,7 +16,12 @@ const handlebars = new Views(
 	path.join(__dirname, '/views'),
 	{
 		map: { hbs: 'handlebars' },
-		extension: 'hbs'
+		extension: 'hbs',
+		options: {
+			partials: {
+				navbar: `${__dirname}/views/partials/navbar.hbs`
+			}
+		}
 	}
 )
 
@@ -42,10 +47,12 @@ app.context.db = dbcontext
 const home = require('./controllers/home')
 const login = require('./controllers/login')
 const logout = require('./controllers/logout')
+const homepage = require('./controllers/homepage')
 
 // routers
 app.use(home.routes())
 app.use(login.routes())
 app.use(logout.routes())
+app.use(homepage.routes())
 
 module.exports = app
