@@ -272,7 +272,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		await sqlite.run(
-			'INSERT INTO `games` VALUES `title`= ? , `platforms` =?, `slugline` = ?, `summary`= ? , `releaseDate`=?, , `developer`=?, `publisher`=?, `submittedBy`= ?, `approved` = `no`, `poster`=?, `splash`=?;',
+			'INSERT INTO `games` (`title`, `platforms`, `slugline`, `summary`, `releaseDate`, `developer`, `publisher`, `submittedBy`, `approved`, `poster`, `splash`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,
 			game.title,
 			game.platforms,
 			game.slugline,
@@ -281,6 +281,7 @@ class SqliteDbContext extends DbContext {
 			game.developer,
 			game.publisher,
 			game.submittedBy,
+			'no',
 			game.poster,
 			game.splash
 		)
