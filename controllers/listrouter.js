@@ -48,18 +48,18 @@ listrouter.get('/', async ctx => {
 })
 
 
-//games page with filter on genre	
+//games page with filter on genre
 listrouter.get('/:genre/', async ctx => {
 
-  let gameslist = []
+  const gameslist = []
   
-  for (let i = 0; i < game.info.length; i++){
-			if (game.info[i].genre === ctx.params.genre) {
-         gameslist.push(game.info[i])
+  for (let i = 0; i < game.info.length; i++) {
+    if (game.info[i].genre === ctx.params.genre) {
+      gameslist.push(game.info[i])
 		}
 }
   console.log(gameslist)
-  var title = ctx.params.genre
+  const title = ctx.params.genre
   await ctx.render('listpage.hbs', {info: gameslist, genres: genre, type: title})
 })
 
