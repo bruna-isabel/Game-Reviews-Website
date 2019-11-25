@@ -19,7 +19,7 @@ describe('username', () => {
 		expect(() => userValidation.validateUsername('aaaaaaa¶')).toThrowError('username contains illegal characters')
 	})
 
-	test ('should have min 4 and max 30 characters', () => {
+	test('should have min 4 and max 30 characters', () => {
 		expect(() => userValidation.validateUsername('abc')).toThrowError('username must have in between 4 and 30 characters')
 		expect(() => userValidation.validateUsername('1234567890123456789012345678901')).toThrowError('username must have in between 4 and 30 characters')
 		expect( userValidation.validateUsername('abcderfj')).toBeTruthy

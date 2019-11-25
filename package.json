@@ -24,6 +24,7 @@
     "sqlite3": "^4.1.0"
   },
   "devDependencies": {
+    "cucumber": "^6.0.5",
     "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
