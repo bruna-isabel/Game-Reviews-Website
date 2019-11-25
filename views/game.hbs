@@ -30,11 +30,15 @@
                                 <section id = "modalText" class="modal-content">
                                 <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
                                 <section style="margin-bottom: 0%">
-                                                                        <h2>{{thisgame.title}} ({{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}})</h2>
+                                                                        <h2>{{thisgame.title}}</h2>
 
                                         <article class = "aboutGame">
                                                 <table>
                                                         <tbody>
+                                                            <tr>
+                                                                <th>Release Date</th>
+                                                                <td>{{thisgame.releaseDate}}</td>
+                                                            </tr>                                                            
                                                             <tr>
                                                                 <th>Release Date</th>
                                                                 <td>{{thisgame.releaseDate}}</td>
@@ -47,6 +51,10 @@
                                                                 <th>Publisher</th>
                                                                 <td>{{thisgame.publisher}}</td>
                                                             </tr>
+                                                            <tr>
+                                                                <th>Platforms</th>
+                                                                <td>{{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</td>
+                                                            </tr>                                                            
                                                         </tbody>
                                                 </table>
                                     </section>

@@ -344,12 +344,12 @@ class SqliteDbContext extends DbContext {
 		let query
 
 		if (typeof gameID === 'number') {
-			query = 'SELECT * FROM `reviews` WHERE `game` = ?;'
+			query = 'SELECT * FROM `reviews` WHERE `game` = ? AND `approved` = ?;'
 		} else {
 			throw new TypeError('must be a number')
 		}
 
-		const reviews = await sqlite.all(query, gameID)
+		const reviews = await sqlite.all(query, gameID, 'yes')
 		return reviews
 	}
 
