@@ -12,15 +12,18 @@ game.get('/game:id', async ctx => {
 		const platformsIds = gamedata.platforms.split(',');
 		const platforms = await ctx.db.getPlatforms(platformsIds);
 		let avgScore = 0;
-		if (reviewCount > 0)
-		{
+		if (reviewCount > 0) {
 			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
 		}
-		else
-		{
+		else {
 			avgScore = 0;
 		}
-		await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore})
+		if (gamedata.approved == 'yes') {
+			await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore})
+		}
+		else {
+			ctx.redirect(`/list`)
+		}
 	} catch(err) {
 		ctx.body = err.message
 	}
