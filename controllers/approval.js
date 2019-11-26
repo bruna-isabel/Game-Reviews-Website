@@ -20,6 +20,14 @@ approval.get('/games', authenticateUser, async ctx => {
 		}
 
 		const unapproved = await ctx.db.approvalGameList(false)
+
+		//changing submittedBy from an ID to the username
+		let game
+		for(game of unapproved) {
+			const user = await ctx.db.getUser(game.submittedBy)
+			game.submittedBy = user.username
+		}
+
 		await ctx.render('approvalGames', {games: unapproved})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
