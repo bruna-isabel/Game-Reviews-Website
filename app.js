@@ -61,9 +61,10 @@ const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 const game = require('./controllers/game')
 const homepage = require('./controllers/homepage')
+const signup = require('./controllers/signup')
 
-// routers
-app.use(home.routes())
+app.use(handlebars)
+app.use(game.routes())
 app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
@@ -71,5 +72,6 @@ app.use(logout.routes())
 app.use(game.routes())
 app.use(adding.routes())
 app.use(homepage.routes())
+app.use(signup.routes())
 
 module.exports = app

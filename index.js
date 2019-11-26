@@ -15,4 +15,4 @@ const app = require('./app')
 // inject the db context
 app.context.db = dbcontext
 
-app.listen(port)
+module.exports = app.listen(port, async() => console.log(`listening on port ${port}`)) 
