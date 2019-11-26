@@ -22,7 +22,10 @@ adding.post('/game', async ctx => {
 	const body = ctx.request.body
 	body.submittedBy = ctx.session.userID
 	const platforms = body.platforms
-	body.platforms = platforms.join(',')
+	if(Array.isArray(platforms)) { //if only one platform is selected 'platforms' is a string and not a list, causing an error
+		body.platforms = platforms.join(',')
+		console.log('11111111111111111')
+	}
 	console.log(body)
 	await ctx.db.addGame(body)
 	console.log(platforms)

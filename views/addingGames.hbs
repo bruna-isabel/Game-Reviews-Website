@@ -1,8 +1,11 @@
 <DOCTYPE html>
 	<html>
-<head><title>Adding Games</title></head>
+<head>
+	<link href="/public/css/placeholderforadding.css" type="text/css" rel="stylesheet" />
+</head>
 	<body>
-		<header>Adding Games</header>
+		{{>navbar}}
+		<h1>Adding Games</h1>
 		{{#if errorMsg}}
 		<div class= "error-msg">
 			{{errorMsg}}

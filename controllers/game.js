@@ -4,6 +4,7 @@ const Router = require('koa-router')
 const game = new Router()
 const Review = require('../models/review')
 
+// eslint-disable-next-line max-lines-per-function
 game.get('/game:id', async ctx => {
 	try {
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
@@ -11,6 +12,7 @@ game.get('/game:id', async ctx => {
 		const reviewCount = reviews.length;
 		const platformsIds = gamedata.platforms.split(',');
 		const platforms = await ctx.db.getPlatforms(platformsIds);
+		const user = await ctx.db.getUser(ctx.session.userID)
 		let avgScore = 0;
 		if (reviewCount > 0) {
 			avgScore = await ctx.db.getAvgScore(gamedata.gameID);
@@ -18,7 +20,7 @@ game.get('/game:id', async ctx => {
 		else {
 			avgScore = 0;
 		}
-		if (gamedata.approved == 'yes') {
+		if (gamedata.approved === 'yes' || user.isAdmin === 'yes') { //so the game page can be opened by an admin during the approval process
 			await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore})
 		}
 		else {

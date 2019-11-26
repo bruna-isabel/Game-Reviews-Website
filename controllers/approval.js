@@ -6,6 +6,7 @@ const approval = new Router({prefix: '/approval'})
 
 const {authenticateUser} = require('./middleware/auth')
 
+// eslint-disable-next-line max-lines-per-function
 approval.get('/games', authenticateUser, async ctx => {
 	try {
 		//console.log(await ctx.session.authorised)
