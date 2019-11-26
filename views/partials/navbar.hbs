@@ -4,21 +4,21 @@
       <nav>
             <a id="title">XD REVIEWS</a>
 
-            {{#if user}} 
+            {{#if user }}
             <ul> 
-                  <li> Welcome, {{user}}</li>
-                  <li><a>Logout</a></li>
+                  <li><a href="../homepage">Welcome! </a></li>
+                  <li><a href="../logout">Logout</a></li>
                   <li><a href="../games">Games</a></li>
-                  <li><a>Add a Game</a></li>
+                  <li><a href="../adding">Add a Game</a></li>
                   <li><a>About Us</a></li>
             </ul> 
-            {{else}} 
+            {{else}}
             <ul> 
                   <li><a href="../login">Log In</a></li>
                   <li><a href="../signup">Create Account</a></li>
                   <li><a href="../games">Games</a></li>
                   <li><a>About Us</a></li>
             </ul>
-            {{/if}}
+           {{/if}}
       </nav>    
 </header>
