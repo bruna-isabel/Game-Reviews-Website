@@ -3,7 +3,7 @@ html{
 	color: #e3e7e8;
 	font-size: 16px;
 	height: 1300px;
-	margin: 22px 0 22px 0;
+	margin: 75px 0 22px 0;
 }
 h1{
 	color: #A9A9A9;
@@ -86,25 +86,25 @@ input[type=submit]{
 	font-weight: 30em;
 }
 
-a:link {
+a.list:link {
 	color: #A9A9A9;
 	text-decoration: none;
 }
 
 /* visited link */
-a:visited {
+a.list:visited {
 	color: #A9A9A9;
 	text-decoration: none;
 }
 
 /* mouse over link */
-a:hover {
+a.list:hover {
 	color: #A9A9A9;
 	text-decoration: underline;
 }
 
 /* selected link */
-a:active {
+a.list:active {
 	color: #A9A9A9;
 	text-decoration: underline;
 }
