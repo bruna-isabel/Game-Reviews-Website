@@ -152,5 +152,6 @@ INSERT INTO 'platforms' VALUES (40, 'iOS');
 INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
-INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
+
