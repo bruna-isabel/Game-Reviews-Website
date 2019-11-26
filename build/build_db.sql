@@ -65,7 +65,7 @@ INSERT INTO `games` VALUES
   2, 
   'no', 
   'botw.jpg', 
-  'botwsplash.png');
+  'botwsplash.jpg');
 
 INSERT INTO `games` VALUES 
   (3,
@@ -94,6 +94,20 @@ INSERT INTO `games` VALUES
   'no', 
   'fm20poster.jpg', 
   'fm20splash.jpg');
+
+INSERT INTO `games` VALUES 
+  (5,
+  "Star Wars Jedi: Fallen Order", 
+  '36,35,38',
+  'Become a Jedi.', 
+  'The Empire seeks to eradicate all Jedi after the execution of Order 66. You, a Jedi Padawan-turned-fugitive, must fight for your survival as you explore the mysteries of a long-extinct civilization in hopes of rebuilding the Jedi Order.', 
+  '15/11/2019', 
+  'Respawn Entertainment', 
+  'Electronic Arts', 
+  2, 
+  'no', 
+  'starwarsjfoposter.jpg', 
+  'starwarsjfosplash.jpg');
 
 INSERT INTO 'platforms' VALUES (1, 'Atari 2600');
 INSERT INTO 'platforms' VALUES (2, 'Color TV-Game');

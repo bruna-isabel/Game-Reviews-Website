@@ -214,7 +214,6 @@ class SqliteDbContext extends DbContext {
 
 		const games = await sqlite.all('SELECT * FROM `games`;')
 		return games
-		//ask dec about what the hell his code returns
 	}
 
 	async getGame(id) {
@@ -287,18 +286,19 @@ class SqliteDbContext extends DbContext {
 		return Object.assign(new Game(), newGame)
 	}
 
-	async getAvgScore(id) {
+	async getAvgScore(id, reviewCount) {
+		if (reviewCount === 0) {
+			return 0
+		}
 		const sqlite = await this.sqlitePromise
 
-		let allScoresForGame = []
-		let totalOfScores = 0
+		let allScoresForGame = [];
+		let totalOfScores = 0;
 		allScoresForGame = await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id)
 		for (let i = 0; i < allScoresForGame.length; i++) {
 			totalOfScores += allScoresForGame[i].review_score
 		}
-
 		const averageReviewScore = totalOfScores/allScoresForGame.length
-		// eslint-disable-next-line no-magic-numbers
 		return +averageReviewScore.toFixed(2)
 	}
 	async getPlatforms(platformIDs) {

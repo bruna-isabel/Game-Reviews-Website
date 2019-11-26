@@ -2,7 +2,7 @@
 <html>
 		<head>
 		<meta charset="utf-8">
-		<title>Game</title>
+		<title>Reviews for {{thisgame.title}}</title>
         <link href="/public/css/game.css" type="text/css" rel="stylesheet" />
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -43,28 +43,21 @@
 		             <section class="recentReviews">
 								
 
-                {{#each review}}
-                                
-                <table  class='review{{@index}}'>
-									
-                    <tbody>
-                                                <tr>
-                                                    <th><span style = "color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
-                                                    <td><span class="close" id = "expandText"onclick= "expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
-                                                        <figure class='rating_bar' id = 'reviewfull' >
-                                                            <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
-                                                        </figure>
-                                                        
-                                                    </td>
-                                
-                                                </tr>
-                                                <tr>
-                                                    <th colspan="2" class="smalltext" id = "fullReview">{{{this.review_text}}}</th>
-                                                </tr>
- 
-                    </tbody>
-                
+            {{#each review}}
+            <table id = "reviewTable"  class='review{{@index}}'>
+               <tbody>
+                  <tr>
+                     <th ><span style = "color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                     <td>
+                        <span class="close" id = "expandText"onclick= "expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
+                        <figure class='rating_bar' id = 'reviewfull'>
+                           <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
+                        </figure>
+                     </td>
+                  </tr>
+               </tbody>
             </table>
+            <section colspan="2" class='review{{@index}}' id = 'reviewText'>{{this.review_text}}</section>
             {{/each}}
 
         </section>
@@ -76,5 +69,5 @@
 						document.getElementById("score/10text").innerHTML = "No Reviews."
 				}
 			</script>
-
+    <script src="/public/GamePage.js"></script>
 </html>
