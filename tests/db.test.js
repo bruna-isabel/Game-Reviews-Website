@@ -108,3 +108,21 @@ describe('user database with sqlite', () => {
 		expect(await sqliteContext.updateUser(user)).toEqual(user)
 	})
 })
+describe('get all the platform names from the table', () => {
+	const sqliteContext = new db.SqliteDbContext(':memory:')
+	beforeEach(async() => {
+		await sqliteContext.sqlitePromise.then(async db => {
+		//DELETE the table
+			await db.exec('DROP TABLE IF EXISTS`platforms`;')
+			//CREATE the table
+			await db.exec('CREATE TABLE `platforms`(`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT);')
+			//INSERT into the table
+			await db.exec('INSERT INTO `platforms` (name) VALUES("gameboy"),("XBOX");')
+		})
+	})
+	test('take all the platform names from the table', async() => {
+		expect.assertions(1)
+		expect(await sqliteContext.getAllPlatforms())
+			.toContainEqual({ id: 1, name: 'gameboy'})
+	})
+})

@@ -92,13 +92,10 @@ class DbContext {
 	async getReviews() {
 		throw new NotImplemented('getReviews is not implemented')
 	}
-	
 	// eslint-disable-next-line no-unused-vars
 	async getReviewsForGame() {
 		throw new NotImplemented('getReviewsForGame is not implemented')
 	}
-
-	
 	// eslint-disable-next-line no-unused-vars
 	async getReview(id) {
 		throw new NotImplemented('getReview is not implemented')
@@ -293,14 +290,15 @@ class SqliteDbContext extends DbContext {
 	async getAvgScore(id) {
 		const sqlite = await this.sqlitePromise
 
-		let allScoresForGame = [];
-		let totalOfScores = 0;
+		let allScoresForGame = []
+		let totalOfScores = 0
 		allScoresForGame = await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id)
 		for (let i = 0; i < allScoresForGame.length; i++) {
 			totalOfScores += allScoresForGame[i].review_score
 		}
 
 		const averageReviewScore = totalOfScores/allScoresForGame.length
+		// eslint-disable-next-line no-magic-numbers
 		return +averageReviewScore.toFixed(2)
 	}
 	async getPlatforms(platformIDs) {
@@ -387,7 +385,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 		const d = new Date();
 		const month = Number(d.getMonth()+1)
-		const currentDate = `${  d.getDate()  }/${  month  }/${  d.getFullYear()  }`
+		const currentDate = `${d.getDate()}/${month}/${d.getFullYear()}`
 
 		await sqlite.run(
 			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
