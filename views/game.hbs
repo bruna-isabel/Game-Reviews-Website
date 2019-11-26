@@ -8,6 +8,8 @@
       <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
    </head>
    <body>
+       {{>navbar}}
+<section class="siteContent">
       <figure class="splash">
          <img src="/public/images/{{thisgame.splash}}" alt="Splash image" class="centre"/>
          <section class="splashGradient"></sec>
@@ -188,6 +190,7 @@
             <section colspan="2" class='review{{@index}}' id = 'reviewText'>{{this.review_text}}</section>
             {{/each}}
          </section>
+      </section>
       </section>
    </body>
    <script src="/public/GamePage.js"></script>
