@@ -29,7 +29,7 @@ approval.get('/games', authenticateUser, async ctx => {
 			game.submittedBy = user.username
 		}
 
-		await ctx.render('approvalGames', {games: unapproved})
+		await ctx.render('approvalGames', {games: unapproved, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
@@ -64,7 +64,7 @@ approval.get('/reviews', authenticateUser, async ctx => {
 			return await ctx.render('error', {message: 'Session not authorised'})
 		}
 		const unapproved = await ctx.db.approvalReviewList(false)
-		await ctx.render('approvalReviews', {review: unapproved})
+		await ctx.render('approvalReviews', {review: unapproved, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}

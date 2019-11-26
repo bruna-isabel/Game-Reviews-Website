@@ -21,7 +21,7 @@ game.get('/game:id', async ctx => {
 			avgScore = 0;
 		}
 		if (gamedata.approved === 'yes' || user.isAdmin === 'yes') { //so the game page can be opened by an admin during the approval process
-			await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore})
+			await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 		}
 		else {
 			ctx.redirect(`/list`)
@@ -45,7 +45,7 @@ game.get('/allReviews:id', async ctx => {
 		{
 			avgScore = 0;
 		}
-		await ctx.render('allReviews', {review: reviews, thisgame: gamedata, reviewNo: reviewCount, avgScore: avgScore})
+		await ctx.render('allReviews', {review: reviews, thisgame: gamedata, reviewNo: reviewCount, avgScore: avgScore, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 	} catch(err) {
 		ctx.body = err.message
 	}

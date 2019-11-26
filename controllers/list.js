@@ -22,7 +22,7 @@ list.get('/', async ctx => {
 				game.rating = rating
 			}
 		}
-		await ctx.render('listpage.hbs', {games: approved})
+		await ctx.render('listpage.hbs', {games: approved, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
