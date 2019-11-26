@@ -12,12 +12,22 @@ const serve = require('./controllers/middleware/serve')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 
+// const findPartials = (folder) =>
+//   fs.readdirSync(folder)
+//     .filter(x => x.endsWith('partial.hbs'))
+
 const app = new Koa()
+const viewPath = path.join(__dirname, '/views')
 const handlebars = new Views(
 	path.join(__dirname, '/views'),
 	{
 		map: { hbs: 'handlebars' },
-		extension: 'hbs'
+		extension: 'hbs',
+		options: {
+			partials: {
+				navbar: `${__dirname}/views/partials/navbar.hbs`
+			}
+		}
 	}
 )
 app.use(session({key: 'session_id', renew: true}, app))
@@ -51,6 +61,7 @@ const login = require('./controllers/login')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 const game = require('./controllers/game')
+const homepage = require('./controllers/homepage')
 
 // routers
 app.use(home.routes())
@@ -60,5 +71,6 @@ app.use(approval.routes())
 app.use(logout.routes())
 app.use(game.routes())
 app.use(adding.routes())
+app.use(homepage.routes())
 
 module.exports = app

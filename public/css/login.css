@@ -1,0 +1,57 @@
+* {box-sizing: border-box}
+body {
+	background: rgb(15, 15, 15);
+}
+
+/* Full-width input fields */
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+	margin: 22px 0 22px 0;
+  display: inline-block; 
+  border: none;
+  background: rgb(143, 143, 127);
+}
+
+form {
+	padding: 50px;
+}
+
+input[placeholder], label {
+	color: rgb(255, 255, 255);
+	text-align: center;
+}
+
+.popup
+{
+	width: 400px;
+	text-align: center;
+	margin: auto;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: transparent;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modalbox {
+  background-color:  rgb(0,0,0,0.7);
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid rgb(15, 15, 15);
+	width: 50%; /* Could be more or less, depending on screen size */
+	opacity: 0.5;
+}
+
+.error-msg {
+	color: white;
+}
