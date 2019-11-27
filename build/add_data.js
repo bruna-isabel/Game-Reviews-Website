@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use strict'
 
 const request = require('request')
@@ -10,32 +11,30 @@ const dbctx = new db.SqliteDbContext(path.join(__dirname, '/../app.db'))
 // eslint-disable-next-line max-lines-per-function
 request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, response, body) => {
 	const allGames = JSON.parse(body)
-	let i = 200
-	const gameAmount = 300 //change according to how many games you want to add
+	let i = 1
+	const gameAmount = 100 //change according to how many games you want to add
 	for(i; i<gameAmount; i++) {
 		const gameid = allGames.applist.apps[i].appid //getting the appID to insert into next URL as a string
 		gameid.toString()
 		// eslint-disable-next-line max-lines-per-function
 		request(`https://store.steampowered.com/api/appdetails/?appids=${gameid}` , (error, response, body) => {
 			//console.log(gameid)
+			if (response.statusCode !== 200) {
+			//if the api doesn't load the page, skip
+				return
+			}
 			try {
-				if(!JSON.parse(body)) {
-					return
-				}
 				const gameObj = JSON.parse(body)
-				//console.log(body)
-				/*
-				if(typeof gameObj === 'undefined') {
-				//checking whether the url is has no data at all
-					return
-				}
-				*/
 				if(gameObj[gameid].success === false) {
 				//checking if it found the game
 					return
 				}
 				if(!gameObj[gameid].data.hasOwnProperty('developers')) {
 				//checking if the developer property exists
+					return
+				}
+				if(!gameObj[gameid].data.hasOwnProperty('screenshots')) {
+				//if game has no screenshots, skip
 					return
 				}
 				const gameData = gameObj[gameid].data
@@ -51,7 +50,7 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, respon
 					'admin',
 					'yes',
 					gameData.header_image,
-					gameData.background)
+					gameData.screenshots[0].path_thumbnail)
 				dbctx.addGame(game)
 				//console.log(gameData)
 			} catch(err) {
