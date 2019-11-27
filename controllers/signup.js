@@ -12,7 +12,6 @@ signup.get('/signup', async ctx => ctx.render('signup.hbs'))
 signup.post('/signup', async ctx => {
 
 	const body = ctx.request.body
-	console.log(body)
 	//validation of the data
 	try{
 		await userValidation.validateUsername(body.username)

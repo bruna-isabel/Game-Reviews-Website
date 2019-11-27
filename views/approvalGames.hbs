@@ -2,6 +2,7 @@
 <html>
 
 <head>
+	<title>Approval of Games</title>
 	<link href="/public/css/list.css" type="text/css" rel="stylesheet" />
 </head>
 
@@ -23,7 +24,7 @@
 		<tbody>
 			{{#each games}}
 			<tr>
-				<td class='image'>{{this.poster}}</td>
+				<td class='image'><img src='/public/images/{{this.poster}}' class='image'></td>
 				<td class='title'><a class='list' href="/game{{this.gameID}}">{{this.title}}</a></td>
 				<td class='summary'>{{this.summary}}</td>
 				<td class='releaseDate'>{{this.releaseDate}}</td>

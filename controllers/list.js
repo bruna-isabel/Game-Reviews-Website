@@ -28,9 +28,4 @@ list.get('/', async ctx => {
 	}
 })
 
-list.post('/', async ctx => {
-	console.log(ctx.query)
-	console.log(ctx.querystring)
-})
-
 module.exports = list
