@@ -278,7 +278,7 @@ class SqliteDbContext extends DbContext {
 			game.developer,
 			game.publisher,
 			game.submittedBy,
-			'no',
+			game.approved,
 			game.poster,
 			game.splash
 		)
@@ -299,7 +299,11 @@ class SqliteDbContext extends DbContext {
 			totalOfScores += allScoresForGame[i].review_score
 		}
 		const averageReviewScore = totalOfScores/allScoresForGame.length
-		return +averageReviewScore.toFixed(2)
+		let score = +averageReviewScore.toFixed(2)
+		if(isNaN(score)) { //in case there are no reviews
+			score = 0
+		}
+		return score
 	}
 	async getPlatforms(platformIDs) {
 		const sqlite = await this.sqlitePromise

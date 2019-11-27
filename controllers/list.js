@@ -16,10 +16,15 @@ list.get('/', async ctx => {
 			const user = await ctx.db.getUser(game.submittedBy)
 			game.submittedBy = user.username
 			const rating = await ctx.db.getAvgScore(game.gameID)
+			game.rating = rating
+			/*
 			if(isNaN(rating)) { //function returns NaN if there are no reviews for the game
 				game.rating = 'No Reviews Yet'
 			} else {
 				game.rating = rating
+			*/
+			if(game.poster.startsWith('http')) {
+				game.url = true
 			}
 		}
 		await ctx.render('listpage.hbs', {games: approved, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})

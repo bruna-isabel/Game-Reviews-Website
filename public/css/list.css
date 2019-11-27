@@ -40,7 +40,12 @@ h1{
 }
 .image{
 	height: 8em;
-	width: 6em;
+	width: 7em;
+	padding-left: 1em;
+}
+.imageUrl{
+	height: 5em;
+	width: 10em;
 }
 .left{
 	text-align: left;

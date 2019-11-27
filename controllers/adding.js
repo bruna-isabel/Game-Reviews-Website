@@ -21,9 +21,10 @@ adding.post('/game', async ctx => {
 	const body = ctx.request.body
 	body.submittedBy = ctx.session.userID
 	const platforms = body.platforms
-	if(Array.isArray(platforms)) { //if only one platform is selected 'platforms' is a string and not a list, causing an error
+	if(Array.isArray(platforms)) { //if only one platform is selected 'platforms' is a string and not a list
 		body.platforms = platforms.join(',')
 	}
+	body.approved = 'no'
 	await ctx.db.addGame(body)
 	return ctx.redirect('/adding/game')
 })

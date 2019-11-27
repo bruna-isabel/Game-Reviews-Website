@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use strict'
 
 const Router = require('koa-router')
@@ -19,6 +20,9 @@ game.get('/game:id', async ctx => {
 		}
 		else {
 			avgScore = 0;
+		}
+		if(gamedata.poster.startsWith('http')) {
+			gamedata.url = true
 		}
 		if (gamedata.approved === 'yes' || user.isAdmin === 'yes') { //so the game page can be opened by an admin during the approval process
 			await ctx.render('game', {review: reviews.slice(0,3),  expandedReview: reviews, thisgame: gamedata, reviewNo: reviewCount, platforms: platforms, avgScore: avgScore, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})

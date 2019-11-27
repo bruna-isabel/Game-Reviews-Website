@@ -13,7 +13,11 @@
     {{>navbar}}
     <section class="siteContent">
         <figure class="splash">
+            {{#if thisgame.url}}
+            <img src="{{thisgame.splash}}" alt="Splash image" class="centre" />
+            {{else}}
             <img src="/public/images/{{thisgame.splash}}" alt="Splash image" class="centre" />
+            {{/if}}
             <section class="splashGradient">
                 </sec>
         </figure>
@@ -111,7 +115,11 @@
         <section class="column" id="column1">
             <section>
                 <figure>
+                    {{#if thisgame.url}}
+                    <img src="{{thisgame.poster}}" alt="Game poster" />
+                    {{else}}
                     <img src="/public/images/{{thisgame.poster}}" alt="Game poster" />
+                    {{/if}}
                 </figure>
             </section>
             <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords={{thisgame.title}}" target="_blank">
