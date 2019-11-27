@@ -12,6 +12,7 @@ login.get('/', async ctx => ctx.render('login.hbs'))
 
 login.post('/', async ctx => {
 	const { username, password } = ctx.request.body
+	const redirect = ctx.query.refer || '/'
 
 	const user = await ctx.db.getUser(username)
 	if (!user) {
@@ -21,7 +22,7 @@ login.post('/', async ctx => {
 	if (await bcrypt.compare(password, user.hash)) {
 		ctx.session.authorised = true
 		ctx.session.userID = user.id
-		return ctx.redirect('back')
+		return ctx.redirect(redirect)
 	} else {
 		return ctx.render('login.hbs', { errorMsg: 'Password incorrect' })
 	}
