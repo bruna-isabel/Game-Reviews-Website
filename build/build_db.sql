@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `reviews`
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `user` TEXT,
   `game` INTEGER,
-  `review_score` INT,
-  `review_text` TEXT,
-  `review_date` DATE,
+  `reviewScore` INT,
+  `reviewText` TEXT,
+  `reviewDate` DATE,
   `approved` TEXT
 );
 
@@ -153,5 +153,5 @@ INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
-INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
 

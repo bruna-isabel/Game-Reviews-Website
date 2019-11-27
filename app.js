@@ -73,5 +73,6 @@ app.use(game.routes())
 app.use(adding.routes())
 app.use(homepage.routes())
 app.use(signup.routes())
+app.use(home.routes())
 
 module.exports = app

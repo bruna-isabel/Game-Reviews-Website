@@ -1,7 +1,9 @@
 'use strict'
 
 class Game {
-	constructor(title, platforms, slugline, summary, releaseDate, developer, publisher, submittedBy, approved, poster, splash) {
+	// eslint-disable-next-line max-params
+	constructor(title, platforms, slugline, summary, releaseDate, developer, publisher,
+		submittedBy, approved, poster, splash) {
 		this.gameID = -1
 		this.title = title
 		this.platforms = platforms

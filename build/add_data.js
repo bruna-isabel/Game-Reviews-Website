@@ -19,7 +19,8 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, respon
 		// eslint-disable-next-line max-lines-per-function
 		request(`https://store.steampowered.com/api/appdetails/?appids=${gameid}` , (error, response, body) => {
 			//console.log(gameid)
-			if (response.statusCode !== 200) {
+			const statusInt = 200
+			if (response.statusCode !== statusInt) {
 			//if the api doesn't load the page, skip
 				return
 			}
