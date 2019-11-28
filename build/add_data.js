@@ -11,8 +11,8 @@ const dbctx = new db.SqliteDbContext(path.join(__dirname, '/../app.db'))
 // eslint-disable-next-line max-lines-per-function
 request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, response, body) => {
 	const allGames = JSON.parse(body)
-	let i = 1
-	const gameAmount = 100 //change according to how many games you want to add
+	let i = 800
+	const gameAmount = 1100 //change according to how many games you want to add
 	for(i; i<gameAmount; i++) {
 		const gameid = allGames.applist.apps[i].appid //getting the appID to insert into next URL as a string
 		gameid.toString()
@@ -39,6 +39,9 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, respon
 					return
 				}
 				const gameData = gameObj[gameid].data
+				if(gameData.type !== 'game') {
+					return
+				}
 				//Creating Game Object
 				const game = new Game(
 					gameData.name,
