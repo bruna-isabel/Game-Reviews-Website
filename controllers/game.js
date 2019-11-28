@@ -8,7 +8,11 @@ const Review = require('../models/review')
 // eslint-disable-next-line max-lines-per-function
 game.get('/game:id', async ctx => {
 	try {
-		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
+		const gameID = Number(ctx.params.id)
+		if (isNaN(gameID)) {
+			throw new Error('game ID must be a number')
+		}
+		const gamedata = await ctx.db.getGame(gameID)
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse();
 		const reviewCount = reviews.length;
 		const platformsIds = gamedata.platforms.split(',');
@@ -31,6 +35,7 @@ game.get('/game:id', async ctx => {
 			ctx.redirect(`/list`)
 		}
 	} catch(err) {
+		
 		ctx.body = err.message
 	}
 })
