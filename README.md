@@ -6,6 +6,8 @@ To install the packages needed to run this package run: `npm install`.
 
 Run `npm run build-db` to create the database structure.
 
+Run `npm run add-data` to fill database with game data.
+
 ## Running
 
 To run the server, run `npm start`.
