@@ -49,7 +49,7 @@ INSERT INTO `games` VALUES
   'Naughty Dog', 
   'Sony Computer Entertainment', 
   1,
-  'no', 
+  'yes', 
   'tlou.jpg', 
   'tlousplash.jpg');
 
@@ -63,7 +63,7 @@ INSERT INTO `games` VALUES
   'Nintendo EPD', 
   'Nintendo', 
   2, 
-  'no', 
+  'yes', 
   'botw.jpg', 
   'botwsplash.jpg');
 
@@ -77,7 +77,7 @@ INSERT INTO `games` VALUES
   'Insomniac Games', 
   'Sony Interactive Entertainment', 
   2, 
-  'no', 
+  'yes', 
   'spiderman.jpg', 
   'spidermansplash.jpg');
 
@@ -91,7 +91,7 @@ INSERT INTO `games` VALUES
   'Sports Interactive', 
   'SEGA', 
   1, 
-  'no', 
+  'yes', 
   'fm20poster.jpg', 
   'fm20splash.jpg');
 
@@ -105,7 +105,7 @@ INSERT INTO `games` VALUES
   'Respawn Entertainment', 
   'Electronic Arts', 
   2, 
-  'no', 
+  'yes', 
   'starwarsjfoposter.jpg', 
   'starwarsjfosplash.jpg');
 

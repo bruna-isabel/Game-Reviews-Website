@@ -7,7 +7,7 @@ let ratingGiven = 0
 const colorStarHighlighted = '#FFCC00'
 const colorStar = '#FFD700'
 const scoreText = document.getElementById('score/10text').innerHTML
-
+const title = document.getElementsByTagName('h1')[0].innerHTML
 for (i = 0; i < ratings.length; i++) {
 	let newval = i * 15
 	if (i % 2 === 0) {
@@ -22,6 +22,9 @@ if (document.getElementById('synopsisHeader').innerHTML.length > 30) {
 	document.getElementById('synopsisPara').style = '-webkit-line-clamp: 4'
 } else {
 	document.getElementById('synopsisPara').style = '-webkit-line-clamp: 5'
+}
+if (document.getElementById('synopsisHeader').innerHTML === 'Slugline') {
+	document.getElementById('synopsisHeader').innerHTML = title
 }
 
 const modal = document.getElementById('synopsisModal')

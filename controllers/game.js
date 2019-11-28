@@ -8,6 +8,10 @@ const Review = require('../models/review')
 // eslint-disable-next-line max-lines-per-function
 game.get('/game:id', async ctx => {
 	try {
+		//const gameID = Number(ctx.params.id //commented out because of eslint error (too many statements)
+		if (isNaN(Number(ctx.params.id))) {
+			throw new Error('game ID must be a number')
+		}
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse()
 		const reviewCount = reviews.length
