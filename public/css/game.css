@@ -191,13 +191,22 @@ figure img {
 	border: var(--main-button-color) 2px solid;
 	margin-left: -1.5px;
 }
-.purchaseButton:hover {
+.purchaseButton:hover#amazon {
 	background-color: #FF9900;
 	transition-duration: 0.2s;
 	margin-top: -1px;
 }
+.purchaseButton:hover#steam {
+	background-color: #FF9900;
+	transition-duration: 0.2s;
+	margin-top: -1px;
+}
+
 .purchaseButton .fa-amazon {
 	vertical-align: -1px;
+}
+.purchaseButton .fa-steam {
+	vertical-align: -2px;
 }
 #column2 #synopsis {
 	font-weight: normal;

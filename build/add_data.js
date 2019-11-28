@@ -43,8 +43,8 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, respon
 				const game = new Game(
 					gameData.name,
 					'38', //Most Steam games are on Windows
-					'Slugline',
 					gameData.short_description,
+					gameData.about_the_game.replace(/<[^>]*>?/gm, ''),
 					gameData.release_date.date,
 					gameData.developers[0], //not every game has developers listed so it repeats the publisher
 					gameData.publishers[0],
