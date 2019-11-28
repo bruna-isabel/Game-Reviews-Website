@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html style="height: 1200px;">
+	<head>
+		<meta charset="utf-8">
+		<title>Game</title>
+        <link href="/public/css/game.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        </head>
+
+
+	<body>
+
+            <figure class="splash">
+                    <img src="/public/images/{{thisgame.splash}}" alt="Splash image" class="centre"/>
+                    <figure class="splashGradient"></figure>
+            </figure>
+        <h1>{{thisgame.title}}</h1>
+
+                        <section id="synopsisModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                        <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+
+                                    <h2>MODAL HEADER</h2>
+                                    <p>MODAL TEXT</p>
+                                </section>
+                        </section>
+
+                        <section id="aboutGameModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+                                <section style="margin-bottom: 0%">
+                                                                        <h2>{{thisgame.title}}</h2>
+
+                                        <article class = "aboutGame">
+                                                <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Release Date</th>
+                                                                <td>{{thisgame.releaseDate}}</td>
+                                                            </tr>                                                            
+                                                            <tr>
+                                                                <th>Release Date</th>
+                                                                <td>{{thisgame.releaseDate}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Developer</td>
+                                                                <td>{{thisgame.developer}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Publisher</th>
+                                                                <td>{{thisgame.publisher}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Platforms</th>
+                                                                <td>{{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</td>
+                                                            </tr>                                                            
+                                                        </tbody>
+                                                </table>
+                                    </section>
+                                </section>
+                        </section>
+
+                        <section id="reviewModal" class="modal">
+                                <section id = "modalText" class="modal-content">
+                                        <span class="close"onclick= "closeModal()"><i class="fas fa-window-close"></i></span>
+
+                                    <h2>LEAVE A REVIEW</h2>
+                                    <p>{{thisgame.title}} ({{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}})</p>
+                                    <fieldset class="rate">
+                                  <span id = "10" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "9" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "8" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "7" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "6" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "5" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>   
+                                  <span id = "4" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>     
+                                  <span id = "3" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>
+                                  <span id = "2" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star"></figure>
+                                        </span>
+                                  <span id = "1" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure class="fa fa-star-half"></figure>
+                                        </span>     
+                                  <span id = "0" onclick="clickStar(id)" onmouseover="hoverStar(id)" onmouseout="exitStar(id)">
+                                        <figure></figure>
+                                        </span>         
+                                    </fieldset>
+
+                                    	<form action="/add" method="post">
+                                        	<p><br /><textarea name="rvtext"></textarea></p>
+                                            <input type="hidden" id="gameName" name="gameName" value="{{thisgame.title}}">
+                                            <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
+                                            <input type="hidden" id="starRating" name="starRating" value="...">
+                                            <section style="width: 150px;">
+                                            <p ><input type="submit" value="Submit Review" class="submitButton"></p>
+                                            </section>
+                                        </form>
+
+                                </section>
+                            </section>
+
+        <section class = "column" id="column1">
+
+            <section>
+                    <figure>
+                            <img src="/public/images/{{thisgame.poster}}" alt="Game poster"/>
+                    </figure>
+            </section>
+
+        <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords={{thisgame.title}}" target="_blank">
+                <section class = "purchaseButton">
+                    <i class="fab fa-amazon" aria-hidden="true"></i> PURCHASE
+                </section>
+            </a>
+
+
+        </section>
+
+        <section class = "column" id="column2">
+                <section class = "platforms">
+                        <article>
+                            <p>{{#each platforms}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}</p> 
+                        </article>
+                    </section>
+                <section class= "synopsis">
+                        <article id = "synopsis" onclick= "clickSynopsis()">
+                                <h2 class = "synopsisHeader" id = "synopsisHeader">{{thisgame.slugline}}</h2>
+                                <p class = "synopsisPara" id = "synopsisPara">
+                                {{thisgame.summary}}                             
+                                </p>
+                        </article>
+                    
+                </section>
+                    
+            <section style="margin-bottom: 0%" onclick="clickAboutGame()" class = "aboutGame" id="hidden">
+                    <article >
+                            <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Release Date</th>
+                                            <td>{{thisgame.releaseDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Developer</td>
+                                            <td>{{thisgame.developer}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Publisher</th>
+                                            <td>{{thisgame.publisher}}</td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                </section>
+            </section>  
+
+        <section class = "column" id="column3">
+            <section>
+             <fieldset class = "leaveReviewButton" onclick= "clickReview()">RATE AND REVIEW</fieldset>
+            </section>
+            <section class = "charts">
+            
+            <h2>AVERAGE USER SCORE</h2>
+                    <figure class='rating_bar'>
+                        <figure class="rating" style="width: calc({{avgScore}}% * 10);"></figure>
+                        </figure>
+            <p style="text-align:center; font-size: 12px;" id = "score/10text">{{avgScore}}/10 from {{reviewNo}} reviews.</p>
+            </section>
+        </section>
+
+            
+        <section class = "column" id = "columnReviews">
+             <section class="recentReviews">
+                <h2>
+                    Recent User Reviews
+                                <span class = "smalltext" style="text-align: right;">
+                    <span>
+                            	<form action="/showAllReviews" method="post" style="width: 150px; float: right" >
+                                                <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
+                                            <input type="submit" value="Show All {{reviewNo}} Reviews"  class="submitButton">
+                    </span>
+                                                    
+                </span>
+                </h2>
+
+
+                {{#each review}}
+                                
+                <table id = "reviewTable"  class='review{{@index}}'>
+                    <tbody>
+                                                <tr>
+                                                    <th><span style = "color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                                                    <td><span class="close" id = "expandText"onclick= "expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
+
+                                                        <figure class='rating_bar' id = 'reviewfull'>
+                                                            <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id = "review"></figure>
+                                                        </figure>
+                                                        
+                                                    </td>
+                                
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="smalltext">{{this.review_text}}</th>
+                                                </tr>
+ 
+                    </tbody>
+                
+            </table>
+            {{/each}}
+
+        </section>
+        </section>
+
+
+    </body>
+    <script src="/public/GamePage.js"></script>
+
+</html>

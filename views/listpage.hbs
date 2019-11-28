@@ -1,64 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Games List</title>
 
-  <style lang= "css">
-  body{
-  font-size: 100%;
-  line-height: 1.4;
-  padding:50px;
-  background-color: black
-}
-h1, h2 {
-  font-weight: 900;
-}
-ul {
-  list-style:none;
-}
-h1{
-  margin:30px 0;
-  text-align:center;
-  color : gray;  
-}
-.listofgames{
-  width:75%;
-  margin:0 auto;
-}
-.info {
-  background-color: white;
-  margin-bottom: 10px;
-}
-.info * {
-  color: black;
-}
+<head>
+  <link href="/public/css/list.css" type="text/css" rel="stylesheet" />
+</head>
 
-</style>
-  </head>
-
-  <body>
-    {{!-- <div  id="gamesdata"></div> --}}
-    <h1>Top {{type}} Games</h1>
-
-    <ul class= "listofgames">
-
-      {{#each info}}
-      <li class= "info">
-        <h2>{{title}}</h2>
-        <p>Year: {{year}}</p>
-        <p>Descritpion : {{description}}</p>
-      </li>
+<body>
+  {{!-- <div  id="gamesdata"></div> --}}
+  <h1>Browse</h1>
+  <table class='content-table'>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Summary</th>
+        <th>Release Date</th>
+        <th>Avg. Rating</th>
+        <th>Submitted By</th>
+      </tr>
+    </thead>
+      <tbody>
+      {{#each games}}
+      <tr>
+        <td class='image'>{{this.poster}}</td>
+        <td class='title'><a href="/game{{this.gameID}}">{{this.title}}</a></td>
+        <td class='summary'>{{this.summary}}</td>
+        <td class='releasedate'>{{this.releaseDate}}</td>
+        <td class='rating'>{{this.rating}}</td>
+        <td class='rating'>{{this.submittedBy}}</td>
+      </tr>
       {{/each}}
+      </tbody>
+    </table>
 
-    </ul>
+</body>
 
-    	{{#each genres}}
-			<ul>
-				<li>
-					<a href="/games/{{genre}}">{{genre}}</a>
-				</li>
-			</ul>
-  	  {{/each}}
-
-  </body>
 </html>

@@ -15,6 +15,9 @@ const {
 const User = require('./models/user')
 const Game = require('./models/game')
 const Category = require('./models/category')
+const Review = require('./models/review')
+const Platform = require('./models/platform')
+
 
 /**
  * Abstract class for connecting to site database.
@@ -43,6 +46,16 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async updateUser(user) {
 		throw new NotImplemented('updateUser is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async isUserAdmin(id) {
+		throw new NotImplemented('isUserAdmin is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async usersGames() {
+		throw new NotImplemented('users_games is not implemented')
 	}
 
 	// eslint-disable-next-line no-unused-vars
@@ -180,6 +193,56 @@ class DbContext {
 	async execute(query) {
 		throw new NotImplemented('execute is not implemented')
 	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getAvgScore(id) {
+		throw new NotImplemented('getAvgScore is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getPlatforms() {
+		throw new NotImplemented('getPlatforms is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async approvalGameList(bool) {
+		throw new NotImplemented('approvalGameList is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getReviews() {
+		throw new NotImplemented('getReviews is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getReviewsForGame() {
+		throw new NotImplemented('getReviewsForGame is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getReview(id) {
+		throw new NotImplemented('getReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async deleteReview(id) {
+		throw new NotImplemented('deleteReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async createReview(review) {
+		throw new NotImplemented('createReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async updateReview(review) {
+		throw new NotImplemented('updateReview is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async approvalReviewList(bool) {
+		throw new NotImplemented('approvalReviewList is not implemented')
+	}
 }
 
 class SqliteDbContext extends DbContext {
@@ -256,6 +319,23 @@ class SqliteDbContext extends DbContext {
 		return this.getUser(user.id)
 	}
 
+	async isUserAdmin(id) {
+		const user = await this.getUser(id)
+		if(user['isAdmin'] === 'yes') {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	// eslint-disable-next-line camelcase
+	async usersGames() {
+		const sqlite = await this.sqlitePromise
+
+		const linkedTable = await sqlite.all('SELECT `users`.`id`, `users`.`username`, `games`.`gameID`, `games`.`title` FROM `games` INNER JOIN `users` ON `users`.`id` = `games`.`submittedBy`;')
+		return linkedTable
+	}
+
 	async getGames() {
 		const sqlite = await this.sqlitePromise
 
@@ -283,6 +363,7 @@ class SqliteDbContext extends DbContext {
 		// downcasr result as Game object
 		game = Object.assign(new Game(), game)
 		game.categories = await this._getGameCategories(id)
+		game.platforms = []
 
 		return game
 	}
@@ -315,19 +396,26 @@ class SqliteDbContext extends DbContext {
 		await this.getUser(game.submittedBy)
 
 		const sqlite = await this.sqlitePromise
-
 		await sqlite.run(
 			'UPDATE `games` SET ' +
-			'`title` = ?, `summary` = ?, `imageSrc` = ?, ' +
-			'`rating` = ?, `submittedBy` = ? WHERE `id` = ?;',
+			'`title` = ?, `summary` = ?, `slugline` = ?, ' +
+			'`releaseDate` = ?, `submittedBy` = ?, `developer` = ?, ' +
+			'`publisher` = ?, `approved` = ?, `poster` = ?, `splash` = ? ' +
+			'WHERE `id` = ?;',
 			game.title,
 			game.summary,
-			game.imageSrc,
-			game.rating,
+			game.slugline,
+			game.releaseDate,
 			game.submittedBy,
+			game.developer,
+			game.publisher,
+			game.approved,
+			game.poster,
+			game.splash,
 			game.id
 		)
 
+		// link each category
 		for (const category of game.categories) {
 			await this.createAndLinkGameCategory(game, category)
 		}
@@ -345,14 +433,20 @@ class SqliteDbContext extends DbContext {
 
 		const { lastID } = await sqlite.run(
 			'INSERT INTO `games` ' +
-			'(`title`, `summary`, `imageSrc`, ' +
-			' `rating`, `submittedBy`) ' +
-			'VALUES (?, ?, ?, ?, ?);',
+			'(`title`, `slugline`, `summary`, ' +
+			' `releaseDate`, `developer`, `publisher`, ' +
+			' `submittedBy`, `approved`, `poster`, `splash`) ' +
+			'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
 			game.title,
+			game.slugline,
 			game.summary,
-			game.imageSrc,
-			game.rating,
+			game.releaseDate,
+			game.developer,
+			game.publisher,
 			game.submittedBy,
+			'no',
+			game.poster,
+			game.splash
 		)
 
 		// update game id after insert
@@ -482,6 +576,157 @@ class SqliteDbContext extends DbContext {
 		)
 
 		return categories.map(x => Object.assign(new Category(), x))
+	}
+
+	async getAvgScore(id) {
+		const sqlite = await this.sqlitePromise
+
+		let allScoresForGame = [];
+		let totalOfScores = 0;
+		allScoresForGame = await sqlite.all('SELECT `review_score` FROM `reviews` WHERE `game` = ?;', id)
+		for (let i = 0; i < allScoresForGame.length; i++) {
+			totalOfScores += allScoresForGame[i].review_score
+		}
+
+		const averageReviewScore = totalOfScores/allScoresForGame.length
+		return +averageReviewScore.toFixed(2)
+	}
+	async getPlatforms(platformIDs) {
+		const sqlite = await this.sqlitePromise
+
+		const platforms = []
+		for (let i = 0; i < platformIDs.length; i++) {
+			platforms.push(await sqlite.get('SELECT `name` FROM `platforms` WHERE `id` = ?;', platformIDs[i]))
+		}
+
+		return platforms
+	}
+
+	async approvalGameList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `games` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `games` WHERE `approved` != ?'
+		}
+		const games = await sqlite.all(query, 'yes')
+		return games
+	}
+
+	async getAllPlatforms() {
+		const sqlite = await this.sqlitePromise
+		const names = await sqlite.all('SELECT * FROM `platforms`; ')
+		return names
+	}
+
+	async addPlatforms(platform) {
+		const sqlite = await this.aqlitePromise
+		await sqlite.run(
+			'INSERT INTO `games` VALUES `platforms` = ?',
+			platform.id
+		)
+	}
+
+
+	async getReviews() {
+		const sqlite = await this.sqlitePromise
+
+		const reviews = await sqlite.all('SELECT * FROM `reviews`;')
+		return reviews
+	}
+
+	async getReviewsForGame(gameID) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof gameID === 'number') {
+			query = 'SELECT * FROM `reviews` WHERE `game` = ? AND `approved` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		const reviews = await sqlite.all(query, gameID, 'yes')
+		return reviews
+	}
+
+	async getReview(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof id === 'number') {
+			query = 'SELECT * FROM `reviews` WHERE `id` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		const review = await sqlite.get(query, id)
+		return Object.assign(new Review(), review)
+	}
+
+	async deleteReview(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof id === 'number') {
+			query = 'DELETE FROM `reviews` WHERE `id` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		await sqlite.run(query, id)
+	}
+
+	async createReview(review) {
+		const sqlite = await this.sqlitePromise
+		const d = new Date();
+		const month = Number(d.getMonth()+1)
+		const currentDate = `${d.getDate()}/${month}/${d.getFullYear()}`
+
+		await sqlite.run(
+			'INSERT INTO `reviews`(`user`, `game`, `review_score`, `review_text`, `review_date`, `approved`) VALUES(?,?,?,?,?,?)',
+			review.user,
+			review.game,
+			review.review_score,
+			review.review_text,
+			currentDate,
+			'no'
+		)
+	}
+
+	async updateReview(review) {
+		const sqlite = await this.sqlitePromise
+
+		await sqlite.run(
+			'UPDATE `reviews` SET `user`=?, `game`=?, `review_score`=?, `review_text`=?, `review_date`=?, `approved`=? WHERE `id`=?;',
+			review.user,
+			review.game,
+			review.review_score,
+			review.review_text,
+			review.review_date,
+			review.approved,
+			review.id
+		)
+		return this.getReview(review.id)
+	}
+
+	async approvalReviewList(bool) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if(bool === true) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` = ?'
+		} else if(bool ===false) {
+			 query = 'SELECT * FROM `reviews` WHERE `approved` != ?'
+		}
+		const reviews = await sqlite.all(query, 'yes')
+		return reviews
 	}
 }
 

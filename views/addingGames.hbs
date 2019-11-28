@@ -1,0 +1,34 @@
+<DOCTYPE html>
+	<html>
+<head><title>Adding Games</title></head>
+	<body>
+		<header>Adding Games</header>
+		{{#if errorMsg}}
+		<div class= "error-msg">
+			{{errorMsg}}
+		</div>
+		{{/if}}
+
+		<form method= "post">
+			<input type="text" placeholder="Title:" name="title" required/>
+			<h1>Platforms:</h1>
+						{{#each platforms}}
+				<input type="checkbox" name="Platform1" value="{{this.id}}" />{{this.name}}
+			{{/each}}
+			<input type="text" placeholder="Slugline" name="slugline" required/>
+			<input type= "text" placeholder="Summary" name="summary" required/>
+			
+			<input type="date" placeholder="Release Date" name="releaseDate" required/>
+			<input type="text" placeholder="Director" name="director" required/>
+			<input type="text" placeholder="Publisher" name="publisher" required/>
+			<input type="text" placeholder="Poster" name="poster" required/>
+			<input type="text" placeholder="splash" name="splash" required/>
+			<button class="Submit_button" type="submit" > Submit </button>
+	</form>
+	</body>
+
+
+
+
+	</html>
+</DOCTYPE>
