@@ -1,15 +1,6 @@
 /* eslint-disable complexity */
 'use strict'
 
-const fs = require('fs')
-const sqlite = require('sqlite')
-//Manually inserted data
-const sqlDb = sqlite.open('../app.db')
-fs.readFile('add_data', async(err, data) => {
-	if(err) throw err
-	await sqlDb.exec(data)
-})
-
 const request = require('request')
 const path = require('path')
 const Game = require(path.join(__dirname, '/../models/game'))
