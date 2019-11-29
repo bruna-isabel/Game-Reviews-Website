@@ -8,6 +8,7 @@ const colorStarHighlighted = '#FFCC00'
 const colorStar = '#FFD700'
 const scoreText = document.getElementById('score/10text').innerHTML
 const title = document.getElementsByTagName('h1')[0].innerHTML
+
 for (i = 0; i < ratings.length; i++) {
 	let newval = i * 15
 	if (i % 2 === 0) {
@@ -16,7 +17,6 @@ for (i = 0; i < ratings.length; i++) {
 	ratings[i].style = `margin-left: -${newval}px;`
 	document.getElementsByClassName('rate')[0].style = 'margin-left: 123px'
 }
-
 
 if (document.getElementById('synopsisHeader').innerHTML.length > 30) {
 	document.getElementById('synopsisPara').style = '-webkit-line-clamp: 4'
@@ -31,10 +31,7 @@ const modal = document.getElementById('synopsisModal')
 const reviewModal = document.getElementById('reviewModal')
 const aboutGameModal = document.getElementById('aboutGameModal')
 const modalText = document.getElementById('modalText')
-
-if (scoreText.includes('0 reviews')) {
-	document.getElementById('score/10text').innerHTML = 'No reviews yet. Be the first to leave a review!'
-}
+const commentModal = document.getElementById('commentModal')
 
 
 function clickSynopsis() {
@@ -50,31 +47,28 @@ function clickAboutGame() {
 function clickReview() {
 	reviewModal.style.display = 'block'
 }
-
-
 // eslint-disable-next-line max-lines-per-function
 function expandReviews(index) {
 	const mainTextColor = '#DBDBDB'
 	const textbox = document.getElementsByClassName(`review${index}`)[1]
-	if (document.getElementsByClassName('fas fa-angle-down')[index].style.display === 'none') {
-		document.getElementsByClassName('fas fa-angle-down')[index].style.display = 'inline'
-		document.getElementsByClassName('fas fa-angle-left')[index].style.display = 'none'
-		textbox.style = `-webkit-line-clamp: 1;color: ${mainTextColor}; height: auto`
-	} else {
+	if (document.getElementsByClassName('fas fa-angle-down')[index].style.display === 'inline') {
 		document.getElementsByClassName('fas fa-angle-down')[index].style.display = 'none'
 		document.getElementsByClassName('fas fa-angle-left')[index].style.display = 'inline'
+		textbox.style = `-webkit-line-clamp: 1;color: ${mainTextColor}; height: auto`
+	} else {
+		document.getElementsByClassName('fas fa-angle-down')[index].style.display = 'inline'
+		document.getElementsByClassName('fas fa-angle-left')[index].style.display = 'none'
 		for (i = 1; i < 100; i++) {
 			textbox.style = `-webkit-line-clamp: ${i};color: white; height: auto`
 		}
 	}
-
-
 }
 
 function closeModal() {
 	modal.style.display = 'none'
 	reviewModal.style.display = 'none'
 	aboutGameModal.style.display = 'none'
+	commentModal.style.display = 'none'
 }
 
 

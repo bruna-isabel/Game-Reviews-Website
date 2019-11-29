@@ -33,6 +33,17 @@ CREATE TABLE IF NOT EXISTS `reviews`
   `approved` TEXT
 );
 
+CREATE TABLE IF NOT EXISTS `reviewComments`
+(
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  'gameID' INTEGER,
+  `reviewID` INTEGER,
+  `user` TEXT,
+  `commentDate` DATE,
+  `commentTime` TEXT,
+  `commentText` TEXT
+);
+
 CREATE TABLE IF NOT EXISTS 'platforms'
 (
   'id' INTEGER PRIMARY KEY,

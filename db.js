@@ -10,6 +10,8 @@ const { NotImplemented } = require('./utils/errors')
 const User = require('./models/user')
 const Game = require('./models/game')
 const Review = require('./models/review')
+const Comment = require('./models/comment')
+
 //const Platform = require('./models/platform')
 
 
@@ -101,6 +103,10 @@ class DbContext {
 
 	async approvalReviewList(bool) {
 		throw new NotImplemented('approvalReviewList is not implemented')
+	}
+
+	async postComment(comment) {
+		throw new NotImplemented('postComment is not implemented')
 	}
 }
 
@@ -417,7 +423,44 @@ class SqliteDbContext extends DbContext {
 		const reviews = await sqlite.all(query, 'yes')
 		return reviews
 	}
+
+	async postComment(comment) {
+		const sqlite = await this.sqlitePromise
+		const d = new Date(); const month = Number(d.getMonth()+1)
+		const currentDate = `${d.getDate()}/${month}/${d.getFullYear()}`
+		const numberDigits = 2
+		const hours = String(d.getHours()).padStart(numberDigits, '0')
+		const minutes = String(d.getMinutes()).padStart(numberDigits, '0')
+		const seconds = String(d.getSeconds()).padStart(numberDigits, '0')
+		const currentTime = `${hours}:${minutes}:${seconds}`
+		await sqlite.run(
+			'INSERT INTO `reviewComments`(`gameID`, `reviewID`, `user`, `commentDate`, `commentTime`, `commentText`)'+
+				'VALUES(?,?,?,?,?,?)',
+			comment.gameID,
+			comment.reviewID,
+			comment.user,
+			currentDate,
+			currentTime,
+			comment.commentText
+		)
+	}
+
+	async getCommentsForReview(reviewID) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+
+		if (typeof reviewID === 'number') {
+			query = 'SELECT * FROM `reviewComments` WHERE `reviewID` = ?;'
+		} else {
+			throw new TypeError('must be a number')
+		}
+
+		const comments = await sqlite.all(query, reviewID)
+		return comments
+	}
 }
+
 
 module.exports = {
 	DbContext,

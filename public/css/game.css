@@ -2,6 +2,7 @@ html {
 	--main-shadow-color: Black;
 	--main-bg-color: #111111;
 	--main-element-color: #272727;
+	--main-secondaryelement-color: #1c1c1c;
 	--main-highlight-color: #3a3a3a;
 	--main-text-color: #dbdbdb;
 	--main-button-color: #272727;
@@ -149,6 +150,11 @@ h2 {
 	margin-top: -5%;
 	height: 478px;
 }
+#allReviews.splash {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
 .splash img {
 	object-fit: cover;
 	height: 100%;
@@ -197,7 +203,7 @@ figure img {
 	margin-top: -1px;
 }
 .purchaseButton:hover#steam {
-	background-color: #FF9900;
+	background-color: #2a475e;
 	transition-duration: 0.2s;
 	margin-top: -1px;
 }
@@ -342,22 +348,33 @@ figure img {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 1;
 }
-.recentReviews table {
+table#reviewTable  {
 	width: 100%;
 	vertical-align: auto;
 }
-.recentReviews table tbody tr th {
+table#reviewTable tbody tr th {
 	text-align: left;
 	width: 300px;
 	height: 30px;
 }
-.recentReviews table {
-	width: 100%;
-	vertical-align: auto;
-}
-.recentReviews table tbody tr td:nth-of-type(1) {
+table#reviewTable tbody tr td:nth-of-type(1) {
 	text-align: left;
 	width: 400px;
+}
+#reviewTable tbody tr th:nth-of-type(1){
+	width: 45%;
+}
+#reviewTable tbody tr th:nth-of-type(2){
+	width: 45%;
+}
+#reviewTable tbody tr th:nth-of-type(3){
+	width: 5%;
+	text-align: center;
+}
+#reviewTable tbody tr th:nth-of-type(4){
+	width: 5%;
+	text-align: center;
+
 }
 .recentReviews section#reviewText {
 	text-align: left;
@@ -378,7 +395,7 @@ figure img {
 	margin-top: -10px;
 	padding-top: 5px;
 }
-.recentReviews table tbody tr:nth-of-type(2) th#fullReview {
+table#reviewTable tbody tr:nth-of-type(2) th#fullReview {
 	width: 150%;
 }
 .ratings {
@@ -565,4 +582,75 @@ textarea {
 .submitButton:hover {
 	background-color: var(--main-highlight-color);
 	transition-duration: 0.2s;
+}
+.commentTableContainer {
+	display: none;
+}
+#commentTable {
+	width: 685px;
+	color: var(--main-text-color);
+	background-color: var(--main-secondaryelement-color) !important;
+	border-color: var(--main-secondaryelement-color) !important;
+
+
+}
+#commentTable tbody {
+	background-color: var(--main-secondaryelement-color);
+
+}
+#commentTable tbody tr {
+	width: 685px !important;
+}
+#commentTable th:nth-of-type(1){
+	width: 5%;
+}
+#commentTable th:nth-of-type(2) textarea{
+	margin-bottom: -4px;
+}
+#commentTable th:nth-of-type(3){
+	width: 15%;
+}
+#commentTable th:nth-of-type(4){
+	width: 5%;
+}
+#commentTable th textarea{
+height: 20px;
+padding-top: 2px;
+font-size: 12px;
+overflow: visible;
+}
+#commentTable .fas{
+	vertical-align: -1px;
+}
+button{
+	border: none;
+	color: var(--main-text-color);
+  background-color: inherit;
+  cursor: pointer;
+  display: inline-block;
+}
+input.submitButton{
+	color: var(--main-text-color);
+	margin-bottom: 0px;
+	border: none;
+	margin-top: 0px;
+}
+input.submitButton:hover{
+	background-color: var(--main-highlight-color);
+	color: white;
+}
+button:hover{
+	background-color: var(--main-highlight-color);
+}
+.commentTable {
+	display: none ;
+	width: 679px !important;
+	float: right;
+	margin-top: -42px !important;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+.commentTable tr:first-of-type td p{
+	margin: 5px
 }

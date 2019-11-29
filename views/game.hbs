@@ -102,14 +102,14 @@
                     <textarea name="rvtext"></textarea>
                     <input type="hidden" id="gameName" name="gameName" value="{{thisgame.title}}">
                     <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
-                    <input type="hidden" id="starRating" name="starRating" value=>
+                    <input type="hidden" id="starRating" name="starRating" value=0>
                     <section style="width: 120px;">
                         <p>
                             <input type="submit" value="Submit Review" class="submitButton">
                         </p>
                     </section>
                 </form>
-                <p class="smalltext" style="margin-top: -32px; text-align: right">reviews must be approved by an administrator.</p>
+                <p class="smalltext" style="margin-top: -22px; text-align: right">reviews must be approved by an administrator.</p>
             </section>
         </section>
         <section class="column" id="column1">
@@ -179,27 +179,37 @@
                 <figure class='rating_bar'>
                     <figure class="rating" style="width: calc({{avgScore}}% * 10);"></figure>
                 </figure>
-                <p style="text-align:center; font-size: 12px;" id="score/10text">{{avgScore}}/10 from {{reviewNo}} reviews.</p>
+                <p style="text-align:center; font-size: 12px;" id="score/10text">
+                    {{#if hasReviews}}
+                        {{avgScore}}/10 from {{reviewNo}} reviews.
+                    {{else}}
+                        No reviews yet. Be the first to leave a review!
+                    {{/if}}
+               </p>
             </section>
         </section>
         <section class="column" id="columnReviews">
             <section class="recentReviews">
                 <h2>
                Recent User Reviews
+               {{#if hasReviews}}
                <span class = "smalltext" style="text-align: right;">
-                  <span>
-                     <form action="/showAllReviews" method="post" style="width: 150px; float: right" >
-                     <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
-                     <input type="submit" value="Show All {{reviewNo}} Reviews"  class="submitButton">
-                  </span>
+                    <span>
+                        <form action="/showAllReviews" method="post" style="width: 150px; float: right" >
+                        <input type="hidden" id="gameID" name="gameID" value="{{thisgame.gameID}}">
+                        <input type="submit" value="Show All {{reviewNo}} Reviews"  class="submitButton">
+                    </span>
                </span>
+               {{else}}
+                    <span class = "smalltext" style="text-align: right;"><section style= "float: right">No Reviews.</section></span>
+               {{/if}}
             </h2> {{#each review}}
                 <table id="reviewTable" class='review{{@index}}'>
                     <tbody>
                         <tr>
                             <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.reviewDate}}</span></th>
                             <td>
-                                <span class="close" id="expandText" onclick="expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
+                                <span class="close" id="expandText" onclick="expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down" style="display: none;"></i></i><i class="fas fa-angle-left"></i></span>
                                 <figure class='rating_bar' id='reviewfull'>
                                     <figure class="rating" style='width: calc({{this.reviewScore}}% * 10);' id="review"></figure>
                                 </figure>
