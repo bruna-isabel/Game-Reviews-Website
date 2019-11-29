@@ -48,7 +48,6 @@ const dbcontext = new db.SqliteDbContext(path.join(__dirname, 'app.db'))
 // inject the db context
 app.context.db = dbcontext
 
-const home = require('./controllers/home')
 const login = require('./controllers/login')
 const logout = require('./controllers/logout')
 const signup = require('./controllers/signup')
@@ -63,6 +62,5 @@ app.use(signup.routes())
 app.use(homepage.routes())
 app.use(serve(path.join(__dirname, './public')))
 
-
-
 module.exports = app
+

@@ -67,14 +67,10 @@ When('I press Sign Up', async function() {
 	await currentPage.click('button[class=signup]')
 })
 
-Then('I should be redirected to {string} and signed in successfully', async function(page) {
+Then('I should be redirected to {string} and signed in successfully', async function() {
 	let currentURL = currentPage.url()
 	assert(currentURL = `http://${hostname}/homepage`, `got ${currentURL}`)
 })
 
 //        Scenario: User provides invalid username  //
 
-When('I fill in username with not {string}', async function(user) {
-
-
-})
