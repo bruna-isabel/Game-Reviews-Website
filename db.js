@@ -6,7 +6,11 @@
 
 const sqlite = require('sqlite')
 
-const { NotImplemented } = require('./utils/errors')
+const {
+	NotImplemented,
+	EntityNotFound
+} = require('./utils/errors')
+
 const User = require('./models/user')
 const Game = require('./models/game')
 const Review = require('./models/review')
@@ -54,9 +58,11 @@ class DbContext {
 	}
 
 	async deleteGame(id) {
-		throw new NotImplemented('removeGame is not implemented')
+		throw new NotImplemented('deleteGame is not implemented')
 	}
 
+	// eslint-disable-next-line no-unused-vars
+	async createGame(game) {
 	async addGame(game) {
 		throw new NotImplemented('addGame is not implemented')
 	}
@@ -102,6 +108,35 @@ class DbContext {
 	async approvalReviewList(bool) {
 		throw new NotImplemented('approvalReviewList is not implemented')
 	}
+	
+	async getCategories() {
+		throw new NotImplemented('getCategories is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async getCategory(id) {
+		throw new NotImplemented('getCategory is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async deleteCategory(id) {
+		throw new NotImplemented('deleteCategory is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async createCategory(category) {
+		throw new NotImplemented('createCategory is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async updateCategory(category) {
+		throw new NotImplemented('updateCategory is not implemented')
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async execute(query) {
+		throw new NotImplemented('execute is not implemented')
+	}
 }
 
 class SqliteDbContext extends DbContext {
@@ -125,7 +160,11 @@ class SqliteDbContext extends DbContext {
 		}
 
 		const user = await sqlite.get(query, id)
-		return user ? Object.assign(new User(), user) : null
+		if (!user) {
+			throw new EntityNotFound(`user with id ${id} not found`)
+		}
+
+		return Object.assign(new User(), user)
 	}
 
 	async getUsers() {
@@ -195,7 +234,7 @@ class SqliteDbContext extends DbContext {
 		const sqlite = await this.sqlitePromise
 
 		const games = await sqlite.all('SELECT * FROM `games`;')
-		return games
+		return games.map(x => Object.assign(new Game(), x))
 	}
 
 	async getGame(id) {
@@ -204,24 +243,33 @@ class SqliteDbContext extends DbContext {
 		let query
 
 		if (typeof id === 'number') {
-			query = 'SELECT * FROM `games` WHERE `gameID` = ?;'
+			query = 'SELECT * FROM `games` WHERE `id` = ?;'
 		} else {
-			throw new TypeError('must be a number')
+			throw new TypeError('id must be a number')
 		}
 
 		const game = await sqlite.get(query, id)
+
+		if (!game) {
+			throw new EntityNotFound(`game with id ${id} not found`)
+		}
+
 		return Object.assign(new Game(), game)
 	}
 
 	async deleteGame(id) {
 		const sqlite = await this.sqlitePromise
 
+		if (!this.getGame(id)) {
+			throw new EntityNotFound(`game with id ${id} not found`)
+		}
+
 		let query
 
 		if (typeof id === 'number') {
-			query = 'DELETE FROM `games` WHERE `gameID` = ?;'
+			query = 'DELETE FROM `games` WHERE `id` = ?;'
 		} else {
-			throw new TypeError('must be number')
+			throw new TypeError('must be number or string')
 		}
 
 		await sqlite.run(query, id)
@@ -229,6 +277,11 @@ class SqliteDbContext extends DbContext {
 
 	async updateGame(game) {
 		const sqlite = await this.sqlitePromise
+
+		// throws errors if entities are nonexistent
+		await this.getGame(game.id)
+		await this.getUser(game.submittedBy)
+
 		await sqlite.run(
 			'UPDATE `games` SET `title`= ? , `platforms`=?, `slugline` = ?, `summary`= ? , `releaseDate`=?,'+
 				'`developer`=?, `publisher`=?, `submittedBy`= ?,`approved`=?,`poster`=?,`splash`=? WHERE `gameID`= ? ;',
@@ -240,15 +293,12 @@ class SqliteDbContext extends DbContext {
 			game.developer,
 			game.publisher,
 			game.submittedBy,
-			game.approved,
-			game.poster,
-			game.splash,
-			game.gameID
+			game.id
 		)
-		return this.getGame(game.gameID)
+		return this.getGame(game.id)
 	}
 
-	async addGame(game) {
+	async createGame(game) {
 		const sqlite = await this.sqlitePromise
 		await sqlite.run(
 			'INSERT INTO `games` (`title`, `platforms`, `slugline`, `summary`, `releaseDate`,`developer`, `publisher`,'+
@@ -265,8 +315,8 @@ class SqliteDbContext extends DbContext {
 			game.poster,
 			game.splash
 		)
-		const newGame = 'SELECT * FROM `games` ORDER BY `gameID` DESC LIMIT 1;'
-		return Object.assign(new Game(), newGame)
+
+		return this.getGame(lastID)
 	}
 
 	async getAvgScore(id, reviewCount) {

@@ -10,6 +10,13 @@ class NotImplemented extends Error {
 	}
 }
 
+class EntityNotFound extends Error {
+	constructor(message) {
+		super(message)
+	}
+}
+
 module.exports = {
 	NotImplemented,
+	EntityNotFound
 }

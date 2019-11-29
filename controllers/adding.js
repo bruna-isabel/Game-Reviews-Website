@@ -5,6 +5,7 @@ const Router = require('koa-router')
 const adding = new Router({prefix: '/adding'})
 
 adding.get('/game', async ctx => {
+	
 	const a = ctx.session.userID
 	const user = await ctx.db.getUser(Number(a))
 	const platformnames = await ctx.db.getAllPlatforms()
