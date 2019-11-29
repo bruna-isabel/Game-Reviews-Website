@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `reviews`
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `user` TEXT,
   `game` INTEGER,
-  `review_score` INT,
-  `review_text` TEXT,
-  `review_date` DATE,
+  `reviewScore` INT,
+  `reviewText` TEXT,
+  `reviewDate` DATE,
   `approved` TEXT
 );
 
@@ -49,7 +49,7 @@ INSERT INTO `games` VALUES
   'Naughty Dog', 
   'Sony Computer Entertainment', 
   1,
-  'no', 
+  'yes', 
   'tlou.jpg', 
   'tlousplash.jpg');
 
@@ -63,7 +63,7 @@ INSERT INTO `games` VALUES
   'Nintendo EPD', 
   'Nintendo', 
   2, 
-  'no', 
+  'yes', 
   'botw.jpg', 
   'botwsplash.jpg');
 
@@ -77,7 +77,7 @@ INSERT INTO `games` VALUES
   'Insomniac Games', 
   'Sony Interactive Entertainment', 
   2, 
-  'no', 
+  'yes', 
   'spiderman.jpg', 
   'spidermansplash.jpg');
 
@@ -91,7 +91,7 @@ INSERT INTO `games` VALUES
   'Sports Interactive', 
   'SEGA', 
   1, 
-  'no', 
+  'yes', 
   'fm20poster.jpg', 
   'fm20splash.jpg');
 
@@ -105,7 +105,7 @@ INSERT INTO `games` VALUES
   'Respawn Entertainment', 
   'Electronic Arts', 
   2, 
-  'no', 
+  'yes', 
   'starwarsjfoposter.jpg', 
   'starwarsjfosplash.jpg');
 
@@ -153,5 +153,5 @@ INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
-INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
+INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');
 

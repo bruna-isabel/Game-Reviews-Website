@@ -122,11 +122,19 @@
                     {{/if}}
                 </figure>
             </section>
-            <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords={{thisgame.title}}" target="_blank">
-                <section class="purchaseButton">
-                    <i class="fab fa-amazon" aria-hidden="true"></i> PURCHASE
+            {{#if thisgame.url}}
+            <a href="https://store.steampowered.com/search/?term={{thisgame.title}}" target="_blank">
+                <section class="purchaseButton" id = "steam">
+                    <i class="fab fa-steam" style="font-size: 20px"></i> PURCHASE
                 </section>
             </a>
+            {{else}}
+            <a href="http://www.amazon.co.uk/s?url=search-alias%3Daps&field-keywords={{thisgame.title}}" target="_blank">
+                <section class="purchaseButton" id = "amazon">
+                    <i class="fab fa-amazon" aria-hidden="true"></i></i> PURCHASE
+                </section>
+            </a>
+            {{/if}}
         </section>
         <section class="column" id="column2">
             <section class="platforms">
@@ -189,17 +197,17 @@
                 <table id="reviewTable" class='review{{@index}}'>
                     <tbody>
                         <tr>
-                            <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                            <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.reviewDate}}</span></th>
                             <td>
                                 <span class="close" id="expandText" onclick="expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
                                 <figure class='rating_bar' id='reviewfull'>
-                                    <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id="review"></figure>
+                                    <figure class="rating" style='width: calc({{this.reviewScore}}% * 10);' id="review"></figure>
                                 </figure>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <section colspan="2" class='review{{@index}}' id='reviewText'>{{this.review_text}}</section>
+                <section colspan="2" class='review{{@index}}' id='reviewText'>{{this.reviewText}}</section>
                 {{/each}}
             </section>
         </section>

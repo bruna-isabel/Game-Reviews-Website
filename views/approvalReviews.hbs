@@ -23,8 +23,8 @@
 		{{#each review}}
 		<tr>
 			<td class='user'>{{this.user}}</td>
-			<td class='review'>{{this.review_text}}</td>
-			<td class='rating'>{{this.review_score}}</td>
+			<td class='review'>{{this.reviewText}}</td>
+			<td class='rating'>{{this.reviewScore}}</td>
 			<form action="/approval/reviews" method="post">
 				<td class='statusChange'> <input type="submit" name="{{this.id}}" value="Approve"/> </td>
 			</form>

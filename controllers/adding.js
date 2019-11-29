@@ -9,7 +9,8 @@ adding.get('/game', async ctx => {
 	const a = ctx.session.userID
 	const user = await ctx.db.getUser(Number(a))
 	const platformnames = await ctx.db.getAllPlatforms()
-	await ctx.render('addingGames.hbs', {platforms: platformnames, user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
+	await ctx.render('addingGames.hbs', {platforms: platformnames, user: ctx.session.authorised,
+		admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 
 	if(!user) {
 		console.log('you are not allowed to add any games')

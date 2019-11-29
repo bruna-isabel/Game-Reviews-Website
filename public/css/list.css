@@ -4,10 +4,13 @@ html{
 	font-size: 16px;
 	height: 1300px;
 	margin: 75px 0 22px 0;
+	font-family: 'Roboto', sans-serif;
+
 }
 h1{
 	color: #A9A9A9;
 	text-align: center;
+	
 }
 .content-table{
 	border-collapse: collapse;
@@ -38,6 +41,9 @@ h1{
 .content-table tbody tr:last-of-type{
 	border-bottom: 2px solid #696969;
 }
+.content-table tbody tr td section {
+height: 100px;overflow: scroll;
+}
 .image{
 	height: 8em;
 	width: 7em;
@@ -54,6 +60,7 @@ h1{
 	font-size: 20px;
 	width: 20em;
 	font-weight: bold;
+	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .summary{
 	text-align: left;

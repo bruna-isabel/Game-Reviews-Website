@@ -2,12 +2,13 @@
 
 <header>
       <nav>
+            <figure class="navBackground">
+            </figure>
             <a id="title" href="../homepage">XD REVIEWS</a>
 
             {{#if user }}
             <ul> 
                   <li><a href="../homepage">Welcome! </a></li>
-                  <li><a href="../logout">Logout</a></li>
                   <li><a href="../list">Games</a></li>
                   <li><a href="../adding/game">Add a Game</a></li>
                   {{#if admin}}
@@ -19,6 +20,7 @@
                   </li>
                   {{/if}}
                   <li><a>About Us</a></li>
+                  <li><a href="../logout">Logout</a></li>
             </ul> 
             {{else}}
             <ul> 

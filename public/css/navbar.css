@@ -5,22 +5,28 @@ body{
     color: black;
 		margin:0;
 }
-
 /* EVERYTHING IN THE HEADER*/
 header {
     font-family: Helvetica, sans-serif;
     position: fixed;
 		width: 100%;
 		top: 0;
-    background-color: transparent;
     z-index: 1;
-}
 
+}
+.navBackground {
+  background-color: #111111;
+  width: 100vw;
+  height: 46px;
+  z-index: -1;
+  margin: 0px;
+  margin-bottom: -46px;
+}
 /*title of website*/
 #title{
   float: left;
   margin-left: 15%;
-
+  background-color: #111111;
   
 }
 /*elements from top bar*/
@@ -31,12 +37,16 @@ ul {
     overflow: hidden;
     top: 0;
     float: right;
+    
 }
 
 /*each element of list*/ 
   li {
     float: left;
     text-align: center;
+    width: 150px;
+    background-color: #111111;
+
 }
 
 
@@ -51,12 +61,13 @@ li a, #title{
 }
 li a:hover, #title:hover {
     background-color: rgb(49, 49, 49);
+    
   }
-
 
 ul li ul {
   visibility: hidden;
-  opacity: 0;
+  background-color: #111111;
+  opacity: 0.5;
   transition: all 0.5s ease;
   margin-top: 1rem;
   left: 0;
@@ -68,9 +79,11 @@ ul li ul:hover {
   visibility: visible;
   opacity: 1;
   display: block;
+  
 }
 
 ul li ul li a, ul li ul li {
   clear: both;
   width: 100%;
+
 }

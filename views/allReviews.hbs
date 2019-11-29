@@ -49,17 +49,17 @@
                 <table id="reviewTable" class='review{{@index}}'>
                     <tbody>
                         <tr>
-                            <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.review_date}}</span></th>
+                            <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.reviewDate}}</span></th>
                             <td>
                                 <span class="close" id="expandText" onclick="expandReviews({{@index}})" style="width: 20px;"><i class="fas fa-angle-down"></i><i class="fas fa-angle-left" style="display: none;"></i></span>
                                 <figure class='rating_bar' id='reviewfull'>
-                                    <figure class="rating" style='width: calc({{this.review_score}}% * 10);' id="review"></figure>
+                                    <figure class="rating" style='width: calc({{this.reviewScore}}% * 10);' id="review"></figure>
                                 </figure>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <section colspan="2" class='review{{@index}}' id='reviewText'>{{this.review_text}}</section>
+                <section colspan="2" class='review{{@index}}' id='reviewText'>{{this.reviewText}}</section>
                 {{/each}}
 
             </section>

@@ -1,13 +1,14 @@
 'use strict'
 
 class Review {
-	constructor(user, game, review_score, review_text, review_date, approved) {
+	// eslint-disable-next-line max-params
+	constructor(user, game, reviewScore, reviewText, reviewDate, approved) {
 		this.id = -1
 		this.user = user
 		this.game = game
-		this.review_score = review_score
-		this.review_text = review_text
-		this.review_date = review_date
+		this.reviewScore = reviewScore
+		this.reviewText = reviewText
+		this.reviewDate = reviewDate
 		this.approved = approved
 	}
 }
