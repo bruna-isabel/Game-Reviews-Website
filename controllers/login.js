@@ -1,14 +1,14 @@
 'use strict'
 
 const Router = require('koa-router')
-const koaBody = require('koa-body')
+const koaBodyParser = require('koa-bodyparser')
 const bcrypt = require('bcrypt')
 
 const login = new Router({ prefix: '/login' })
 
 const { EntityNotFound } = require('../utils/errors')
 
-login.use(koaBody())
+login.use(koaBodyParser())
 
 login.get('/', async ctx => ctx.render('login.hbs'))
 
