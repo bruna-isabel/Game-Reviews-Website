@@ -3,51 +3,30 @@
 
 <head>
   <title>Log In</title>
-
-  <style lang="css">
-    .login-form {
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: calc(50vh - 100px);
-      width: 400px;
-
-      border: 1px solid black;
-    }
-
-    .login-form form {
-      padding: 5px;
-    }
-
-    .login-form input {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      width: calc(100% - 5px);
-      height: 20px;
-      display: block;
-    }
-
-    .login-button {
-      background-color: rgb(84, 84, 230);
-      color: white;
-      font-family: sans-serif;
-    }
-  </style>
+  <link href="../public/css/login.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
+  
+  {{>navbar}}
+  
   {{#if errorMsg}}
   <div class="error-msg">
     {{errorMsg}}
   </div>
   {{/if}}
 
-  <div class="login-form">
-    <form method="post">
+ 
+    <form class = 'modalbox' method="post"> 
+      <section class="popup">
+      <label for="username"><b>Username</b></label>
       <input type="text" placeholder="Username" name="username" required />
+      <label for="password"><b>Password</b></label>
       <input type="password" placeholder="Password" name="password" required />
       <button class="login-button" type="submit">Log In</button>
+      </section>
     </form>
-  </div>
+
 </body>
 
 </html>
