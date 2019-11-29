@@ -1,13 +1,22 @@
 /* eslint-disable complexity */
 'use strict'
 
+const fs = require('fs')
+const sqlite = require('sqlite')
+//Manually inserted data
+const sqlDb = sqlite.open('../app.db')
+fs.readFile('add_data', async(err, data) => {
+	if(err) throw err
+	await sqlDb.exec(data)
+})
+
 const request = require('request')
 const path = require('path')
 const Game = require(path.join(__dirname, '/../models/game'))
 const db = require(path.join(__dirname, '/../db'))
-
 const dbctx = new db.SqliteDbContext(path.join(__dirname, '/../app.db'))
 
+//Automatically inserted data
 // eslint-disable-next-line max-lines-per-function
 request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, response, body) => {
 	const allGames = JSON.parse(body)
