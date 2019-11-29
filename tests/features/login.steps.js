@@ -51,6 +51,11 @@ Before(async function() {
 	currentPage = await browser.newPage()
 })
 
+const getLoginError = async() => currentPage.evaluate(() => {
+	const msgEl = document.getElementsByClassName('error-msg')[0]
+	return msgEl ? msgEl.textContent.trim() : ''
+})
+
 Given('username is {string} and password is {string}', async function(user, pass) {
 	await currentPage.goto(`http://${hostname}/login`)
 
@@ -58,32 +63,28 @@ Given('username is {string} and password is {string}', async function(user, pass
 	await currentPage.type('input[name=password]', pass)
 })
 
-When('I try to log in', async() => {
+When('I try to log in', async function() {
 	await currentPage.click('button[type=submit]')
 })
 
-Then('I should be redirected and logged in successfully', async function() {
+Then('I should be logged in successfully', async function() {
+	const errorMsg = await getLoginError()
+	assert(!errorMsg, `got: ${errorMsg}`)
+})
+
+Then('I should be redirected to {string}', function(page) {
 	const currentURL = currentPage.url()
-	console.log(await currentPage.content())
-	assert(currentURL === `http://${hostname}/`, `got ${currentURL}`)
+	if (!page.startsWith('/')) page = `/${page}`
+
+	assert(currentURL === `http://${hostname}${page}`, `got: ${currentURL}`)
 })
 
-Given('username is {string} and password is not {string}', function(user, pass) {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should be asked to try again with an error telling me the password was incorrect', async function() {
+	const errorMsg = await getLoginError()
+	assert(errorMsg === 'Password incorrect', `got: ${errorMsg}`)
 })
 
-Then('I should be asked to try again with an error telling me the password was incorrect', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Given('username is not {string} and password is {string}', function(user, pass) {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Then('I should be asked to try again with an error telling me the username doesn\'t exist', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should be asked to try again with an error telling me the username doesn\'t exist', async function() {
+	const errorMsg = await getLoginError()
+	assert(errorMsg === 'User does not exist', `got: ${errorMsg}`)
 })
