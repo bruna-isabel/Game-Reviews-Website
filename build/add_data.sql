@@ -1,7 +1,6 @@
 INSERT INTO `games` VALUES 
   (1, 
   'The Last of Us', 
-  '31',
   'Hope is the key to survival.', 
   'Set in the post-apocalyptic United States, the game tells the story of survivors Joel and Ellie as they work together to survive their westward journey across what remains of the country to find a possible cure for the modern fungal plague that has nearly decimated the entire human race.', 
   '04/06/2013', 
@@ -15,7 +14,6 @@ INSERT INTO `games` VALUES
 INSERT INTO `games` VALUES 
   (2, 
   'The Legend of Zelda: Breath of the Wild', 
-  '34,37',
   'Step into a world of discovery, exploration and adventure.', 
   'No kingdom. No memories. After a 100-year slumber, Link wakes up alone in a world he no longer remembers. Now the legendary hero must explore a vast and dangerous land and regain his memories before Hyrule is lost forever. Armed only with what he can scavenge, Link sets out to find answers and the resources needed to survive.', 
   '03/03/2017', 
@@ -29,7 +27,6 @@ INSERT INTO `games` VALUES
 INSERT INTO `games` VALUES 
   (3,
   "Marvel's Spider-Man", 
-  '36',
   'Be Greater.', 
   'After eight years behind the mask, Peter Parker is a crime-fighting expert. Feel the full power of a more experienced Spider-Man with improvisational combat, dynamic acrobatics, fluid urban traversal, and environmental interactions. A rookie no longer, this is the most masterful Spider-Man you’ve ever played.', 
   '07/09/2018', 
@@ -43,7 +40,6 @@ INSERT INTO `games` VALUES
 INSERT INTO `games` VALUES 
   (4,
   "Football Manager 2020", 
-  '38,37,39,40,41',
   'Your club, your way.', 
   'Manage your football club, your way. Every decision counts in FM20 with new features rewarding planning and progression like never before, empowering managers to develop both your club’s and your own unique managerial identity.', 
   '19/11/2019', 
@@ -57,7 +53,6 @@ INSERT INTO `games` VALUES
 INSERT INTO `games` VALUES 
   (5,
   "Star Wars Jedi: Fallen Order", 
-  '36,35,38',
   'Become a Jedi.', 
   'The Empire seeks to eradicate all Jedi after the execution of Order 66. You, a Jedi Padawan-turned-fugitive, must fight for your survival as you explore the mysteries of a long-extinct civilization in hopes of rebuilding the Jedi Order.', 
   '15/11/2019', 
@@ -110,6 +105,19 @@ INSERT INTO 'platforms' VALUES (39, 'macOS');
 INSERT INTO 'platforms' VALUES (40, 'iOS');
 INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
+
+INSERT INTO
+  `gamePlatforms`
+VALUES
+  (1, 31),
+  (2, 34),
+  (2, 37),
+  (3, 36),
+  (4, 38),
+  (4, 37),
+  (4, 39),
+  (4, 40),
+  (4, 41);
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');

@@ -1,10 +1,16 @@
-/**
+/*
  * Common error types
  */
 
 'use strict'
 
+/**
+ * Error for use when a function is not implemented.
+ */
 class NotImplemented extends Error {
+	/**
+	 * @param {string} message - Internal message of the Error.
+	 */
 	constructor(message) {
 		super(message)
 	}

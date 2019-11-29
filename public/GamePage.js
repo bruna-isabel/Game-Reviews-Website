@@ -90,10 +90,12 @@ function clickStar(id) {
 	}
 	document.getElementById('starRating').value = ratingGiven
 }
+// eslint-disable-next-line complexity
 function colourStars() {
 	if (ratingSubmitted) {
 		if (ratingGiven > 0) {
 			for (i = 0; i <= 9; i++) {
+				// eslint-disable-next-line max-depth
 				if (ratings[i].id <= ratingGiven) {
 					ratings[i].style.color = colorStar
 				} else{

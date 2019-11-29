@@ -4,7 +4,6 @@ module.exports = {
 	displayName: 'test',
 	verbose: true,
 	collectCoverage: true,
-	'preset' : 'jest-puppeteer' ,
 	coverageThreshold: {
 		global: {
 			branches: 0,

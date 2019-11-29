@@ -4,12 +4,14 @@ const Router = require('koa-router')
 
 const adding = new Router({prefix: '/adding'})
 
-adding.get('/game', async ctx => {
-	
+const { authenticateUser } = require('../controllers/middleware/auth')
+
+adding.get('/game', authenticateUser, async ctx => {
+
 	const a = ctx.session.userID
-	const user = await ctx.db.getUser(Number(a))
+	const user = await ctx.db.getUser(a)
 	const platformnames = await ctx.db.getAllPlatforms()
-	await ctx.render('addingGames.hbs', {platforms: platformnames, user: ctx.session.authorised,
+	await ctx.render('addingGames.hbs', {platforms: platformnames, user: ctx.session.userID,
 		admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 
 	if(!user) {
@@ -19,7 +21,7 @@ adding.get('/game', async ctx => {
 })
 
 
-adding.post('/game', async ctx => {
+adding.post('/game', authenticateUser, async ctx => {
 	const body = ctx.request.body
 	body.submittedBy = ctx.session.userID
 	const platforms = body.platforms

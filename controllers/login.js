@@ -16,8 +16,7 @@ login.post('/', async ctx => {
 
 	const user = await getUser(ctx.db, username)
 	if (!user) {
-		return ctx.render('login.hbs', { errorMsg: 'User does not exist',
-			user: ctx.session.authorised, admin: await ctx.db.isUserAdmin(ctx.session.userID)})
+		return ctx.render('login.hbs', { errorMsg: 'User does not exist' })
 	}
 
 	if (await bcrypt.compare(password, user.hash)) {
@@ -25,8 +24,7 @@ login.post('/', async ctx => {
 		ctx.session.userID = user.id
 		return ctx.redirect(redirect)
 	} else {
-		return ctx.render('login.hbs', { errorMsg: 'Password incorrect', user: ctx.session.authorised,
-			admin: await ctx.db.isUserAdmin(ctx.session.userID)})
+		return ctx.render('login.hbs', { errorMsg: 'Password incorrect' })
 	}
 })
 
