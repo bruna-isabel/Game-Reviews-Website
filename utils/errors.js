@@ -10,7 +10,13 @@ class NotImplemented extends Error {
 	}
 }
 
+/**
+ * Error for use when an entity in the database is not found.
+ */
 class EntityNotFound extends Error {
+	/**
+	 * @param {string} message - Internal message of the Error.
+	 */
 	constructor(message) {
 		super(message)
 	}

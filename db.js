@@ -116,7 +116,8 @@ class DbContext {
 
 	async postComment(comment) {
 		throw new NotImplemented('postComment is not implemented')
-	
+	}
+
 	async getCategories() {
 		throw new NotImplemented('getCategories is not implemented')
 	}
@@ -285,11 +286,9 @@ class SqliteDbContext extends DbContext {
 
 	async updateGame(game) {
 		const sqlite = await this.sqlitePromise
-
 		// throws errors if entities are nonexistent
 		await this.getGame(game.id)
 		await this.getUser(game.submittedBy)
-
 		await sqlite.run(
 			'UPDATE `games` SET `title`= ? , `platforms`=?, `slugline` = ?, `summary`= ? , `releaseDate`=?,'+
 				'`developer`=?, `publisher`=?, `submittedBy`= ?,`approved`=?,`poster`=?,`splash`=? WHERE `gameID`= ? ;',

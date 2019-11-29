@@ -7,8 +7,8 @@
     "start": "node --use_strict index.js",
     "watch": "npx nodemon --harmony --use_strict index.js",
     "build-db": "node ./build/build_db.js",
-    "test": "jest --coverage --runInBand",
-    "add-data": "node ./build/add_data.js"
+    "add-data": "node ./build/add_data.js",
+    "test": "node ./tests/test.js"
   },
   "author": "",
   "license": "ISC",
@@ -34,7 +34,8 @@
     "supertest": "^4.0.2"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "cucumber": "^6.0.5",
+    "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
@@ -42,6 +43,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "nodemon": "^1.19.3",
+    "puppeteer": "^2.0.0",
     "supertest": "^4.0.2"
   }
 }
