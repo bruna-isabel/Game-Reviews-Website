@@ -6,7 +6,11 @@
 
 const sqlite = require('sqlite')
 
-const { NotImplemented } = require('./utils/errors')
+const {
+	NotImplemented,
+	EntityNotFound
+} = require('./utils/errors')
+
 const User = require('./models/user')
 
 class DbContext {
@@ -61,7 +65,11 @@ class SqliteDbContext extends DbContext {
 		}
 
 		const user = await sqlite.get(query, id)
-		return user ? Object.assign(new User(), user) : null
+		if (!user) {
+			throw new EntityNotFound(`user with id ${id} not found`)
+		}
+
+		return Object.assign(new User(), user)
 	}
 
 	async getUsers() {

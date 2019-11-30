@@ -10,7 +10,7 @@ Run `npm run build-db` to create the database structure.
 
 To run the server, run `npm start`.
 
-To live-reloading, run `npm run watch`.
+To start live-reloading, run `npm run watch`.
 
 ## Debugging
 
@@ -28,4 +28,5 @@ This project is split into a few folders:
 - `public/`: contains the site's front-end static pages and JavaScript.
 - `utils/`: contains shared utility code.
 - `views/`: contains dynamic HTML templates.
+- `tests/`: contains all tests for the project.
 - `./`: contains code that is used directly by the Koa app.

@@ -1,9 +1,18 @@
 'use strict'
 
-const db = require('../db')
+const path = require('path')
 
-const { NotImplemented } = require('../utils/errors')
+const db = require('../db')
+const { runSQLScript } = require('../build/util')
+
+const {
+	NotImplemented,
+	EntityNotFound
+} = require('../utils/errors')
+
 const User = require('../models/user')
+
+const BUILD_DB_SCRIPT = path.join(__dirname, '../build/build_db.sql')
 
 describe('abstract database context', () => {
 	const context = new db.DbContext()
@@ -40,35 +49,33 @@ describe('user database with sqlite', () => {
 	// create an in memory db
 	const sqliteContext = new db.SqliteDbContext(':memory:')
 
+	beforeAll(async() => {
+		const db = await sqliteContext.sqlitePromise
+		await runSQLScript(db, BUILD_DB_SCRIPT)
+	})
+
 	beforeEach(async() => {
-		await sqliteContext.sqlitePromise.then(async db => {
-			// clear table
-			await db.exec('DROP TABLE IF EXISTS `users`;')
+		const db = await sqliteContext.sqlitePromise
+		// clear table
+		await db.exec('DELETE FROM `users`;')
+		// insert test users
+		await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\'), (11, \'hello\', \'world\');')
+	})
 
-			// create user table
-			await db.exec(
-				'CREATE TABLE `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT UNIQUE, `hash` TEXT);'
-			)
-
-			// insert test users
-			await db.exec('INSERT INTO `users` VALUES (10, \'hakasec\', \'test\'), (11, \'hello\', \'world\');')
-		})
+	test('should error when a user is not found', async() => {
+		await expect(sqliteContext.getUser(42))
+			.rejects
+			.toThrowError(new EntityNotFound('user with id 42 not found'))
 	})
 
 	test('should get a user by id', async() => {
 		expect(await sqliteContext.getUser(10))
 			.toEqual({ id: 10, username: 'hakasec', hash: 'test' })
-
-		expect(await sqliteContext.getUser(1234))
-			.toBe(null)
 	})
 
 	test('should get a user by username', async() => {
 		expect(await sqliteContext.getUser('hakasec'))
 			.toEqual({ id: 10, username: 'hakasec', hash: 'test' })
-
-		expect(await sqliteContext.getUser('notauser'))
-			.toBe(null)
 	})
 
 	test('should get all users', async() => {

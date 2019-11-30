@@ -1,19 +1,22 @@
 'use strict'
 
 const Router = require('koa-router')
-const koaBody = require('koa-body')
+const koaBodyParser = require('koa-bodyparser')
 const bcrypt = require('bcrypt')
 
 const login = new Router({ prefix: '/login' })
 
-login.use(koaBody())
+const { EntityNotFound } = require('../utils/errors')
+
+login.use(koaBodyParser())
 
 login.get('/', async ctx => ctx.render('login.hbs'))
 
 login.post('/', async ctx => {
 	const { username, password } = ctx.request.body
+	const redirect = ctx.query.refer || '/'
 
-	const user = await ctx.db.getUser(username)
+	const user = await getUser(ctx.db, username)
 	if (!user) {
 		return ctx.render('login.hbs', { errorMsg: 'User does not exist' })
 	}
@@ -21,10 +24,26 @@ login.post('/', async ctx => {
 	if (await bcrypt.compare(password, user.hash)) {
 		ctx.session.authorised = true
 		ctx.session.userID = user.id
-		return ctx.redirect('back')
+		return ctx.redirect(redirect)
 	} else {
 		return ctx.render('login.hbs', { errorMsg: 'Password incorrect' })
 	}
 })
+
+async function getUser(db, username) {
+	try {
+		// try to get the user by username
+		const user = await db.getUser(username)
+		return user
+	} catch (error) {
+		// if an EntityNotFound error is thrown, return null
+		if (error instanceof EntityNotFound) {
+			return null
+		}
+
+		// else re-throw the error
+		throw error
+	}
+}
 
 module.exports = login
