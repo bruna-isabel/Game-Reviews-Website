@@ -106,6 +106,30 @@ INSERT INTO 'platforms' VALUES (40, 'iOS');
 INSERT INTO 'platforms' VALUES (41, 'Google Stadia');
 INSERT INTO 'platforms' VALUES (42, 'Linux');
 
+INSERT INTO 'categories' ('name') VALUES ('Action');
+INSERT INTO 'categories' ('name') VALUES ('Platformer');
+INSERT INTO 'categories' ('name') VALUES ('Shooter');
+INSERT INTO 'categories' ('name') VALUES ('Fighting');
+INSERT INTO 'categories' ('name') VALUES ('Stealth');
+INSERT INTO 'categories' ('name') VALUES ('Survival');
+INSERT INTO 'categories' ('name') VALUES ('Sandbox');
+INSERT INTO 'categories' ('name') VALUES ('Rhythm');
+INSERT INTO 'categories' ('name') VALUES ('Horror');
+INSERT INTO 'categories' ('name') VALUES ('Visual Novel');
+INSERT INTO 'categories' ('name') VALUES ('RPG');
+INSERT INTO 'categories' ('name') VALUES ('MMORPG');
+INSERT INTO 'categories' ('name') VALUES ('Action RPG');
+INSERT INTO 'categories' ('name') VALUES ('Rougelike');
+INSERT INTO 'categories' ('name') VALUES ('Tower Defence');
+INSERT INTO 'categories' ('name') VALUES ('Racing');
+INSERT INTO 'categories' ('name') VALUES ('Puzzle');
+INSERT INTO 'categories' ('name') VALUES ('Indie');
+INSERT INTO 'categories' ('name') VALUES ('Adventure');
+INSERT INTO 'categories' ('name') VALUES ('Sports');
+INSERT INTO 'categories' ('name') VALUES ('Co-op');
+
+
+
 INSERT INTO
   `gamePlatforms`
 VALUES
@@ -118,6 +142,20 @@ VALUES
   (4, 39),
   (4, 40),
   (4, 41);
+
+INSERT INTO 
+  `gameCategories` 
+VALUES 
+  (1, 3),
+  (1, 4),
+  (2, 5),
+  (2, 1),
+  (3, 3),
+  (3, 7),
+  (4, 4),
+  (4, 3),
+  (4, 7);
+
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');

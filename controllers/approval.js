@@ -9,7 +9,7 @@ const {authenticateUser} = require('./middleware/auth')
 // eslint-disable-next-line max-lines-per-function
 approval.get('/games', authenticateUser, async ctx => {
 	try {
-		if(await ctx.db.isUserAdmin(await ctx.session.userID) !== true) {
+		if(await ctx.db.isUserAdmin(ctx.session.userID) !== true) {
 			return await ctx.render('error', {message: 'Session not authorised'})
 		}
 
@@ -18,6 +18,7 @@ approval.get('/games', authenticateUser, async ctx => {
 		//changing submittedBy from an ID to the username
 		let game
 		for(game of unapproved) {
+			//console.log(game.submittedBy)
 			const user = await ctx.db.getUser(game.submittedBy)
 			game.submittedBy = user.username
 			if(game.poster.startsWith('http')) {

@@ -16,8 +16,12 @@
 		<form method= "post">
 			<input type="text" placeholder="Title:" name="title" required/>
 			<h1>Platforms:</h1>
-						{{#each platforms}}
+			{{#each platforms}}
 				<input type="checkbox" name="platforms" value="{{this.id}}" />{{this.name}}
+			{{/each}}
+			<h1>Categories:</h1>
+			{{#each categories}}
+				<input type="checkbox" name="categories" value="{{this.id}}" />{{this.name}}
 			{{/each}}
 			<input type="text" placeholder="Slugline" name="slugline" required/>
 			<input type= "text" placeholder="Summary" name="summary" required/>

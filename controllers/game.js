@@ -15,6 +15,7 @@ game.get('/game:id', async ctx => {
 			throw new Error('game ID must be a number')
 		}
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
+		console.log(gamedata)
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse()
 		const reviewCount = reviews.length
 		const platforms = gamedata.platforms
@@ -34,7 +35,8 @@ game.get('/game:id', async ctx => {
 			const sliceInt = 3
 			await ctx.render('game', {review: reviews.slice(0, sliceInt), expandedReview: reviews, thisgame: gamedata,
 				reviewNo: reviewCount, platforms: platforms, avgScore: avgScore, user: ctx.session.authorised,
-				admin: await ctx.db.isUserAdmin(ctx.session.userID), hasReviews: hasReviews})
+				admin: await ctx.db.isUserAdmin(ctx.session.userID), hasReviews: hasReviews,
+				categories: gamedata.categories})
 		} else {
 			ctx.redirect('/list')
 		}

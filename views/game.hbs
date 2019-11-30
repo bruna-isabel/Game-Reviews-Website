@@ -54,6 +54,10 @@
                                     <th>Publisher</th>
                                     <td>{{thisgame.publisher}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Categories</th>
+                                    <td>{{#each categories}}{{this.name}}{{#unless @last}}, {{/unless}}{{/each}}</td>
+                                </tr>
                             </tbody>
                         </table>
                 </section>

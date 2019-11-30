@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 'use strict'
 
@@ -8,16 +9,14 @@ const db = require(path.join(__dirname, '/../db'))
 const dbctx = new db.SqliteDbContext(path.join(__dirname, '/../app.db'))
 
 //Automatically inserted data
-// eslint-disable-next-line max-lines-per-function
-request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, response, body) => {
+request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', async(error, response, body) => {
 	const allGames = JSON.parse(body)
-	let i = 800
-	const gameAmount = 1100 //change according to how many games you want to add
+	let i = 1
+	const gameAmount = 10 //change according to how many games you want to add
 	for(i; i<gameAmount; i++) {
 		const gameid = allGames.applist.apps[i].appid //getting the appID to insert into next URL as a string
 		gameid.toString()
-		// eslint-disable-next-line max-lines-per-function
-		request(`https://store.steampowered.com/api/appdetails/?appids=${gameid}` , (error, response, body) => {
+		request(`https://store.steampowered.com/api/appdetails/?appids=${gameid}` , async(error, response, body) => {
 			//console.log(gameid)
 			const statusInt = 200
 			if (response.statusCode !== statusInt) {
@@ -43,23 +42,23 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', (error, respon
 					return
 				}
 				//Creating Game Object
-				const game = new Game(
+				let game = new Game(
 					gameData.name,
-					'38', //Most Steam games are on Windows
 					gameData.short_description,
 					gameData.about_the_game.replace(/<[^>]*>?/gm, ''),
 					gameData.release_date.date,
 					gameData.developers[0], //not every game has developers listed so it repeats the publisher
 					gameData.publishers[0],
-					'admin',
+					1,
 					'yes',
 					gameData.header_image,
 					gameData.screenshots[0].path_thumbnail)
-				dbctx.addGame(game)
-				//console.log(gameData)
+				game.categories = gameData.categories
+				game = await dbctx.createGame(game)
+				const platform = await dbctx.getPlatform(38)
+				await dbctx.linkGamePlatform(game, platform)
 			} catch(err) {
-				console.log(body)
-				throw TypeError(`Game: https://store.steampowered.com/api/appdetails/?appids=${gameid}  ${err}`)
+				throw new Error(`Game: https://store.steampowered.com/api/appdetails/?appids=${gameid}  ${err}`)
 			}
 		})
 	}

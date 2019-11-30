@@ -68,7 +68,7 @@ class DbContext {
 
 	// eslint-disable-next-line no-unused-vars
 	async createGame(game) {
-		throw new NotImplemented('addGame is not implemented')
+		throw new NotImplemented('createGame is not implemented')
 	}
 
 	/**
@@ -292,31 +292,6 @@ class DbContext {
 		throw new NotImplemented('postComment is not implemented')
 	}
 
-	async getCategories() {
-		throw new NotImplemented('getCategories is not implemented')
-	}
-
-	// eslint-disable-next-line no-unused-vars
-	async getCategory(id) {
-		throw new NotImplemented('getCategory is not implemented')
-	}
-
-	// eslint-disable-next-line no-unused-vars
-	async deleteCategory(id) {
-		throw new NotImplemented('deleteCategory is not implemented')
-	}
-
-	// eslint-disable-next-line no-unused-vars
-	async createCategory(category) {
-		throw new NotImplemented('createCategory is not implemented')
-	}
-
-	// eslint-disable-next-line no-unused-vars
-	async updateCategory(category) {
-		throw new NotImplemented('updateCategory is not implemented')
-	}
-
-	// eslint-disable-next-line no-unused-vars
 	async execute(query) {
 		throw new NotImplemented('execute is not implemented')
 	}
@@ -549,6 +524,18 @@ class SqliteDbContext extends DbContext {
 		}
 
 		return this.getGame(lastID)
+	}
+
+	/**
+	 * Gets all Categories.
+	 * @abstract
+	 * @returns {Promise<Category[]>}
+	 */
+	async getCategories() {
+		const sqlite = await this.sqlitePromise
+
+		const categories = await sqlite.all('SELECT * FROM `categories`;')
+		return categories.map(x => Object.assign(new Category(), x))
 	}
 
 	/**
@@ -834,7 +821,7 @@ class SqliteDbContext extends DbContext {
 			 query = 'SELECT * FROM `games` WHERE `approved` != ?'
 		}
 		const games = await sqlite.all(query, 'yes')
-		return games
+		return games.map(x => Object.assign(new Game(), x))
 	}
 	//selects all the platforms from the database
 	async getAllPlatforms() {
