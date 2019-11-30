@@ -347,7 +347,7 @@ class SqliteDbContext extends DbContext {
 
 		await sqlite.run(query, id)
 	}
-	//create a new user 
+	//create a new user
 	async createUser(user) {
 		const sqlite = await this.sqlitePromise
 
@@ -442,7 +442,7 @@ class SqliteDbContext extends DbContext {
 	 * @returns {Promise<Game>} Updated version of game
 	 * @throws {EntityNotFound} Game, User, or Category not found
 	 */
-		//updates game info 
+	//updates game info
 	 // eslint-disable-next-line max-lines-per-function
 	async updateGame(game) {
 		// throws errors if entities are nonexistent
@@ -489,7 +489,7 @@ class SqliteDbContext extends DbContext {
 	 * @param {Game} game - Game to be added to the database
 	 * @returns {Promise<Game>}
 	 */
-		// create new game 
+	// create new game
 	 // eslint-disable-next-line max-lines-per-function
 	async createGame(game) {
 		const sqlite = await this.sqlitePromise
@@ -544,7 +544,7 @@ class SqliteDbContext extends DbContext {
 	 * @throws {EntityNotFound} Category not found
 	 * @throws {TypeError} ID must be string or number
 	 */
-	// selects category by id 
+	// selects category by id
 	 async getCategory(id) {
 		const sqlite = await this.sqlitePromise
 
@@ -569,7 +569,7 @@ class SqliteDbContext extends DbContext {
 	 * @param {Category} category - Category being created
 	 * @returns {Promise<Category>}
 	 */
-	// creates a new category 
+	// creates a new category
 	 async createCategory(category) {
 		const sqlite = await this.sqlitePromise
 
@@ -667,7 +667,7 @@ class SqliteDbContext extends DbContext {
 	 * @throws {EntityNotFound} Platform not found
 	 * @returns {Promise<Platform>}
 	 */
-	//selects a platform by id 
+	//selects a platform by id
 	 async getPlatform(id) {
 		const sqlite = await this.sqlitePromise
 
@@ -692,7 +692,7 @@ class SqliteDbContext extends DbContext {
 	 * @param {Platform} platform - Platform being created
 	 * @returns {Promise<Platform>}
 	 */
-	//creates a platform 
+	//creates a platform
 	 async createPlatform(platform) {
 		const sqlite = await this.sqlitePromise
 
@@ -738,7 +738,7 @@ class SqliteDbContext extends DbContext {
 	 * @param {Platform} platform - The Platform being linked
 	 * @throws {EntityNotFound} Game or platform not found
 	 */
-	 // links the platfroms to the games table 
+	 // links the platfroms to the games table
 	 async linkGamePlatform(game, platform) {
 		// validate
 		await this.getGame(game.id)
@@ -844,7 +844,7 @@ class SqliteDbContext extends DbContext {
 		const reviews = await sqlite.all('SELECT * FROM `reviews`;')
 		return reviews
 	}
-	//selects the reviews for a specific game by gameID 
+	//selects the reviews for a specific game by gameID
 	async getReviewsForGame(gameID) {
 		const sqlite = await this.sqlitePromise
 
@@ -874,7 +874,7 @@ class SqliteDbContext extends DbContext {
 		const review = await sqlite.get(query, id)
 		return Object.assign(new Review(), review)
 	}
-	//delete a review by id 
+	//delete a review by id
 	async deleteReview(id) {
 		const sqlite = await this.sqlitePromise
 
@@ -958,7 +958,7 @@ class SqliteDbContext extends DbContext {
 			comment.commentText
 		)
 	}
-	//select a comment of a review by the reviewID 
+	//select a comment of a review by the reviewID
 	async getCommentsForReview(reviewID) {
 		const sqlite = await this.sqlitePromise
 
