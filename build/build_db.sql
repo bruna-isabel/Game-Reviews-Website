@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `reviewComments`
 CREATE TABLE IF NOT EXISTS `platforms`
 (
   `id` INTEGER PRIMARY KEY,
-  `name` TEXT
+  `name` TEXT UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS `gamePlatforms` (

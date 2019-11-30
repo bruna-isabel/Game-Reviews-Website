@@ -14,10 +14,10 @@ const {
 const User = require('./models/user')
 const Game = require('./models/game')
 const Category = require('./models/category')
+const Platform = require('./models/platform')
 const Review = require('./models/review')
 const Comment = require('./models/comment')
 
-//const Platform = require('./models/platform')
 
 
 /**
@@ -176,6 +176,64 @@ class DbContext {
 	// eslint-disable-next-line no-unused-vars
 	async createAndLinkGameCategory(game, category) {
 		throw new NotImplemented('createAndLinkGameCategory is not implemented')
+	}
+
+	/**
+	 * Gets a Platform by a given ID.
+	 * @abstract
+	 * @param {number|string} id - ID of the Platform
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async getPlatform(id) {
+		throw new NotImplemented('getPlatform is not implemented')
+	}
+
+	/**
+	 * Creates a new Platform.
+	 * @abstract
+	 * @param {Platform} platform - Platform being created
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async createPlatform(platform) {
+		throw new NotImplemented('createPlatform is not implemented')
+	}
+
+	/**
+	 * Links a Game and a Platform.
+	 * @abstract
+	 * @param {Game} game - The Game being linked
+	 * @param {Platform} platform - The Platform being linked
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async linkGamePlatform(game, platform) {
+		throw new NotImplemented('linkGamePlatform is not implemented')
+	}
+
+	/**
+	 * Creates a new Platform if it doesn't exist and links
+	 * it to a Game.
+	 * @abstract
+	 * @param {Game} game - Game being linked to
+	 * @param {Platform} platform - Platform being linked
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async createAndLinkGamePlatform(game, platform) {
+		throw new NotImplemented('createAndLinkGamePlatform is not implemented')
+	}
+
+	/**
+	 * Gets the Platforms for a given Game.
+	 * @abstract
+	 * @param {number} gameID - ID of the game
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async getGamePlatforms(gameID) {
+		throw new NotImplemented('getGamePlatforms is not implemented')
 	}
 
 	/**
@@ -384,7 +442,7 @@ class SqliteDbContext extends DbContext {
 		// downcasr result as Game object
 		game = Object.assign(new Game(), game)
 		game.categories = await this._getGameCategories(id)
-		game.platforms = []
+		game.platforms = await this._getGamePlatforms(id)
 
 		return game
 	}
@@ -444,6 +502,11 @@ class SqliteDbContext extends DbContext {
 			await this.createAndLinkGameCategory(game, category)
 		}
 
+		//link each platform
+		for (const platform of game.platforms) {
+			await this.createAndLinkGamePlatform(game, platform)
+		}
+
 		return this.getGame(game.id)
 	}
 
@@ -479,6 +542,10 @@ class SqliteDbContext extends DbContext {
 		for (const category of game.categories) {
 			await this.createAndLinkGameCategory(game, category)
 		}
+		//link each platform
+		for (const platform of game.platforms) {
+			await this.createAndLinkGamePlatform(game, platform)
+		}
 
 		return this.getGame(lastID)
 	}
@@ -511,13 +578,13 @@ class SqliteDbContext extends DbContext {
 
 	/**
 	 * @param {Category} category - Category being created
-	 * @returns {Category}
+	 * @returns {Promise<Category>}
 	 */
 	async createCategory(category) {
 		const sqlite = await this.sqlitePromise
 
 		const { lastID } = await sqlite.run(
-			'INSERT INTO `categories` (`name`) VALUES (?)',
+			'INSERT INTO `categories` (`name`) VALUES (?);',
 			category.name
 		)
 
@@ -602,10 +669,122 @@ class SqliteDbContext extends DbContext {
 		return categories.map(x => Object.assign(new Category(), x))
 	}
 
-	async getAvgScore(id, reviewCount) {
-		if (reviewCount === 0) {
-			return 0
+	/**
+	 * @param {number|string} id - ID of the Platform
+	 * @throws {TypeError} ID must be a number or string
+	 * @throws {EntityNotFound} Platform not found
+	 * @returns {Promise<Platform>}
+	 */
+	async getPlatform(id) {
+		const sqlite = await this.sqlitePromise
+
+		let query
+		if (typeof id === 'number') {
+			query = 'SELECT * FROM `platforms` WHERE `id` = ?;'
+		} else if (typeof id === 'string') {
+			query = 'SELECT * FROM `platforms` WHERE `name` = ?;'
+		} else {
+			throw new TypeError('id must be number or string')
 		}
+
+		const platform = await sqlite.get(query, id)
+		if (!platform) {
+			throw new EntityNotFound(`platform with id ${id} not found`)
+		}
+
+		return Object.assign(new Platform(), platform)
+	}
+
+	/**
+	 * @param {Platform} platform - Platform being created
+	 * @returns {Promise<Platform>}
+	 */
+	async createPlatform(platform) {
+		const sqlite = await this.sqlitePromise
+
+		const { lastID } = await sqlite.run(
+			'INSERT INTO `platforms` (`name`) VALUES (?);',
+			platform.name
+		)
+		return this.getPlatform(lastID)
+	}
+
+	/**
+	 * @param {number} gameID - ID of the Game
+	 * @throws {EntityNotFound} Game not found
+	 */
+	async getGamePlatforms(gameID) {
+		await this.getGame(gameID)
+
+		return this._getGamePlatforms(gameID)
+	}
+
+	/**
+	 * Gets a list of Platforms for a given Game ID, skips check
+	 * @protected
+	 * @param {number} gameID - ID of the Game
+	 * @returns {Promise<Platform[]>}
+	 */
+	async _getGamePlatforms(gameID) {
+		const sqlite = await this.sqlitePromise
+
+		const platforms = await sqlite.all(
+			'SELECT `p`.`id`, `p`.`name` FROM `gamePlatforms` AS `gp` ' +
+			'INNER JOIN `platforms` AS `p` ON `gp`.`platformID` = `p`.`id` ' +
+			'WHERE `gameID` = ?',
+			gameID
+		)
+
+		return platforms.map(x => Object.assign(new Platform(), x))
+	}
+
+	/**
+	 * @param {Game} game - The Game being linked
+	 * @param {Platform} platform - The Platform being linked
+	 * @throws {EntityNotFound} Game or platform not found
+	 */
+	async linkGamePlatform(game, platform) {
+		// validate
+		await this.getGame(game.id)
+		await this.getPlatform(platform.id)
+
+		const alreadyLinked = await this.getGamePlatforms(game.id)
+		const isLinked = alreadyLinked.some(c => c.id === platform.id)
+
+		// link if category is not already linked to this game
+		if (!isLinked) {
+			await sqlite.run(
+				'INSERT INTO `gamePlatforms` VALUES (?, ?)',
+				game.id,
+				platform.id
+			)
+		}
+	}
+
+	/**
+	 * @param {Game} game - Game being linked to
+	 * @param {Platform} platform - Platform being linked
+	 * @throws {EntityNotFound} Game not found
+	 */
+	async createAndLinkGamePlatform(game, platform) {
+		// validate
+		await this.getGame(game.id)
+
+		try {
+			await this.getPlatform(platform.id)
+		} catch (e) {
+			// if missing, create new
+			if (e instanceof EntityNotFound) {
+				platform = await this.createPlatform(platform)
+			} else {
+				throw e
+			}
+		}
+
+		await this.linkGamePlatform(game, platform)
+	}
+
+	async getAvgScore(id) {
 		const sqlite = await this.sqlitePromise
 
 		let allScoresForGame = []
@@ -622,6 +801,7 @@ class SqliteDbContext extends DbContext {
 		}
 		return score
 	}
+
 	async getPlatforms(platformIDs) {
 		const sqlite = await this.sqlitePromise
 
