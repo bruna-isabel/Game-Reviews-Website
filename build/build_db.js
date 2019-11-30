@@ -9,6 +9,8 @@ const sqlite = require('sqlite')
 const { runSQLScript } = require('./utils')
 
 sqlite.open('app.db').then(async db => {
-	const sqlPath = path.join(__dirname, 'build_db.sql')
-	await runSQLScript(db, sqlPath)
+	const buildSQL = path.join(__dirname, 'build_db.sql')
+	const dataSQL = path.join(__dirname, 'add_data.sql')
+	await runSQLScript(db, buildSQL)
+	await runSQLScript(db, dataSQL)
 })

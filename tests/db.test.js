@@ -14,8 +14,30 @@ const {
 const User = require('../models/user')
 const Game = require('../models/game')
 const Category = require('../models/category')
+const Platform = require('../models/platform')
 
 const BUILD_DB_SCRIPT = path.join(__dirname, '../build/build_db.sql')
+
+const sqliteContext = new db.SqliteDbContext(':memory:')
+
+// build the database
+beforeAll(async() => {
+	const db = await sqliteContext.sqlitePromise
+	await runSQLScript(db, BUILD_DB_SCRIPT)
+})
+
+// clean any data
+afterEach(async() => {
+	const db = await sqliteContext.sqlitePromise
+
+	const tables = await db.all('SELECT `tbl_name` FROM `sqlite_master`;')
+
+	for (const table of tables) {
+		const name = table['tbl_name']
+		await db.exec(`DELETE FROM \`${name}\`;`)
+		await db.exec(`DELETE FROM sqlite_sequence WHERE name = \'${name}\';`)
+	}
+})
 
 describe('abstract database context', () => {
 	const context = new db.DbContext()
@@ -49,13 +71,6 @@ describe('abstract database context', () => {
 })
 
 describe('user database with sqlite', () => {
-	// create an in memory db
-	const sqliteContext = new db.SqliteDbContext(':memory:')
-
-	beforeAll(async() => {
-		const db = await sqliteContext.sqlitePromise
-		await runSQLScript(db, BUILD_DB_SCRIPT)
-	})
 
 	beforeEach(async() => {
 		const db = await sqliteContext.sqlitePromise
@@ -125,13 +140,9 @@ describe('user database with sqlite', () => {
 })
 
 describe('game database with sqlite', () => {
-	// create an in memory db
-	const sqliteContext = new db.SqliteDbContext(':memory:')
 
-	beforeAll(async() => {
-		// set up db
+	beforeEach(async() => {
 		const db = await sqliteContext.sqlitePromise
-		await runSQLScript(db, BUILD_DB_SCRIPT)
 
 		// add dummy user
 		await db.exec(
@@ -139,13 +150,6 @@ describe('game database with sqlite', () => {
 			'(10, \'hakasec\', \'test\'), ' +
 			'(11, \'hello\', \'world\');'
 		)
-	})
-
-	beforeEach(async() => {
-		const db = await sqliteContext.sqlitePromise
-
-		// clear games data
-		await db.exec('DELETE FROM `games`;')
 
 		// insert dummy games data
 		await db.exec(
@@ -291,31 +295,173 @@ describe('game database with sqlite', () => {
 	})
 })
 
-describe('games database with categories', () => {
-	const sqliteContext = new db.SqliteDbContext(':memory:')
+describe('games database with platforms', () => {
 
-	beforeAll(async() => {
+	beforeEach(async() => {
 		const db = await sqliteContext.sqlitePromise
-		await runSQLScript(db, BUILD_DB_SCRIPT)
 
-		// static dummy data
 		// add dummy user
 		await db.exec(
 			'INSERT INTO `users` (`id`, `username`, `hash`) ' +
 			'VALUES (10, \'hakasec\', \'test\');'
 		)
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, ' +
+			' `poster`, `slugline`, `submittedBy`, ' +
+			' `releaseDate`, `developer`, `publisher`, ' +
+			' `approved`, `splash`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', ' +
+			' \'image1.png\', \'123\', 10, ' +
+			' \'2019-09-01\', \'Dev\', \'Pub\', ' +
+			' \'yes\', \'slash1.png\'), ' +
+			'(2, \'game2\', \'summary!!\', ' +
+			' \'image2.png\', \'456\', 10, ' +
+			' \'2019-10-10\', \'Dev2\', \'Pub\', ' +
+			' \'no\', \'slash2.jpg\');'
+		)
+
+		await db.exec(
+			'INSERT INTO `platforms` (`id`, `name`) ' +
+			'VALUES ' +
+			'(1, \'Nintendo Switch\'), ' +
+			'(2, \'Xbox\'), ' +
+			'(3, \'PlayStation\');'
+		)
+
+		await db.exec(
+			'INSERT INTO `gamePlatforms` ' +
+			'VALUES ' +
+			'(1, 1), ' +
+			'(1, 2), ' +
+			'(2, 2);'
+		)
+	})
+
+	test('should get game with linked platforms', async() => {
+		expect(await sqliteContext.getGame(1))
+			.toEqual(
+				{
+					id: 1,
+					title: 'game1',
+					summary: 'summary!!!',
+					poster: 'image1.png',
+					slugline: '123',
+					submittedBy: 10,
+					releaseDate: '2019-09-01',
+					developer: 'Dev',
+					publisher: 'Pub',
+					splash: 'slash1.png',
+					approved: 'yes',
+					categories: [],
+					platforms: [
+						{ id: 1, name: 'Nintendo Switch' },
+						{ id: 2, name: 'Xbox' }
+					]
+				}
+			)
+
+		expect((await sqliteContext.getGame(2)).platforms)
+			.toEqual(
+				[
+					{ id: 2, name: 'Xbox' }
+				]
+			)
+	})
+
+	test('should get platforms by gameID', async() => {
+		expect(await sqliteContext.getGamePlatforms(1))
+			.toEqual(
+				[
+					{ id: 1, name: 'Nintendo Switch' },
+					{ id: 2, name: 'Xbox' }
+				]
+			)
+
+		// check for error on nonexistant game
+		await expect(sqliteContext.getGameCategories(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+	})
+
+	test('should add new game with existing platforms', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const platform = await sqliteContext.getPlatform(1)
+
+		game.platforms.push(platform)
+
+		expect((await sqliteContext.createGame(game)).platforms)
+			.toEqual(
+				[
+					{ id: 1, name: 'Nintendo Switch' }
+				]
+			)
+	})
+
+	test('should add new game with new platforms', async() => {
+		const game = new Game('1', '2', '3', 4, 10)
+		const platform = new Platform('Google Stadia')
+
+		game.platforms.push(platform)
+
+		expect((await sqliteContext.createGame(game)).platforms)
+			.toEqual(
+				[
+					{ id: 4, name: 'Google Stadia' }
+				]
+			)
+	})
+
+	test('should update existing game with existing platforms', async() => {
+		const game = await sqliteContext.getGame(2)
+		const platform = await sqliteContext.getPlatform(3)
+
+		game.platforms.push(platform)
+
+		expect((await sqliteContext.updateGame(game)).platforms)
+			.toEqual(
+				[
+					{ id: 2, name: 'Xbox' },
+					{ id: 3, name: 'PlayStation' }
+				]
+			)
+	})
+
+	test('should update existing game with new platform', async() => {
+		const game = await sqliteContext.getGame(1)
+
+		game.platforms.push(new Platform('PC'))
+
+		expect((await sqliteContext.updateGame(game)).platforms)
+			.toEqual(
+				[
+					{ id: 1, name: 'Nintendo Switch' },
+					{ id: 2, name: 'Xbox' },
+					{ id: 4, name: 'PC' }
+				]
+			)
+	})
+})
+
+describe('games database with categories', () => {
+
+	beforeAll(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// static dummy data
 	})
 
 	beforeEach(async() => {
 		const db = await sqliteContext.sqlitePromise
 
-		// mutable dummy data, reload on test
-		await db.exec('DELETE FROM `gameCategories`;')
-		await db.exec('DELETE FROM `categories`;')
-		await db.exec('DELETE FROM `games`;')
-
-		// reset auto increment for categories
-		await db.exec('DELETE FROM sqlite_sequence WHERE name = \'categories\';')
+		// add dummy user
+		await db.exec(
+			'INSERT INTO `users` (`id`, `username`, `hash`) ' +
+			'VALUES (10, \'hakasec\', \'test\');'
+		)
 
 		// insert dummy categories data
 		await db.exec(
@@ -455,3 +601,4 @@ describe('games database with categories', () => {
 			)
 	})
 })
+
