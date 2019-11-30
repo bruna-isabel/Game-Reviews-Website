@@ -1,7 +1,6 @@
 'use strict'
 
 const Router = require('koa-router')
-const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const listrouter = new Router({prefix: '/games'})
 
 const game = {

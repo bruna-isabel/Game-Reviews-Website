@@ -34,16 +34,17 @@ approval.get('/games', authenticateUser, async ctx => {
 
 approval.post('/games', authenticateUser, async ctx => {
 	try {
-		const body = ctx.request.body
-		//console.log(body)
-		const id = parseInt(Object.keys(body)[0]) //getting the key (gameID) and converting it into an integer
-		const game = await ctx.db.getGame(id)
-		if(body[id] === 'Approve') {
+		console.log(ctx.request.body)
+		const { id, action } = ctx.request.body
+		const game = await ctx.db.getGame(Number(id))
+
+		if(action === 'Approve') {
 			game.approved = 'yes'
 			await ctx.db.updateGame(game)
-		} else if(body[id] === 'Reject') {
-			await ctx.db.deleteGame(id)
+		} else if(action === 'Reject') {
+			await ctx.db.deleteGame(game.id)
 		}
+
 		ctx.redirect('/approval/games')
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
