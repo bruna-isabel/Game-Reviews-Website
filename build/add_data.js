@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 'use strict'
@@ -12,7 +13,7 @@ const dbctx = new db.SqliteDbContext(path.join(__dirname, '/../app.db'))
 request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', async(error, response, body) => {
 	const allGames = JSON.parse(body)
 	let i = 1
-	const gameAmount = 10 //change according to how many games you want to add
+	const gameAmount = 200 //change according to how many games you want to add
 	for(i; i<gameAmount; i++) {
 		const gameid = allGames.applist.apps[i].appid //getting the appID to insert into next URL as a string
 		gameid.toString()
@@ -53,9 +54,22 @@ request('https://api.steampowered.com/ISteamApps/GetAppList/v2/', async(error, r
 					'yes',
 					gameData.header_image,
 					gameData.screenshots[0].path_thumbnail)
-				game.categories = gameData.categories
+				game.categories = []
+				let category
+				for(let i=0; i<gameData.genres.length; i++) {
+					gameData.genres[i].id = -1
+					gameData.genres[i].name = gameData.genres[i].description
+					delete gameData.genres[i].description
+					try{
+						category = await dbctx.createCategory(gameData.genres[i])
+					} catch(err) {
+						category = await dbctx.getCategory(gameData.genres[i].name)
+					}
+					game.categories.push(category)
+				}
 				game = await dbctx.createGame(game)
-				const platform = await dbctx.getPlatform(38)
+				const pltfrm = 38
+				const platform = await dbctx.getPlatform(pltfrm)
 				await dbctx.linkGamePlatform(game, platform)
 			} catch(err) {
 				throw new Error(`Game: https://store.steampowered.com/api/appdetails/?appids=${gameid}  ${err}`)
