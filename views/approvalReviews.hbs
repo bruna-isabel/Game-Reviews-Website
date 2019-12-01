@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Approval of Reviews</title>
+	<link href="/public/css/list.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	{{>navbar}}
+	<h1>Approval of Reviews</h1>
+	<table class='content-table'>
+	<thead>
+		<tr>
+			<th>User Name</th>
+			<th>Review</th>
+			<th>Rating</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each review}}
+		<tr>
+			<td class='user'>{{this.user}}</td>
+			<td class='review'>{{this.reviewText}}</td>
+			<td class='rating'>{{this.reviewScore}}</td>
+			<form action="/approval/reviews" method="post">
+				<td class='statusChange'> <input type="submit" name="{{this.id}}" value="Approve"/> </td>
+			</form>
+			<form action="/approval/reviews" method="post">
+				<td class='statusChange'><input type="submit" name="{{this.id}}" value="Reject"/></td>
+			</form>
+		<tr>
+		{{/each}}
+	</tbody>
+	</table>
+</body>
+
+</html>

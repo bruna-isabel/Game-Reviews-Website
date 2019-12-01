@@ -6,7 +6,7 @@ const logout = new Router({ prefix: '/logout' })
 
 logout.get('/', ctx => {
 	ctx.session.authorised = false
-	return ctx.redirect('back')
+	return ctx.redirect('homepage')
 })
 
 module.exports = logout

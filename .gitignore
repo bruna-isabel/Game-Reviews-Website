@@ -4,3 +4,6 @@ coverage/
 *.db
 screenshots/*
 docs/
+
+# ignore uploaded user images
+public/images/upload_*

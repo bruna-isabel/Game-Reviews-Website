@@ -6,7 +6,7 @@ Feature: Login Page
 		Given username is 'admin' and password is 'hello'
 		When I try to log in
 		Then I should be logged in successfully
-		Then I should be redirected to '/'
+		Then I should be redirected to '/homepage'
 
 	Scenario: User provides incorrect password
 		Given username is 'admin' and password is 'nothello'
