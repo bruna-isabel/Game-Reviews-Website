@@ -10,12 +10,12 @@ const Comment = require('../models/comment')
 // eslint-disable-next-line max-lines-per-function
 game.get('/game:id', async ctx => {
 	try {
-		//const gameID = Number(ctx.params.id //commented out because of eslint error (too many statements)
-		if (isNaN(Number(ctx.params.id))) {
+		const gameID = Number(ctx.params.id) //commented out because of eslint error (too many statements)
+		if (isNaN(gameID)) {
 			throw new Error('game ID must be a number')
 		}
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
-		console.log(gamedata)
+		//console.log(gamedata)
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse()
 		const reviewCount = reviews.length
 		const platforms = gamedata.platforms
@@ -31,7 +31,6 @@ game.get('/game:id', async ctx => {
 			gamedata.url = true
 		}
 		if (gamedata.approved === 'yes' || user.isAdmin === 'yes') {
-		//so the game page can be opened by an admin during the approval process
 			const sliceInt = 3
 			await ctx.render('game', {review: reviews.slice(0, sliceInt), expandedReview: reviews, thisgame: gamedata,
 				reviewNo: reviewCount, platforms: platforms, avgScore: avgScore, user: ctx.session.authorised,
@@ -56,7 +55,7 @@ game.get('/allReviews:id', async ctx => {
 		const comments = []
 		for (let i = 0; i < reviewCount; i++) {
 			comments.push(await ctx.db.getCommentsForReview(i))
-			console.log(comments[i])
+			//console.log(comments[i])
 		}
 		if(gamedata.poster.startsWith('http')) {
 			gamedata.url = true
@@ -104,7 +103,7 @@ game.post('/postComment', async ctx => {
 	try {
 		const body = ctx.request.body
 		const user = await ctx.db.getUser(ctx.session.userID)
-		console.log(user)
+		//console.log(user)
 		const comment = new Comment(body.gameID, body.reviewID, user.username, 'DD/MM/YYYY', 'XX:YY:ZZ', body.commentText)
 		await ctx.db.postComment(comment)
 		ctx.redirect(`/allReviews${body.gameID}`)
