@@ -4,6 +4,8 @@
 
 const path = require('path')
 const assert = require('assert')
+const Game = require('../../models/game')
+const Review = require('../../models/review')
 
 const {
 	Given,
@@ -120,34 +122,6 @@ Then('I should be asked to try again with an error telling me the username doesn
 	assert(errorMsg === 'User does not exist', `got: ${errorMsg}`)
 })
 
-Given('The browser is open on the aprpoval/games page', async function() {
-	await currentPage.goto(
-		`http://${hostname}/approval/games`,
-		{ timeout: 30000, waitUntil: 'load' }
-	)
-})
-
-When('I find the game I want to approve', async function() {
-	const gameTitle = document.getElementsByClassName('title')[0].textContent
-	assert(gameTitle === 'game1')
-	console.log(gameTitle)
-})
-
-Then('I click on the approve button', async function() {
-	await currentPage.click('button[type=submit]')
-})
-
-Then('I should no longer be able see the game in the approval/games page', async function() {
-	const gameTitle = document.getElementsByClassName('title')[0].textContent
-	//^ shouldnt exist
-})
-
-Then('I should be able to find the game in the list page', async function() {
-	await currentPage.goto(`http://${hostname}/list`)
-	const gameTitle = document.getElementsByClassName('title')[0].textContent
-	assert(gameTitle === 'game1')
-})
-
 Given('The browser is open on the adding game page', async function() {
 	await currentPage.goto(`http://${hostname}/adding/game`)
 })
@@ -185,82 +159,67 @@ Then('the game should be added to the webpage', async function() {
 	assert(title === 'game1', `got ${title}`)
 })
 
-Given('The browser is open on the approval\/games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Given('I log in as username {string}, password {string}', async function(username, password) {
+	await currentPage.goto(`http://${hostname}/login`)
+	await currentPage.type('input[name=username]', username)
+	await currentPage.type('input[name=password]', password)
+	await currentPage.click('button[type=submit]')
 })
 
-Then('I should no longer be able to see the game in the approval\/games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+When('game is {string}', async function(title) {
+	//console.log(`${title}`)
+	const game = new Game(title, 'slugline', 'summ', 'date', 'dev',
+		'pub',1,'no','defaultposter.pmg','defaultsplash.png')
+	//console.log(game)
+	await app.context.db.createGame(game)
+	await currentPage.goto(`http://${hostname}/approval/games`)
 })
 
-Given('The browser is open on the approval\/games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I approve', async function() {
+	//console.log(currentPage.url())
+	await currentPage.click('input[value="Approve"]')
 })
 
-When('I find the game I want to reject', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I reject', async function() {
+	//console.log(currentPage.url())
+	await currentPage.click('input[value="Reject"]')
 })
 
-When('I click on the reject button', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should be able to find the game in the list page', async function() {
+	await currentPage.goto(`http://${hostname}/list`)
+	const lastGame = await currentPage.evaluate(
+		() => document.querySelector('.game-row:last-child > .title').textContent
+	)
+	assert(lastGame === 'gameApprove')
 })
 
-Then('I should no longer be able see the game in the approval\/games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should not be able to find the game in the list page', async function() {
+	await currentPage.goto(`http://${hostname}/list`)
+	const lastGame = await currentPage.evaluate(
+		() => document.querySelector('.game-row:last-child > .title').textContent
+	)
+	assert(lastGame !== 'gameReject')
 })
 
-Then('I shouldn\'t be able to find the game in the list page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+When('review is {string}', async function(text) {
+	const review = new Review('admin','1',1,text,'date','yes')
+	await app.context.db.createReview(review)
+	await currentPage.goto(`http://${hostname}/approval/reviews`)
 })
 
-When('I find the review I want to approve', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should be able to find the review in the games individual page', async function() {
+	await currentPage.goto(`http://${hostname}/game1`)
+	const review = await currentPage.evaluate(
+		() => document.querySelector('#reviewText').textContent
+	)
+	console.log(review)
+	assert(review ==='reviewApprove')
 })
 
-Then('I should be able to find the review in the games individual page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Given('The browser is open on the approval reviews page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-When('I find the review I want to reject', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Then('I shouldn\'t be able to find the review in the games individual page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Given('The browser is open on the approval games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Then('I should no longer be able to see the game in the approval games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Then('I should no longer be able see the game in the approval games page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
-})
-
-Then('I should no longer be able to see the review in the approval reviews page', function() {
-	// Write code here that turns the phrase above into concrete actions
-	return 'pending'
+Then('I should not be able to find the review in the games individual page', async function() {
+	await currentPage.goto(`http://${hostname}/game1`)
+	const review = await currentPage.evaluate(
+		() => document.querySelector('#reviewText').textContent
+	)
+	assert(review !=='reviewReject')
 })
