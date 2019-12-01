@@ -8,7 +8,7 @@ Feature: Sign Up Functionality of Game Reviews Website
 		When I fill in confirm password with 'Password1!'
 		When I press Sign Up
 		Then I should be signup successfully
-		Then I should be redirected to homepage
+		Then I should be redirected to login
 
 	Scenario: User inputs invalid username
 		Given The browser is open on the signup page
