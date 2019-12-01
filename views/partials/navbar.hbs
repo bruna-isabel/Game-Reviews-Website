@@ -1,22 +1,30 @@
-<link href="../public/css/navbar.css" type="text/css" rel="stylesheet" />
-
 <header>
       <nav>
-            <a id="title">XD REVIEWS</a>
+            <figure class="navBackground">
+            </figure>
+            <a id="title" href="../homepage">XD REVIEWS</a>
 
             {{#if user }}
             <ul> 
                   <li><a href="../homepage">Welcome! </a></li>
-                  <li><a href="../logout">Logout</a></li>
-                  <li><a href="../games">Games</a></li>
-                  <li><a href="../adding">Add a Game</a></li>
+                  <li><a href="../list">Games</a></li>
+                  <li><a href="../adding/game">Add a Game</a></li>
+                  {{#if admin}}
+                  <li><a>Approval</a>
+                        <ul>
+                              <li><a href="../approval/games">Games</a></li>
+                              <li><a href="../approval/reviews">Reviews</a></li>
+                        </ul>
+                  </li>
+                  {{/if}}
                   <li><a>About Us</a></li>
+                  <li><a href="../logout">Logout</a></li>
             </ul> 
             {{else}}
             <ul> 
                   <li><a href="../login">Log In</a></li>
                   <li><a href="../signup">Create Account</a></li>
-                  <li><a href="../games">Games</a></li>
+                  <li><a href="../list">Games</a></li>
                   <li><a>About Us</a></li>
             </ul>
            {{/if}}

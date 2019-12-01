@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Reviews for {{thisgame.title}}</title>
+    <link href="/public/css/game.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
+</head>
+<figure class="splash" id = "allReviews">
+            {{#if thisgame.url}}
+            <img src="{{thisgame.splash}}" alt="Splash image" class="centre" />
+            {{else}}
+            <img src="/public/images/{{thisgame.splash}}" alt="Splash image" class="centre" />
+            {{/if}}    
+    <figure class="splashGradient"></figure>
+</figure>
+
+<body>
+    {{>navbar}}
+    <section class="siteContent">
+        <section style="padding-bottom: 25px"></section>
+
+        <section class="column" id="column1" style="margin-top: -95px;">
+
+            <section>
+                <figure>
+                    {{#if thisgame.url}}
+                    <img src="{{thisgame.poster}}" alt="Game poster" />
+                    {{else}}
+                    <img src="/public/images/{{thisgame.poster}}" alt="Game poster" />
+                    {{/if}}
+                </figure>
+            </section>
+            <section class="charts">
+
+                <h2>AVERAGE USER SCORE</h2>
+                <figure class='rating_bar' style="margin-left: 40px">
+                    <figure class="rating" style="width: calc({{avgScore}}% * 10);"></figure>
+                </figure>
+                <p style="text-align:center; font-size: 12px;" id="score/10text">{{avgScore}}/10 from {{reviewNo}} reviews.</p>
+            </section>
+            <form action="/game{{thisgame.gameID}}" method="post" style="margin: auto; ">
+                <input type="submit" value="Back to game" class="submitButton">
+            </form>
+
+        </section>
+        <section class="column" id="columnReviews" style="width: 72.5%; float: right">
+            <h1>
+			All reviews for {{thisgame.title}}
+		</h1>
+
+            <section class="recentReviews">
+                {{#each review}}
+                <table id="reviewTable" class='review{{@index}}'>
+                    <tbody>
+                        <tr>
+                            <th><span style="color: white;">{{this.user}}</span> <span style="font-size: 14px;">‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎{{this.reviewDate}}</span></th>
+                            <th>
+                                <span class="close" id="expandText" onclick="expandReviews({{@index}})" style="width: 20px;"><i title = "Collapse text" class="fas fa-angle-down" style="display: none;"></i><i title = "Expand text" class="fas fa-angle-left"></i></span>
+                                <figure class='rating_bar' id='reviewfull'>
+                                    <figure class="rating" style='width: calc({{this.reviewScore}}% * 10);' id="review"></figure>
+                                </figure>
+                            </th>
+                            <th><button title="Leave a comment" onclick="leaveReviewComment({{@index}})"><i class="fas fa-comment-alt"></i></button></th>
+                            
+                            <form action="/showAllComments" method="post" style="margin: auto; ">
+                                                            <input type="hidden" id="reviewID" name="reviewID" value={{this.id}}>                            
+
+                            <th><button type="submit"title="View all comments"><i class="fas fa-ellipsis-h"></i> VIEW COMMENTS</button></th>        
+                            </form>                        
+                        </tr>
+                    </tbody>
+                </table>
+                <section colspan="2" class='review{{@index}}' id='reviewText'>{{this.reviewText}}</section>
+                                    <section class="commentTableContainer">
+                <table id = "commentTable">
+                    <tbody >
+                        <tr style="font-size: 12px;">
+                            <th><i class="fas fa-comment-alt"></i></th>
+                            <th>
+                                <form action="/postComment" method="post" style="margin: auto;">
+                                <textarea name="commentText" ></textarea>
+                            </th>
+                            <th>
+                                <input type="hidden" id="gameID" name="gameID" value={{../thisgame.gameID}}>
+                                <input type="hidden" id="reviewID" name="reviewID" value={{this.id}}>                            
+                                <input title = "Leave a comment" type="submit" value="COMMENT" class="submitButton">
+                                </form>
+                            </th>
+                            </tr>
+
+                    </tbody>
+                </table>
+                    </section>
+
+                {{/each}}
+            </section>
+        </section>
+    </section>
+</body>
+<script src="/public/ReviewPage.js"></script>
+
+</html>

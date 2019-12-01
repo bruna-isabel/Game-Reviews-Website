@@ -3,29 +3,27 @@
 
 <head>
   <title>Log In</title>
-  <link href="../public/css/login.css" type="text/css" rel="stylesheet" />
+  <link href="/public/css/login.css" type="text/css" rel="stylesheet" />
+  <link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-  
   {{>navbar}}
-  
-  {{#if errorMsg}}
-  <div class="error-msg">
-    {{errorMsg}}
-  </div>
-  {{/if}}
 
- 
-    <form class = 'modalbox' method="post"> 
-      <section class="popup">
-      <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Username" name="username" required />
-      <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Password" name="password" required />
-      <button class="login-button" type="submit">Log In</button>
-      </section>
-    </form>
+  <form class="modalbox" method="post"> 
+    {{#if errorMsg}}
+    <div class="error-msg">
+      {{errorMsg}}
+    </div>
+    {{/if}}
+    <section class="popup">
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Username" name="username" required />
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Password" name="password" required />
+    <button class="login-button" type="submit">Log In</button>
+    </section>
+  </form>
 
 </body>
 
