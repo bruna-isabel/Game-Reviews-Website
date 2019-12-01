@@ -847,7 +847,10 @@ class SqliteDbContext extends DbContext {
 	//selects the reviews for a specific game by gameID
 	async getReviewsForGame(gameID) {
 		const sqlite = await this.sqlitePromise
-
+		const game = await this.getGame(gameID)
+		if (!game) {
+			throw new EntityNotFound(`game with id ${gameID} not found`)
+		}
 		let query
 
 		if (typeof gameID === 'number') {
@@ -870,8 +873,10 @@ class SqliteDbContext extends DbContext {
 		} else {
 			throw new TypeError('must be a number')
 		}
-
 		const review = await sqlite.get(query, id)
+		if (!review) {
+			throw new EntityNotFound(`review with id ${id} not found`)
+		}
 		return Object.assign(new Review(), review)
 	}
 	//delete a review by id

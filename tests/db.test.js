@@ -14,6 +14,9 @@ const User = require('../models/user')
 const Game = require('../models/game')
 const Category = require('../models/category')
 const Platform = require('../models/platform')
+const Review = require('../models/review')
+const Comment = require('../models/comment')
+
 
 const BUILD_DB_SCRIPT = path.join(__dirname, '../build/build_db.sql')
 
@@ -615,3 +618,173 @@ describe('games database with categories', () => {
 	})
 })
 
+describe('reviews database with sqlite', () => {
+
+	beforeEach(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// add dummy user
+		await db.exec(
+			'INSERT INTO `users` (`id`, `username`, `hash`) ' +
+			'VALUES (10, \'hakasec\', \'test\');'
+		)
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, ' +
+			' `poster`, `slugline`, `submittedBy`, ' +
+			' `releaseDate`, `developer`, `publisher`, ' +
+			' `approved`, `splash`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', ' +
+			' \'image1.png\', \'123\', 10, ' +
+			' \'2019-09-01\', \'Dev\', \'Pub\', ' +
+			' \'yes\', \'slash1.png\'), ' +
+			'(2, \'game2\', \'summary!!\', ' +
+			' \'image2.png\', \'456\', 10, ' +
+			' \'2019-10-10\', \'Dev2\', \'Pub\', ' +
+			' \'no\', \'slash2.jpg\');'
+		)
+
+		await db.exec(
+			'INSERT INTO `reviews`' +
+			'VALUES ' +
+			'(1, \'admin\', 1, 10, \'test review 1 text\', \'10/04/2019\', \'yes\'), ' +
+			'(2, \'admin\', 1, 9, \'test review 2 text\', \'23/03/2019\', \'no\');'
+		)
+	})
+
+	test('should get list of all reviews', async() => {
+		expect(await sqliteContext.getReviews())
+			.toContainEqual(
+				{ id: 1, user: 'admin', game: 1, reviewScore: 10, reviewText: 'test review 1 text',
+					reviewDate: '10/04/2019', approved: 'yes'}
+			)
+	})
+
+	test('should get all reviews by game ID', async() => {
+		expect(await sqliteContext.getReviewsForGame(1))
+			.toContainEqual(
+				{ id: 1, user: 'admin', game: 1, reviewScore: 10, reviewText: 'test review 1 text',
+					reviewDate: '10/04/2019', approved: 'yes'}
+			)
+
+		await expect(sqliteContext.getReviewsForGame(3))
+			.rejects
+			.toThrowError(new EntityNotFound('game with id 3 not found'))
+	})
+
+	test('should review by review ID', async() => {
+		expect(await sqliteContext.getReview(1))
+			.toEqual(
+				{ id: 1, user: 'admin', game: 1, reviewScore: 10, reviewText: 'test review 1 text',
+					reviewDate: '10/04/2019', approved: 'yes'}
+			)
+
+		await expect(sqliteContext.getReview(3))
+			.rejects
+			.toThrowError(new EntityNotFound('review with id 3 not found'))
+	})
+
+	test('should delete a review by id', async() => {
+		await sqliteContext.deleteReview(1)
+
+		const reviewCheck = await sqliteContext.sqlitePromise.then(
+			db => db.get('SELECT * FROM `reviews` WHERE `id` = 1;')
+		)
+
+		expect(reviewCheck).toBe(undefined)
+	})
+
+	test('should create a new review', async() => {
+		const newReview = new Review('admin', 1, 8, 'created review', 'xx/xx/xxxx', 'no')
+
+		await sqliteContext.createReview(newReview)
+		const returned = await sqliteContext.getReview(3)
+		expect(returned.id).toEqual(3)
+		expect(returned.user).toEqual('admin')
+		expect(returned.game).toEqual(1)
+		expect(returned.reviewScore).toEqual(8)
+		expect(returned.reviewText).toEqual('created review')
+		expect(returned.approved).toEqual('no')
+	})
+
+	test('should update a review', async() => {
+		const review = await sqliteContext.getReview(2)
+		review.reviewText = 'review text updated'
+
+		expect(await sqliteContext.updateReview(review)).toEqual(review)
+	})
+
+	test('should get list of all unapproved reviews', async() => {
+		expect(await sqliteContext.approvalReviewList(true))
+			.toContainEqual(
+				{ id: 1, user: 'admin', game: 1, reviewScore: 10, reviewText: 'test review 1 text',
+					reviewDate: '10/04/2019', approved: 'yes'}
+			)
+		expect(await sqliteContext.approvalReviewList(false))
+			.toContainEqual(
+				{ id: 2, user: 'admin', game: 1, reviewScore: 9, reviewText: 'test review 2 text',
+					reviewDate: '23/03/2019', approved: 'no'}
+			)
+	})
+})
+
+describe('review comments database with sqlite', () => {
+
+	beforeEach(async() => {
+		const db = await sqliteContext.sqlitePromise
+
+		// add dummy user
+		await db.exec(
+			'INSERT INTO `users` (`id`, `username`, `hash`) ' +
+			'VALUES (10, \'hakasec\', \'test\');'
+		)
+
+		// insert dummy games data
+		await db.exec(
+			'INSERT INTO `games` ' +
+			'(`id`, `title`, `summary`, ' +
+			' `poster`, `slugline`, `submittedBy`, ' +
+			' `releaseDate`, `developer`, `publisher`, ' +
+			' `approved`, `splash`) ' +
+			'VALUES ' +
+			'(1, \'game1\', \'summary!!!\', ' +
+			' \'image1.png\', \'123\', 10, ' +
+			' \'2019-09-01\', \'Dev\', \'Pub\', ' +
+			' \'yes\', \'slash1.png\'), ' +
+			'(2, \'game2\', \'summary!!\', ' +
+			' \'image2.png\', \'456\', 10, ' +
+			' \'2019-10-10\', \'Dev2\', \'Pub\', ' +
+			' \'no\', \'slash2.jpg\');'
+		)
+
+		await db.exec(
+			'INSERT INTO `reviews`' +
+			'VALUES ' +
+			'(1, \'admin\', 1, 10, \'test review 1 text\', \'10/04/2019\', \'yes\');'
+		)
+
+		await db.exec(
+			'INSERT INTO `reviewComments`' +
+			'VALUES ' +
+			'(1, 1, 1, \'admin\', \'10/04/2019\', \'19:20:00\', \'test comment 1\');'
+		)
+	})
+
+	test('should post a new comment', async() => {
+		const newComment = new Comment(1, 1, 'admin', 'xx/xx/xxxx', 'xx:xx:xx', 'test comment 2')
+
+		await sqliteContext.postComment(newComment)
+		const returned = await sqliteContext.getCommentsForReview(1)
+		const returnedComment = returned[1]
+
+		expect(returnedComment.id).toEqual(2)
+		expect(returnedComment.gameID).toEqual(1)
+		expect(returnedComment.reviewID).toEqual(1)
+		expect(returnedComment.user).toEqual('admin')
+		expect(returnedComment.commentText).toEqual('test comment 2')
+	})
+
+})

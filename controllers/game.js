@@ -10,8 +10,8 @@ const Comment = require('../models/comment')
 // eslint-disable-next-line max-lines-per-function
 game.get('/game:id', async ctx => {
 	try {
-		//const gameID = Number(ctx.params.id //commented out because of eslint error (too many statements)
-		if (isNaN(Number(ctx.params.id))) {
+		const gameID = Number(ctx.params.id) //commented out because of eslint error (too many statements)
+		if (isNaN(gameID)) {
 			throw new Error('game ID must be a number')
 		}
 		const gamedata = await ctx.db.getGame(Number(ctx.params.id))
@@ -31,7 +31,6 @@ game.get('/game:id', async ctx => {
 			gamedata.url = true
 		}
 		if (gamedata.approved === 'yes' || user.isAdmin === 'yes') {
-		//so the game page can be opened by an admin during the approval process
 			const sliceInt = 3
 			await ctx.render('game', {review: reviews.slice(0, sliceInt), expandedReview: reviews, thisgame: gamedata,
 				reviewNo: reviewCount, platforms: platforms, avgScore: avgScore, user: ctx.session.authorised,
