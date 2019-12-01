@@ -30,16 +30,19 @@
         {{else}}
         <td class='image'><img src='/public/images/{{this.poster}}' class='image'></td>
         {{/if}}
-				<td class='title'><a class='list' href="/game{{this.gameID}}">{{this.title}}</a></td>
+				<td class='title'><a class='list' href="/game{{this.id}}">{{this.title}}</a></td>
 				<td class='summary'>{{this.summary}}</td>
 				<td class='releaseDate'>{{this.releaseDate}}</td>
 				<td class='rating'>{{this.submittedBy}}</td>
 
 				<form action="/approval/games" method="post">
-					<td class='statusChange'> <input type="submit" name="{{this.gameID}}" value="Approve"/> </td>
-				</form>
-				<form action="/approval/games" method="post">
-					<td><input type="submit" name="{{this.gameID}}" value="Reject"/></td>
+					<input type="hidden" name="id" value="{{this.id}}" />
+					<td class="statusChange">
+						<input type="submit" name="action" value="Approve" />
+					</td>
+					<td>
+						<input type="submit" name="action" value="Reject" />
+					</td>
 				</form>
 			</tr>
 			{{/each}}

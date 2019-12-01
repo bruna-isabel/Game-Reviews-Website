@@ -11,12 +11,12 @@
   {{!-- <div  id="gamesdata"></div> --}}
   {{>navbar}}
   <h1>Browse</h1>
-  <table class='content-table'>
+  <table class="content-table">
     <thead>
       <tr>
         <th></th>
-        <th class='left'>Title</th>
-        <th class='left'>Summary</th>
+        <th class="left">Title</th>
+        <th class="left">Summary</th>
         <th>Release Date</th>
         <th>Avg. Rating</th>
         <th>Submitted By</th>
@@ -24,17 +24,17 @@
     </thead>
       <tbody>
       {{#each games}}
-      <tr>
+      <tr class="game-row">
         {{#if this.url}}
-        <td class='imageUrl'><img src='{{this.poster}}' class='imageUrl'></td>
+        <td class="imageUrl"><img src="{{this.poster}}" class="imageUrl"></td>
         {{else}}
-        <td class='image'><img src='/public/images/{{this.poster}}' class='image'></td>
+        <td class="image"><img src="/public/images/{{this.poster}}" ></td>
         {{/if}}
-        <td class='title'><a class='list' href="/game{{this.id}}">{{this.title}}</a></td>
-        <td class='summary'><section>{{this.summary}}</section></td>
-        <td class='releasedate'>{{this.releaseDate}}</td>
-        <td class='rating'>{{this.rating}}</td>
-        <td class='rating'>{{this.submittedBy}}</td>
+        <td class="title"><a class="list" href="/game{{this.id}}">{{this.title}}</a></td>
+        <td class="summary"><section>{{this.summary}}</section></td>
+        <td class="releasedate">{{this.releaseDate}}</td>
+        <td class="rating">{{this.rating}}</td>
+        <td class="rating">{{this.submittedBy}}</td>
       </tr>
       {{/each}}
       </tbody>

@@ -1,14 +1,19 @@
 'use strict'
 
 const Router = require('koa-router')
+const koaBodyParser = require('koa-bodyparser')
 const bcrypt = require('bcrypt')
 //Using koabody and bodyparser together breaks the code
 const login = new Router({ prefix: '/login' })
 
 const { EntityNotFound } = require('../utils/errors')
 
+login.use(koaBodyParser())
 
-login.get('/', async ctx => ctx.render('login.hbs'))
+login.get('/', async ctx => {
+	const { errorMsg } = ctx.query
+	return ctx.render('login.hbs', { errorMsg })
+})
 
 login.post('/', async ctx => {
 	const { username, password } = ctx.request.body
