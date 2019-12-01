@@ -10,6 +10,7 @@ const {
 	When,
 	Then,
 	Before,
+	After,
 	BeforeAll,
 	AfterAll
 } = require('cucumber')
@@ -64,9 +65,9 @@ BeforeAll(async function() {
 })
 
 // close browser and server
-AfterAll(function() {
-	server.close()
-	browser.close()
+AfterAll(async function() {
+	await server.close()
+	await browser.close()
 })
 
 // create a fresh page each scenario
@@ -74,11 +75,23 @@ Before(async function() {
 	currentPage = await browser.newPage()
 })
 
+After(async function() {
+	await currentPage.close()
+})
+
 Given('username is {string} and password is {string}', async function(user, pass) {
 	await currentPage.goto(`http://${hostname}/login`)
 
 	await currentPage.type('input[name=username]', user)
 	await currentPage.type('input[name=password]', pass)
+})
+
+Given('I am logged in as user {string} with password {string}', async function(user, pass) {
+	// enter and submit login details
+	await currentPage.goto(`http://${hostname}/login`)
+	await currentPage.type('input[name=username]', user)
+	await currentPage.type('input[name=password]', pass)
+	await currentPage.click('button[type=submit]')
 })
 
 When('I try to log in', async function() {
@@ -143,20 +156,33 @@ When('I enter {string} on the {string} field', async function(value, field) {
 	await currentPage.type(`input[name=${field}]`, value)
 })
 
+When('I upload {string} in the {string} field', async function(file, field) {
+	const fileInput = await currentPage.$(`input[name=${field}]`)
+	await fileInput.uploadFile(path.join(__dirname, file))
+})
+
+When('I submit the form', async function() {
+	try {
+		await currentPage.click('button[type=submit]')
+	} catch (err) {
+		await currentPage.click('input[type=submit]')
+	}
+})
+
 When('game is approved by admin', async function() {
 	const games = await app.context.db.getGames()
-	assert( games.length === 1 )
-	const g = games[0]
+	const g = games[games.length - 1]
 	g.approved = 'yes'
+
 	await app.context.db.updateGame(g)
 })
 
 Then('the game should be added to the webpage', async function() {
 	await currentPage.goto(`http://${hostname}/list`)
-	const gameOnPage = await currentPage.evaluate(() => {
-		const firstEntry = document.getElementsByClassName('game-row')[0]
-		return firstEntry.textContent
-	})
+	const title = await currentPage.evaluate(
+		() => document.querySelector('.game-row:last-child > .title').textContent
+	)
+	assert(title === 'game1', `got ${title}`)
 })
 
 Given('The browser is open on the approval\/games page', function() {

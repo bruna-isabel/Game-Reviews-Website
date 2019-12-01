@@ -38,7 +38,6 @@ app.use(serve({
 	base: '/public/'
 }))
 app.use(bodyParser())
-// app.use(serve(path.join(__dirname, 'public')))
 app.use(session({key: 'session_id', renew: true}, app))
 
 // db stuff

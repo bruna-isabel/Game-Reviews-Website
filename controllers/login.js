@@ -8,7 +8,10 @@ const login = new Router({ prefix: '/login' })
 const { EntityNotFound } = require('../utils/errors')
 
 
-login.get('/', async ctx => ctx.render('login.hbs'))
+login.get('/', async ctx => {
+	const { errorMsg } = ctx.query
+	return ctx.render('login.hbs', { errorMsg })
+})
 
 login.post('/', async ctx => {
 	const { username, password } = ctx.request.body
