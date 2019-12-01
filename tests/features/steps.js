@@ -299,7 +299,7 @@ Then('I should be signup successfully', async function() {
 
 Then('I should be redirected to login', function() {
 	const currentURL = currentPage.url()
-	assert(currentURL === `http://${hostname}/login`, `got: ${currentURL}`)
+	assert(currentURL === `http://${hostname}/homepage`, `got: ${currentURL}`)
 })
 
 //        Scenario: User provides invalid username  //
