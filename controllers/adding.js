@@ -37,13 +37,14 @@ adding.post(
 		const { poster, splash } = ctx.request.files
 
 		const platforms = await getPlatformsFromBody(ctx.db, body)
+		const categories = await getCategoriesFromBody(ctx.db, body)
 		const posterSrc = uploadImageFile(poster)
 		const splashSrc = uploadImageFile(splash)
 
 		body.submittedBy = ctx.session.userID
 		body.approved = 'no'
 		body.platforms = platforms
-		body.categories = []
+		body.categories = categories
 		body.poster = path.basename(posterSrc)
 		body.splash = path.basename(splashSrc)
 
@@ -67,6 +68,23 @@ async function getPlatformsFromBody(db, body) {
 	}
 
 	return platforms
+}
+
+/**
+ * Gets a list of Categories from the request body
+ * @param {*} db -DbContext for the database
+ * @param {*} body - Request body object
+ */
+async function getCategoriesFromBody(db, body) {
+	const categories = []
+	const keys = Object.keys(body).filter(k => k.startsWith('categories-'))
+
+	for (const key of keys) {
+		const id = Number(body[key])
+		categories.push(await db.getCategory(id))
+	}
+
+	return categories
 }
 
 /**
