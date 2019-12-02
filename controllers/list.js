@@ -40,9 +40,18 @@ list.get('/:category/', async ctx => {
 	const categoryID = await ctx.db.getCategory(ctx.params.category)
 	const categories = await ctx.db.getCategories()
 
-	console.log(categoryID)
 	const games = await ctx.db.getGamesWithCategory(categoryID.id)
-	await ctx.render('listpage.hbs', {games: games, category: categories})
+	for(const game of games) {
+		const user = await ctx.db.getUser(game.submittedBy)
+		game.submittedBy = user.username
+		const rating = await ctx.db.getAvgScore(game.gameID)
+		game.rating = rating
+		if(game.poster.startsWith('http')) {
+			game.url = true
+		}
+	}
+	await ctx.render('listpage.hbs', {games: games, category: categories, user: ctx.session.authorised,
+		admin: await ctx.db.isUserAdmin(ctx.session.userID)})
 })
 
 

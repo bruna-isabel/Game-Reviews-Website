@@ -5,13 +5,13 @@
             <a id="title" href="../homepage">XD REVIEWS</a>
 
             {{#if user }}
-            <ul> 
+            <ul class="navbar"> 
                   <li><a href="../homepage">Welcome! </a></li>
                   <li><a href="../list">Games</a></li>
                   <li><a href="../adding/game">Add a Game</a></li>
                   {{#if admin}}
                   <li><a>Approval</a>
-                        <ul>
+                        <ul class="navbar">
                               <li><a href="../approval/games">Games</a></li>
                               <li><a href="../approval/reviews">Reviews</a></li>
                         </ul>
@@ -21,7 +21,7 @@
                   <li><a href="../logout">Logout</a></li>
             </ul> 
             {{else}}
-            <ul> 
+            <ul class="navbar"> 
                   <li><a href="../login">Log In</a></li>
                   <li><a href="../signup">Create Account</a></li>
                   <li><a href="../list">Games</a></li>

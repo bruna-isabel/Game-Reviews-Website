@@ -11,6 +11,12 @@
   {{!-- <div  id="gamesdata"></div> --}}
   {{>navbar}}
   <h1>Browse</h1>
+   <h2>Categories</h2>
+    {{#each category}}
+      <ul class='categories' id='categories'>
+        <li><a href='/list/{{this.name}}'>{{this.name}}</a></li>
+      </ul>
+    {{/each}}
   <table class="content-table">
     <thead>
       <tr>
@@ -39,13 +45,6 @@
       {{/each}}
       </tbody>
     </table>
-
-    <h2 class='categories'>Categories</h2>
-    {{#each category}}
-      <ul>
-        <li class='categories'><a href='/list/{{this.name}}'>{{this.name}}</a></li>
-      </ul>
-    {{/each}}
 
 </body>
 

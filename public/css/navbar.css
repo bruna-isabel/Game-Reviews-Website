@@ -30,7 +30,7 @@ header {
   
 }
 /*elements from top bar*/
-ul {
+ul.navbar {
     list-style-type: none;
     margin: 0;
     padding-right: 15%;
@@ -41,7 +41,7 @@ ul {
 }
 
 /*each element of list*/ 
-  li {
+  ul.navbar > li {
     float: left;
     text-align: center;
     width: 150px;
