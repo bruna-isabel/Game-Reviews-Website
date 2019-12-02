@@ -33,6 +33,13 @@
       </tbody>
     </table>
 
+    <h2>Categories</h2>
+    {{#each category}}
+      <ul>
+        <li class='categories'><a href='/list/{{this.name}}'>{{this.name}}</a></li>
+      </ul>
+    {{/each}}
+
 </body>
 
 </html>

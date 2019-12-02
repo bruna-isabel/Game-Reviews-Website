@@ -471,6 +471,20 @@ class SqliteDbContext extends DbContext {
 	}
 
 	/**
+	 * Gets all Categories.
+	 * @abstract
+	 * @returns {Promise<Category[]>}
+	 * @throws {NotImplemented}
+	 */
+	async getCategories() {
+		const sqlite = await this.sqlitePromise	
+		const query = 'SELECT * FROM `categories`'
+		const categories = await sqlite.all(query)
+
+		return categories
+	}
+
+	/**
 	 * @param {number|string} id - Name or ID of the Category
 	 * @returns {Promise<Category>}
 	 * @throws {EntityNotFound} Category not found
@@ -522,6 +536,7 @@ class SqliteDbContext extends DbContext {
 
 		// call method without check
 		return this._getGameCategories(gameID)
+		
 	}
 
 	/**
