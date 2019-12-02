@@ -2,13 +2,14 @@
 	<html>
 <head>
 	<title>Add a Game</title>
-	<link href="/public/css/placeholderforadding.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/adding.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
 	<link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
 </head>
 	<body>
 		{{>navbar}}
 		<section class="siteContent">
-		<h1>Adding Games</h1>
+		<h1>Add a Game</h1>
 		{{#if errorMsg}}
 		<div class= "error-msg">
 			{{errorMsg}}
@@ -16,44 +17,58 @@
 		{{/if}}
 	
 		<form method="post" enctype="multipart/form-data">
-			<h2>Game:</h2>
-			<input type="text" placeholder="Title:" name="title" required/>
-			<h2>Platforms:</h2>
-			<div class="grid-container"> 
-			{{#each platforms}}
-			<div class="grid-item">
-				<input type="checkbox" name="platforms-{{this.id}}" value="{{this.id}}"/>
-				<label for="platforms-{{this.id}}">{{this.name}}</label>
-			</div>
-			{{/each}}
-			</div>
-			<h2>Categories:</h2>
-			<div class="grid-container"> 
-			{{#each categories}}
-			<div class="grid-item">
-			<input type="checkbox" name="categories-{{this.id}}" value="{{this.id}}"/>
-			<label for="categories-{{this.id}}">{{this.name}}</label>
-			</div>
-			{{/each}}
-			</div>
 			<br>
-			<input type="text" placeholder="Slugline" name="slugline" required/>
-			<input type="text" placeholder="Summary" name="summary" required/>
+						<h2>Game</h2>
+			<input type="text" id = "titletext" placeholder="Title" name="title" required/>
+			<h2>Platforms</h2>
+			<section class="grid-container"> 
+			{{#each platforms}}
+			<section class="grid-item">
+				<label class = "checkContainer">
+						<input id = "platforms-{{this.id}}" type="checkbox" name="platforms-{{this.id}}" value="{{this.id}}">
+						<label for="platforms-{{this.id}}"><i class="fas fa-plus"></i><i class="fas fa-check"></i> {{this.name}}</label>
+						
+				</label>
+			</section>
+			{{/each}}
+			</section>
+			<h2>Categories</h2>
+			<section class="grid-container"> 
+			{{#each categories}}
+			<section class="grid-item">
+				<label class = "checkContainer">
+					<input id = "categories-{{this.id}}" type="checkbox" name="categories-{{this.id}}" value="{{this.id}}">
+					<label for="categories-{{this.id}}"><i class="fas fa-plus"></i><i class="fas fa-check"></i> {{this.name}}</label>
+				</label>
+			</section>
+			{{/each}}
+			</section>
+									<h2>Details</h2>
+
+			<input type="text" id = "slugline" placeholder="Slugline" name="slugline" required/>
+						<br>
+			<input type="text" id = "summary" placeholder="Summary" name="summary" required/>
 
 			<input type="date" placeholder="Release Date" name="releaseDate" required/>
 
 			<input type="text" placeholder="Developer" name="developer" required/>
 			<input type="text" placeholder="Publisher" name="publisher" required/>
-			<span>
-				<h2>Upload Poster</h2>
-				<input type="file" accept=".png,.jpg,.jpeg" name="poster" required/>
-			</span>
-			<span>
-				<h2>Upload Splash Image</h2>
-				<input type="file" accept=".png,.jpg,.jpeg" name="splash" required/>
-			</span>			
-						<br>
-				<h2>Submit Game <button class="Submit_button" type="submit" class="submitButton">Submit</button></h2>
+
+									<h2>Images</h2>
+
+			<label for="poster-upload" class="custom-file-upload">
+					<input id = "poster-upload" type="file" accept=".png,.jpg,.jpeg" name="poster" required/>
+					<i class="fas fa-file-image"></i><i class="fas fa-check"></i> Upload Poster
+			</label>
+			<br>
+			<label for="splash-upload" class="custom-file-upload">
+					<input id = "splash-upload" type="file" accept=".png,.jpg,.jpeg" name="splash" required/>
+					<i class="fas fa-file-image"></i><i class="fas fa-check"></i> Upload Screenshot
+			</label>
+
+			<br>
+			<button class="Submit_button" type="submit" class="submitButton">Submit Game</button>
+			
 	</form>
 	</section>
 	</body>

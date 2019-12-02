@@ -1,11 +1,10 @@
 **/
 html {
   height: 100%;
-  
 }
 
 body{
-    background-color: black !important;
+    background-color: #111111 !important;
     color: black;
     margin:0;
 }
@@ -13,9 +12,9 @@ body{
 section{
   width: 1100px;
   height:auto;
-  margin-top: 0;
-  margin-left: 12%;
-  box-shadow: inset 0px 0px 150px 150px rgb(0, 0, 0);
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: inset 0px 0px 150px 150px #111111;
 
  }
 img {
@@ -35,9 +34,10 @@ img {
   color: white;
   width: 550px;
   height: auto;
-  margin-left: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -10%;
   float: center;
-  position: absolute;
   top: 400px;
   
 }
