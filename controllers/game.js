@@ -19,7 +19,12 @@ game.get('/game:id', async ctx => {
 		const reviews = (await ctx.db.getReviewsForGame(Number(gamedata.gameID))).reverse()
 		const reviewCount = reviews.length
 		const platforms = gamedata.platforms
-		const user = await ctx.db.getUser(ctx.session.userID)
+
+		let user = { isAdmin: 'no' }
+		if (ctx.session.userID >= 0) {
+			user = await ctx.db.getUser(ctx.session.userID)
+		}
+
 		const hasReviews = reviewCount>0
 		let avgScore = 0
 		if (reviewCount > 0) {

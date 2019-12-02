@@ -383,8 +383,14 @@ class SqliteDbContext extends DbContext {
 	}
 	//checks if the user is an admin
 	async isUserAdmin(id) {
-		const user = await this.getUser(id)
-		if(user['isAdmin'] === 'yes') {
+		let user
+		try {
+			user = await this.getUser(id)
+		} catch (e) {
+			user = null
+		}
+
+		if(user && user['isAdmin'] === 'yes') {
 			return true
 		} else {
 			return false
