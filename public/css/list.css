@@ -8,7 +8,7 @@ html{
 
 }
 h1{
-	color: #A9A9A9;
+	color: white;
 	text-align: center;
 	
 }
@@ -100,7 +100,7 @@ input[type=submit]{
 }
 
 a.list:link {
-	color: #A9A9A9;
+	color: white;
 	text-decoration: none;
 }
 
@@ -112,13 +112,13 @@ a.list:visited {
 
 /* mouse over link */
 a.list:hover {
-	color: #A9A9A9;
+	color: white;
 	text-decoration: underline;
 }
 
 /* selected link */
 a.list:active {
-	color: #A9A9A9;
+	color: white;
 	text-decoration: underline;
 }
 
