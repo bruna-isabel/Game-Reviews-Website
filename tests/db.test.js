@@ -389,6 +389,47 @@ describe('games database with platforms', () => {
 	})
 
 	test('should get game with linked platforms', async() => {
+		expect(await sqliteContext.getGames())
+			.toEqual(
+				[
+					{
+						id: 1,
+						title: 'game1',
+						summary: 'summary!!!',
+						poster: 'image1.png',
+						slugline: '123',
+						submittedBy: 10,
+						releaseDate: '2019-09-01',
+						developer: 'Dev',
+						publisher: 'Pub',
+						splash: 'slash1.png',
+						approved: 'yes',
+						categories: [],
+						platforms: [
+							{ id: 1, name: 'Nintendo Switch' },
+							{ id: 2, name: 'Xbox' }
+						]
+					},
+					{
+						id: 2,
+						title: 'game2',
+						summary: 'summary!!',
+						poster: 'image2.png',
+						slugline: '456',
+						submittedBy: 10,
+						releaseDate: '2019-10-10',
+						developer: 'Dev2',
+						publisher: 'Pub',
+						splash: 'slash2.jpg',
+						approved: 'no',
+						categories: [],
+						platforms: [
+							{ id: 2, name: 'Xbox' }
+						]
+					}
+				]
+			)
+
 		expect(await sqliteContext.getGame(1))
 			.toEqual(
 				{
@@ -541,6 +582,45 @@ describe('games database with categories', () => {
 	})
 
 	test('should get game with linked categories', async() => {
+		expect(await sqliteContext.getGames())
+			.toEqual(
+				[
+					{
+						id: 1,
+						title: 'game1',
+						summary: 'summary!!!',
+						poster: 'image1.png',
+						slugline: '123',
+						submittedBy: 10,
+						releaseDate: '2019-09-01',
+						developer: 'Dev',
+						publisher: 'Pub',
+						splash: 'slash1.png',
+						approved: 'yes',
+						categories: [
+							{ id: 1, name: 'Horror' },
+							{ id: 2, name: 'Action' }
+						],
+						platforms: []
+					},
+					{
+						id: 2,
+						title: 'game2',
+						summary: 'summary!!',
+						poster: 'image2.png',
+						slugline: '456',
+						submittedBy: 10,
+						releaseDate: '2019-10-10',
+						developer: 'Dev2',
+						publisher: 'Pub',
+						splash: 'slash2.jpg',
+						approved: 'no',
+						categories: [],
+						platforms: []
+					}
+				]
+			)
+
 		expect(await sqliteContext.getGame(1))
 			.toEqual(
 				{

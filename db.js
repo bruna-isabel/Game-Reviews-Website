@@ -387,12 +387,16 @@ class SqliteDbContext extends DbContext {
 			'`games`.`title` FROM `games` INNER JOIN `users` ON `users`.`id` = `games`.`submittedBy`;')
 		return linkedTable
 	}
-	//takes all the games from the database
+
+	/**
+	 * Gets all the games from the database
+	 * @returns {Promise<Game[]>}
+	 */
 	async getGames() {
 		const sqlite = await this.sqlitePromise
 
-		const games = await sqlite.all('SELECT * FROM `games`;')
-		return games.map(x => Object.assign(new Game(), x))
+		const games = await sqlite.all('SELECT `id` FROM `games`;')
+		return Promise.all(games.map(x => this.getGame(x.id)))
 	}
 
 	//select a game by id
