@@ -152,6 +152,17 @@ class DbContext {
 	}
 
 	/**
+	 * Get an array of Games from a given Category ID.
+	 * @abstract
+	 * @param {number|string} categoryID - ID of the Category
+	 * @throws {NotImplemented}
+	 */
+	// eslint-disable-next-line no-unused-vars
+	async getGamesWithCategory(categoryID) {
+		throw new NotImplemented('getGamesWithCategory is not implemented')
+	}
+
+	/**
 	 * Links a Category to a Game.
 	 * @abstract
 	 * @param {Game} game - The Game being linked to
@@ -607,6 +618,30 @@ class SqliteDbContext extends DbContext {
 
 		// call method without check
 		return this._getGameCategories(gameID)
+		
+	}
+
+	/**
+	 * @param {number|string} categoryID - ID of the Category
+	 * @throws {EntityNotFound} Category not found
+	 * @throws {TypeError} categoryID must be a string or number
+	 * @returns {Promise<Game[]>}
+	 */
+	async getGamesWithCategory(categoryID) {
+		await this.getCategory(categoryID)
+
+		const sqlite = await this.sqlitePromise
+
+		const results = await sqlite.all(
+			'SELECT `gameID` FROM `gameCategories` WHERE categoryID = ?;',
+			categoryID
+		)
+
+		for (const i in results) {
+			results[i] = await this.getGame(results[i].gameID)
+		}
+
+		return results
 	}
 
 	/**

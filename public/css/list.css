@@ -119,3 +119,7 @@ a.list:active {
 	color: #A9A9A9;
 	text-decoration: underline;
 }
+
+.categories{
+	text-align: center;
+}
