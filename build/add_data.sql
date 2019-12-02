@@ -63,6 +63,19 @@ INSERT INTO `games` VALUES
   'starwarsjfoposter.jpg', 
   'starwarsjfosplash.jpg');
 
+INSERT INTO `games` VALUES 
+  (6,
+  "Minecraft", 
+  'Minecraft is a game about placing blocks and going on adventures.', 
+  'Explore randomly generated worlds and build amazing things from the simplest of homes to the grandest of castles. Play in creative mode with unlimited resources or mine deep into the world in survival mode, crafting weapons and armor to fend off the dangerous mobs.', 
+  '18/11/2011', 
+  'Mojang', 
+  'Mojang', 
+  2, 
+  'yes', 
+  'minecraft.jpg', 
+  'minecraftsplash.png');  
+
 INSERT INTO 'platforms' VALUES (1, 'Atari 2600');
 INSERT INTO 'platforms' VALUES (2, 'Color TV-Game');
 INSERT INTO 'platforms' VALUES (3, 'Magnavox Odyssey');
@@ -126,7 +139,10 @@ INSERT INTO 'categories' ('name') VALUES ('Puzzle');
 INSERT INTO 'categories' ('name') VALUES ('Indie');
 INSERT INTO 'categories' ('name') VALUES ('Adventure');
 INSERT INTO 'categories' ('name') VALUES ('Sports');
-INSERT INTO 'categories' ('name') VALUES ('Co-op');
+INSERT INTO 'categories' ('name') VALUES ('Simulation');
+INSERT INTO 'categories' ('name') VALUES ('Stratgey');
+INSERT INTO 'categories' ('name') VALUES ('Open World');
+
 
 
 
@@ -134,28 +150,58 @@ INSERT INTO
   `gamePlatforms`
 VALUES
   (1, 31),
+  (1, 36),
+
   (2, 34),
   (2, 37),
   (3, 36),
+
   (4, 38),
   (4, 37),
   (4, 39),
   (4, 40),
-  (4, 41);
+  (4, 41),
+
+  (5, 35),
+  (5, 36),
+  (5, 38),
+
+  (6, 38),
+  (6, 39),
+  (6, 29),
+  (6, 31),
+  (6, 33),
+  (6, 34),
+  (6, 35),
+  (6, 36),
+  (6, 37),
+  (6, 40),
+  (6, 42);
 
 INSERT INTO 
   `gameCategories` 
 VALUES 
+  (1, 1),
   (1, 3),
-  (1, 4),
-  (2, 5),
-  (2, 1),
-  (3, 3),
-  (3, 7),
-  (4, 4),
-  (4, 3),
-  (4, 7);
-
+  (1, 5),
+  (1, 6),
+  (1, 9),
+  (2, 6),
+  (2, 23),
+  (2, 11),
+  (2, 19),
+  (3, 1),
+  (3, 2),
+  (3, 23),
+  (4, 20),
+  (4, 21),
+  (4, 22),
+  (5, 1),
+  (5, 19),
+  (6, 6),
+  (6, 7),
+  (6, 18),
+  (6, 19);
 
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('admin', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'yes');
 INSERT INTO `users` (`username`, `hash`, `isAdmin`) VALUES ('user', '$2b$12$niVK8DnXKSyYzAIOUun2C.PZ51waVc2NU/e7DQ9cYM6zxNwUiiOCG', 'no');

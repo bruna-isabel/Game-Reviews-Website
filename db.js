@@ -420,6 +420,17 @@ class SqliteDbContext extends DbContext {
 
 		return game
 	}
+
+	async getGameByTitle(title) {
+		const sqlite = await this.sqlitePromise
+
+		const query = 'SELECT `id` FROM `games` WHERE `title` = ?;'
+		const gameID = await sqlite.get(query, title)
+		if (!gameID) {
+			throw new EntityNotFound(`game with title ${title} not found`)
+		}
+		return this.getGame(gameID.id)
+	}
 	//delete a game by id
 	async deleteGame(id) {
 		// this will throw an error if game not found
@@ -847,7 +858,10 @@ class SqliteDbContext extends DbContext {
 	//selects the reviews for a specific game by gameID
 	async getReviewsForGame(gameID) {
 		const sqlite = await this.sqlitePromise
-
+		const game = await this.getGame(gameID)
+		if (!game) {
+			throw new EntityNotFound(`game with id ${gameID} not found`)
+		}
 		let query
 
 		if (typeof gameID === 'number') {
@@ -858,7 +872,7 @@ class SqliteDbContext extends DbContext {
 
 		const reviews = await sqlite.all(query, gameID, 'yes')
 		return reviews
-	}
+	}	
 	//selects a review by id
 	async getReview(id) {
 		const sqlite = await this.sqlitePromise
@@ -870,8 +884,10 @@ class SqliteDbContext extends DbContext {
 		} else {
 			throw new TypeError('must be a number')
 		}
-
 		const review = await sqlite.get(query, id)
+		if (!review) {
+			throw new EntityNotFound(`review with id ${id} not found`)
+		}
 		return Object.assign(new Review(), review)
 	}
 	//delete a review by id
