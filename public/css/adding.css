@@ -29,14 +29,16 @@ h1 {
 	text-align: center;
 	font-size: 40px;
 	color: white;
-	margin-top: 20px;
-
 	margin-bottom: 0px;
+	margin-top: -90px;
+	position: relative;
+
 }
 h2 {
 	margin-bottom: 5px;
 	text-transform: uppercase;
 	font-size: 18px;
+	position: relative;
 }
 .grid-container {
   display: grid;
@@ -152,4 +154,30 @@ input[type="file"]:valid ~ .fa-check{
 .custom-file-upload:hover {
 	background-color: var(--main-highlight-color);
 	margin-top: 9px;
+}
+.splash {
+	width: 125%;
+	margin-left: -12.5%;
+	margin-top: -5%;
+	height: 478px;
+}
+.splash img {
+	object-fit: cover;
+	height: 100%;
+}
+.splash .splashGradient {
+	position: relative;
+	margin-top: -478px;
+	height: 100%;
+	background: rgba(0, 0, 0, 0);
+	width: 100%;
+	box-shadow: inset 0 0 78px 100px var(--main-bg-color);
+}
+figure {
+	width: 100%;
+	height: auto;
+	margin: 0px;
+}
+figure img {
+	width: 100%;
 }

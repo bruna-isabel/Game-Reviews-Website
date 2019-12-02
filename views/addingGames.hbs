@@ -9,6 +9,11 @@
 	<body>
 		{{>navbar}}
 		<section class="siteContent">
+        <figure class="splash">
+            <img src="/public/images/addingGameSplash.jpg" alt="Splash image" class="centre" />
+            <section class="splashGradient">
+                </sec>
+        </figure>			
 		<h1>Add a Game</h1>
 		{{#if errorMsg}}
 		<div class= "error-msg">
@@ -45,9 +50,9 @@
 			</section>
 									<h2>Details</h2>
 
-			<input type="text" id = "slugline" placeholder="Slugline" name="slugline" required/>
+			<input type="text" id = "slugline" placeholder="Summary" name="slugline" required/>
 						<br>
-			<input type="text" id = "summary" placeholder="Summary" name="summary" required/>
+			<input type="text" id = "summary" placeholder="Description" name="summary" required/>
 
 			<input type="date" placeholder="Release Date" name="releaseDate" required/>
 
