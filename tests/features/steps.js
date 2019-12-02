@@ -277,3 +277,63 @@ Then('I should not be able to find the review in the games individual page', asy
 	)
 	assert(review !=='reviewReject')
 })
+
+const getSignUpError = async() => currentPage.evaluate(() => {
+	const eMsg = document.getElementsByClassName('error-msg')[0]
+	return eMsg ? eMsg.textContent.trim() : ''
+})
+
+//       Scenario: User sign ups sucessfully  //
+
+Given('The browser is open on the signup page', async function() {
+	await currentPage.goto(`http://${hostname}/signup`)
+})
+
+When('I fill in username with {string}', async function(user) {
+	await currentPage.type('input[name=username]', user)
+})
+
+When('I fill in password with {string}', async function(pass) {
+	await currentPage.type('input[name=password]', pass)
+})
+
+When('I fill in confirm password with {string}', async function(confirmPass) {
+	await currentPage.type('input[name=confirmPassword]', confirmPass)
+})
+
+When('I press Sign Up', async function() {
+	await currentPage.click('button[type=submit]')
+})
+
+Then('I should be signup successfully', async function() {
+	const errorMsg = await getSignUpError()
+	assert(!errorMsg, `got: ${errorMsg}`)
+})
+
+Then('I should be redirected to login', function() {
+	const currentURL = currentPage.url()
+	assert(currentURL === `http://${hostname}/homepage`, `got: ${currentURL}`)
+})
+
+//        Scenario: User provides invalid username  //
+
+Then('I should get an error on why the username was invalid and render sign up page', async function() {
+	const errorMsg = await getSignUpError()
+	assert(errorMsg, `got: ${errorMsg}`)
+})
+
+//        Scenario: User provides invalid password //
+
+Then('I should get an error on why the password was invalid and render sign up page', async function() {
+	const errorMsg = await getSignUpError()
+	assert(errorMsg, `got: ${errorMsg}`)
+
+})
+
+//        Scenario: User inputs invalid confirm password //
+
+Then('I should get an error that password and confirm password do not match', async function() {
+	const errorMsg = await getSignUpError()
+	assert(errorMsg, `got: ${errorMsg}`)
+
+})

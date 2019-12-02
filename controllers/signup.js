@@ -20,7 +20,7 @@ signup.post('/signup', async ctx => {
 
 		const user = await User.createFromPlainText(body.username, body.password)
 		await ctx.db.createUser(user)//adds new user to database
-		return ctx.redirect('login')
+		return ctx.redirect('homepage')
 	} catch(err) {
 		return ctx.render('signup.hbs', { errorMsg: err.message})
 	}
