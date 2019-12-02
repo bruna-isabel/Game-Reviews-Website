@@ -44,9 +44,9 @@ h1{
 .content-table tbody tr td section {
 height: 100px;overflow: hidden;
 }
-.image{
-	height: 8em;
-	width: 7em;
+.image img{
+	height: auto;
+	width: 9em;
 	padding-left: 1em;
 }
 .imageUrl{

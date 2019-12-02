@@ -254,6 +254,31 @@ describe('game database with sqlite', () => {
 			.toThrowError(new EntityNotFound('game with id 3 not found'))
 	})
 
+	test('should get game by title', async() => {
+		expect(await sqliteContext.getGameByTitle('game2'))
+			.toEqual(
+				{
+					id: 2,
+					title: 'game2',
+					summary: 'summary!!',
+					poster: 'image2.png',
+					slugline: '456',
+					submittedBy: 10,
+					releaseDate: '2019-10-10',
+					developer: 'Dev2',
+					publisher: 'Pub',
+					splash: 'slash2.jpg',
+					approved: 'no',
+					categories: [],
+					platforms: []
+				}
+			)
+
+		await expect(sqliteContext.getGameByTitle('game3'))
+			.rejects
+			.toThrowError(new EntityNotFound('game with title game3 not found'))
+	})
+
 	test('should update a game', async() => {
 		const game = await sqliteContext.getGame(1)
 		game.title = 'new title'

@@ -3,7 +3,7 @@
  */
 
 'use strict'
-//const sqlite = require('sqlite')
+
 const MAX_LENGTH_USER = 30
 const MIN_LENGTH_USER = 4
 const MAX_LENGTH_PASS = 15

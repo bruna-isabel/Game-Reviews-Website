@@ -9,13 +9,13 @@
 
 <body>
   {{>navbar}}
-  {{#if errorMsg}}
-  <div class="error-msg">
-    {{errorMsg}}
-  </div>
-  {{/if}}
 
   <form class = 'modalbox' method="post">
+    {{#if errorMsg}}
+    <div class="error-msg">
+      {{errorMsg}}
+    </div>
+    {{/if}}
     <section class="popup">
         <h1>Sign up to start making reviews!</h1>
         <hr>
