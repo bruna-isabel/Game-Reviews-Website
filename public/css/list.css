@@ -7,16 +7,20 @@ html{
 	font-family: 'Roboto', sans-serif;
 
 }
-h1{
-	color: white;
+h1 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
-	
+	font-size: 40px;
+	color: white;
+
 }
 .content-table{
 	position: relative;
 	bottom: 108em;
 	border-collapse: collapse;
-	margin: 500px 0;
+	margin: 420px 0;
 	font-size: 0.9em;
 	min-width: 400px;
 	border-radius: 6.5px;

@@ -1,11 +1,13 @@
 <DOCTYPE html>
 	<html>
 <head>
+	<title>Add a Game</title>
 	<link href="/public/css/placeholderforadding.css" type="text/css" rel="stylesheet" />
 	<link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
 </head>
 	<body>
 		{{>navbar}}
+		<section class="siteContent">
 		<h1>Adding Games</h1>
 		{{#if errorMsg}}
 		<div class= "error-msg">
@@ -14,29 +16,46 @@
 		{{/if}}
 	
 		<form method="post" enctype="multipart/form-data">
+			<h2>Game:</h2>
 			<input type="text" placeholder="Title:" name="title" required/>
-			<h1>Platforms:</h1>
+			<h2>Platforms:</h2>
+			<div class="grid-container"> 
 			{{#each platforms}}
-			<label for="platforms-{{this.id}}">{{this.name}}</label>
-			<input type="checkbox" name="platforms-{{this.id}}" value="{{this.id}}"/>
+			<div class="grid-item">
+				<input type="checkbox" name="platforms-{{this.id}}" value="{{this.id}}"/>
+				<label for="platforms-{{this.id}}">{{this.name}}</label>
+			</div>
 			{{/each}}
-			<h1>Categories:</h1>
+			</div>
+			<h2>Categories:</h2>
+			<div class="grid-container"> 
 			{{#each categories}}
-			<label for="categories-{{this.id}}">{{this.name}}</label>
+			<div class="grid-item">
 			<input type="checkbox" name="categories-{{this.id}}" value="{{this.id}}"/>
+			<label for="categories-{{this.id}}">{{this.name}}</label>
+			</div>
 			{{/each}}
+			</div>
+			<br>
 			<input type="text" placeholder="Slugline" name="slugline" required/>
 			<input type="text" placeholder="Summary" name="summary" required/>
-			
+
 			<input type="date" placeholder="Release Date" name="releaseDate" required/>
+
 			<input type="text" placeholder="Developer" name="developer" required/>
 			<input type="text" placeholder="Publisher" name="publisher" required/>
-
-			<input type="file" accept=".png,.jpg,.jpeg" name="poster" required/>
-			<input type="file" accept=".png,.jpg,.jpeg" name="splash" required/>
-			
-			<button class="Submit_button" type="submit">Submit</button>
+			<span>
+				<h2>Upload Poster</h2>
+				<input type="file" accept=".png,.jpg,.jpeg" name="poster" required/>
+			</span>
+			<span>
+				<h2>Upload Splash Image</h2>
+				<input type="file" accept=".png,.jpg,.jpeg" name="splash" required/>
+			</span>			
+						<br>
+				<h2>Submit Game <button class="Submit_button" type="submit" class="submitButton">Submit</button></h2>
 	</form>
+	</section>
 	</body>
 
 

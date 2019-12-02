@@ -1,6 +1,47 @@
-html{
-	background-color: #111111;
-	color: #e3e7e8;
+html {
+	--main-shadow-color: Black;
+	--main-bg-color: #111111;
+	--main-element-color: #272727;
+	--main-secondaryelement-color: #1c1c1c;
+	--main-highlight-color: #3a3a3a;
+	--main-text-color: #dbdbdb;
+	--main-button-color: #272727;
+	background-color: var(--main-bg-color);
+	color: var(--main-text-color);
 	font-size: 16px;
-	margin: 50px 0 30px 0;
+	height: 150%;
+	margin: 75px 0 22px 0;
+
+}
+.siteContent {
+	margin-left: -2px;
+	font-family: 'Roboto', sans-serif;
+	margin-top: 0px;
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+	height: auto;
+	letter-spacing: 0.5px;
+}
+h1 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-size: 40px;
+	color: white;
+
+}
+h2 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	margin-bottom: 5px;
+
+}
+.grid-container {
+  display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+.grid-item{
+	padding-top: 5px;
+  text-align: left;
 }
