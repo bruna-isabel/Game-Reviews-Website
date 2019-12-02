@@ -13,7 +13,7 @@ header{
 
 form {
 	margin: 20px;
-	color: #272727;
+	color: #fff;
 	font-size: 18px;
 	letter-spacing: 0.1em;
 }
@@ -34,10 +34,11 @@ input[type="text"] {
 	background-color: #272727;
 	border: 1px solid #272727;
 	border-radius: 2px;
+	color: white;
 }
 
 .Submit_button {
-	background-color: #fff;
+	background-color: black;
 	border: none;
 	color: white;
 	text-align: center;
