@@ -420,6 +420,17 @@ class SqliteDbContext extends DbContext {
 
 		return game
 	}
+
+	async getGameByTitle(title) {
+		const sqlite = await this.sqlitePromise
+
+		const query = 'SELECT `id` FROM `games` WHERE `title` = ?;'
+		const gameID = await sqlite.get(query, title)
+		if (!gameID) {
+			throw new EntityNotFound(`game with title ${title} not found`)
+		}
+		return this.getGame(gameID.id)
+	}
 	//delete a game by id
 	async deleteGame(id) {
 		// this will throw an error if game not found
@@ -861,7 +872,7 @@ class SqliteDbContext extends DbContext {
 
 		const reviews = await sqlite.all(query, gameID, 'yes')
 		return reviews
-	}
+	}	
 	//selects a review by id
 	async getReview(id) {
 		const sqlite = await this.sqlitePromise

@@ -166,6 +166,60 @@ Given('I log in as username {string}, password {string}', async function(usernam
 	await currentPage.click('button[type=submit]')
 })
 
+Given('the browser is open on the page for {string}', async function(title) {
+	const gameID = await app.context.db.getGameByTitle(title).id
+	await currentPage.goto(`http://${hostname}/game${gameID}`)
+})
+
+When('I click on the Rate and Review button', {timeout: 20000}, async function() {
+	await currentPage.goto(`http://${hostname}/game1`)
+	await currentPage.evaluate(() => {
+		document.getElementsByClassName('leaveReviewButton')[0].click()
+	})
+})
+
+Then('the review box should be opened', async function() {
+	await currentPage.goto(`http://${hostname}/game1`)
+	const reviewModal = await currentPage.evaluate(() => document.getElementById('reviewModal'))
+	assert(reviewModal.style.display === 'block')
+})
+
+When('I click on a {int} star rating', async function(star) {
+	await currentPage.goto(`http://${hostname}/game1`)
+	await currentPage.evaluate((star) => {
+		const starID = String(star*2)
+		console.log(starID)
+		document.getElementsByClassName('leaveReviewButton')[0].click()
+		document.getElementById(starID).click()
+	}, star)
+})
+
+When('I enter {string} in the text area', async function(text) {
+	await currentPage.goto(`http://${hostname}/game1`)
+	await currentPage.type('textarea[name=rvtext]', text)
+})
+
+When('I submit the review', async function() {
+	await currentPage.goto(`http://${hostname}/game1`)
+	await currentPage.evaluate(() => {
+		document.getElementsByClassName('leaveReviewButton')[0].click()
+		document.getElementsByClassName('submitButton')[0].click()
+	})
+})
+
+When('review is approved by admin', async function() {
+	const review = await app.context.db.getReview(1)
+	Object.assign(new Review(), review)
+	review.approved = 'yes'
+
+	await app.context.db.updateReview(review)
+})
+
+Then('the review should be added and I should be redirected to the page for {string}', async function(title) {
+	const gameID = await app.context.db.getGameByTitle(title)
+	await currentPage.goto(`http://${hostname}/game${gameID}`)
+})
+
 When('game is {string}', async function(title) {
 	//console.log(`${title}`)
 	const game = new Game(title, 'slugline', 'summ', 'date', 'dev',
