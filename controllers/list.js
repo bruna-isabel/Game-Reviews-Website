@@ -38,9 +38,11 @@ list.get('/', async ctx => {
 
 list.get('/:category/', async ctx => {
 	const categoryID = await ctx.db.getCategory(ctx.params.category)
+	const categories = await ctx.db.getCategories()
+
 	console.log(categoryID)
 	const games = await ctx.db.getGamesWithCategory(categoryID.id)
-  await ctx.render('listpage.hbs', {games: games})
+	await ctx.render('listpage.hbs', {games: games, category: categories})
 })
 
 
