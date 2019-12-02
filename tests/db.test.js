@@ -454,4 +454,33 @@ describe('games database with categories', () => {
 				]
 			)
 	})
+
+	test('should get games by a category', async() => {
+		expect(await sqliteContext.getGamesWithCategory(1))
+			.toEqual(
+				[
+					{
+						id: 1,
+						title: 'game1',
+						summary: 'summary!!!',
+						poster: 'image1.png',
+						slugline: '123',
+						submittedBy: 10,
+						releaseDate: '2019-09-01',
+						developer: 'Dev',
+						publisher: 'Pub',
+						splash: 'slash1.png',
+						approved: 'yes',
+						categories: [
+							{ id: 1, name: 'Horror' },
+							{ id: 2, name: 'Action' }
+						],
+						platforms: []
+					}
+				]
+			)
+
+		expect(await sqliteContext.getGamesWithCategory(3))
+			.toEqual([])
+	})
 })
