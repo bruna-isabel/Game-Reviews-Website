@@ -1,0 +1,89 @@
+**/
+
+body{
+    background-color: black !important;
+    color: black;
+		margin:0;
+}
+/* EVERYTHING IN THE HEADER*/
+header {
+    font-family: Helvetica, sans-serif;
+    position: fixed;
+		width: 100%;
+		top: 0;
+    z-index: 1;
+
+}
+.navBackground {
+  background-color: #111111;
+  width: 100vw;
+  height: 46px;
+  z-index: -1;
+  margin: 0px;
+  margin-bottom: -46px;
+}
+/*title of website*/
+#title{
+  float: left;
+  margin-left: 15%;
+  background-color: #111111;
+  
+}
+/*elements from top bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding-right: 15%;
+    overflow: hidden;
+    top: 0;
+    float: right;
+    
+}
+
+/*each element of list*/ 
+  li {
+    float: left;
+    text-align: center;
+    width: 150px;
+    background-color: #111111;
+
+}
+
+
+/*FOOTER AND HEADER*/
+li a, #title{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    
+}
+li a:hover, #title:hover {
+    background-color: rgb(49, 49, 49);
+    
+  }
+
+ul li ul {
+  visibility: hidden;
+  background-color: #111111;
+  opacity: 0.5;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+  left: 0;
+  display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+  
+}
+
+ul li ul li a, ul li ul li {
+  clear: both;
+  width: 100%;
+
+}

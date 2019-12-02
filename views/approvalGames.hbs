@@ -2,19 +2,22 @@
 <html>
 
 <head>
+	<title>Approval of Games</title>
 	<link href="/public/css/list.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
+	{{>navbar}}
 	<h1>Approval of Games</h1>
 	<table class='content-table'>
 		<thead>
 			<tr>
 				<th></th>
-				<th>Title</th>
-				<th>Summary</th>
+				<th class='left'>Title</th>
+				<th class='left'>Summary</th>
 				<th>Release Date</th>
-				<th>Avg. Rating</th>
+				<th>Submitted By</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -22,17 +25,24 @@
 		<tbody>
 			{{#each games}}
 			<tr>
-				<td class='image'>{{this.poster}}</td>
-				<td class='title'><a href="/game{{this.gameID}}">{{this.title}}</a></td>
+				{{#if this.url}}
+        <td class='imageUrl'><img src='{{this.poster}}' class='imageUrl'></td>
+        {{else}}
+        <td class='image'><img src='/public/images/{{this.poster}}' class='image'></td>
+        {{/if}}
+				<td class='title'><a class='list' href="/game{{this.id}}">{{this.title}}</a></td>
 				<td class='summary'>{{this.summary}}</td>
 				<td class='releaseDate'>{{this.releaseDate}}</td>
-				
+				<td class='rating'>{{this.submittedBy}}</td>
 
 				<form action="/approval/games" method="post">
-					<td class='statusChange'> <input type="submit" name="{{this.gameID}}" value="Approve"/> </td>
-				</form>
-				<form action="/approval/games" method="post">
-					<td><input type="submit" name="{{this.gameID}}" value="Reject"/></td>
+					<input type="hidden" name="id" value="{{this.id}}" />
+					<td class="statusChange">
+						<input type="submit" name="action" value="Approve" />
+					</td>
+					<td>
+						<input type="submit" name="action" value="Reject" />
+					</td>
 				</form>
 			</tr>
 			{{/each}}

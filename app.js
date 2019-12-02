@@ -17,7 +17,12 @@ const handlebars = new Views(
 	path.join(__dirname, '/views'),
 	{
 		map: { hbs: 'handlebars' },
-		extension: 'hbs'
+		extension: 'hbs',
+		options: {
+			partials: {
+				navbar: `${__dirname}/views/partials/navbar.hbs`
+			}
+		}
 	}
 )
 app.use(session({key: 'session_id', renew: true}, app))
@@ -33,7 +38,6 @@ app.use(serve({
 	base: '/public/'
 }))
 app.use(bodyParser())
-// app.use(serve(path.join(__dirname, 'public')))
 app.use(session({key: 'session_id', renew: true}, app))
 
 // db stuff
@@ -47,12 +51,14 @@ const login = require('./controllers/login')
 const home = require('./controllers/home')
 const logout = require('./controllers/logout')
 const game = require('./controllers/game')
+const homepage = require('./controllers/homepage')
+const signup = require('./controllers/signup')
 const list = require('./controllers/list')
 const approval = require('./controllers/approval')
 const adding = require('./controllers/adding')
 
-// routers
-app.use(home.routes())
+app.use(handlebars)
+app.use(game.routes())
 app.use(login.routes())
 app.use(list.routes())
 app.use(approval.routes())
@@ -61,5 +67,9 @@ app.use(game.routes())
 app.use(list.routes())
 app.use(approval.routes())
 app.use(adding.routes())
+app.use(homepage.routes())
+app.use(signup.routes())
+app.use(home.routes())
 
 module.exports = app
+

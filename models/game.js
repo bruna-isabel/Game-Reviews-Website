@@ -29,6 +29,17 @@ class Game {
 		this.platforms = []
 		this.categories = []
 	}
+
+	/**
+	 * Alias for the id field
+	 */
+	get gameID() {
+		return this.id
+	}
+
+	set gameID(val) {
+		this.id = val
+	}
 }
 
 module.exports = Game

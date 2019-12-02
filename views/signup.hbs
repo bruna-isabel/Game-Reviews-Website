@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" type="text/css" href="/public/css/signup.css">
+  <link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+  {{>navbar}}
+
+  <form class = 'modalbox' method="post">
+    {{#if errorMsg}}
+    <div class="error-msg">
+      {{errorMsg}}
+    </div>
+    {{/if}}
+    <section class="popup">
+        <h1>Sign up to start making reviews!</h1>
+        <hr>
+        
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Username" name="username" required />
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Password" name="password" required />
+        <label for="confirmpassword"><b>Confirm Password</b></label>
+		    <input type="password" placeholder="Confirm Password" name="confirmPassword" required />
+
+      <section class="clear">
+                 <button type="submit" class="signup">Create Account</button>
+      </section>
+    </section>
+  </form>
+</body>
+
+</html>

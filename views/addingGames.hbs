@@ -1,29 +1,41 @@
 <DOCTYPE html>
 	<html>
-<head><title>Adding Games</title></head>
+<head>
+	<link href="/public/css/placeholderforadding.css" type="text/css" rel="stylesheet" />
+	<link href="/public/css/navbar.css" type="text/css" rel="stylesheet" />
+</head>
 	<body>
-		<header>Adding Games</header>
+		{{>navbar}}
+		<h1>Adding Games</h1>
 		{{#if errorMsg}}
 		<div class= "error-msg">
 			{{errorMsg}}
 		</div>
 		{{/if}}
-
-		<form method= "post">
+	
+		<form method="post" enctype="multipart/form-data">
 			<input type="text" placeholder="Title:" name="title" required/>
 			<h1>Platforms:</h1>
-						{{#each platforms}}
-				<input type="checkbox" name="Platform1" value="{{this.id}}" />{{this.name}}
+			{{#each platforms}}
+			<label for="platforms-{{this.id}}">{{this.name}}</label>
+			<input type="checkbox" name="platforms-{{this.id}}" value="{{this.id}}"/>
+			{{/each}}
+			<h1>Categories:</h1>
+			{{#each categories}}
+			<label for="categories-{{this.id}}">{{this.name}}</label>
+			<input type="checkbox" name="categories-{{this.id}}" value="{{this.id}}"/>
 			{{/each}}
 			<input type="text" placeholder="Slugline" name="slugline" required/>
-			<input type= "text" placeholder="Summary" name="summary" required/>
+			<input type="text" placeholder="Summary" name="summary" required/>
 			
 			<input type="date" placeholder="Release Date" name="releaseDate" required/>
-			<input type="text" placeholder="Director" name="director" required/>
+			<input type="text" placeholder="Developer" name="developer" required/>
 			<input type="text" placeholder="Publisher" name="publisher" required/>
-			<input type="text" placeholder="Poster" name="poster" required/>
-			<input type="text" placeholder="splash" name="splash" required/>
-			<button class="Submit_button" type="submit" > Submit </button>
+
+			<input type="file" accept="image/png,image/jpeg" name="poster" required/>
+			<input type="file" accept="image/png,image/jpeg" name="splash" required/>
+			
+			<button class="Submit_button" type="submit">Submit</button>
 	</form>
 	</body>
 
